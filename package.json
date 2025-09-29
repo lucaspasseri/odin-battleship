@@ -1,0 +1,25 @@
+{
+	"name": "odin-battleship",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"test": "jest"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/lucaspasseri/odin-battleship.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/lucaspasseri/odin-battleship/issues"
+	},
+	"homepage": "https://github.com/lucaspasseri/odin-battleship#readme",
+	"description": "",
+	"devDependencies": {
+		"@babel/core": "^7.28.4",
+		"@babel/preset-env": "^7.28.3",
+		"babel-jest": "^30.2.0",
+		"jest": "^30.2.0"
+	}
+}
