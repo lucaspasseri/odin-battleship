@@ -1,7 +1,7 @@
 import Ship from "./Ship";
 
 test("throws error for invalid lengths", () => {
-	const invalidValues = [undefined, null, 0, -1, 11, "2", NaN, {}, []];
+	const invalidValues = [undefined, null, 0, -1, 11, "2", NaN, false, {}, []];
 	invalidValues.forEach(len => expect(() => new Ship(len)).toThrow());
 });
 
