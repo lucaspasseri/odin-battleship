@@ -1,0 +1,41 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background-color: grey;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid purple;
+	min-height: 100vh;
+}
+
+ul {
+	border: 1px solid black;
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	width: 21em;
+	height: 20em;
+	padding: 0;
+	justify-content: center;
+}
+
+li {
+	border: 1px solid rgb(165, 79, 79);
+	height: 2em;
+	width: 2em;
+}
+
+.water {
+	background-color: blue;
+}
+
+.damage {
+	background-color: red;
+}
+.ship {
+	background-color: black;
+}

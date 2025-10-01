@@ -1,10 +1,14 @@
-import Ship from "./Ship";
+import Ship from "./Ship.js";
 
 export default class Gameboard {
 	#missedAttacks = [];
 	#occupiedPlaces = {};
 	#numberOfShips = 0;
 	constructor() {}
+
+	get occupiedPlaces() {
+		return Object.entries(this.#occupiedPlaces);
+	}
 
 	get missedAttacks() {
 		return [...this.#missedAttacks];
