@@ -1,10 +1,5 @@
 import Gameboard from "./Gameboard";
 
-test("Gameboard should be correctly instantiated", () => {
-	const invalidValues = [null, 0, -1, 1, "2", NaN, false, {}, []];
-	invalidValues.forEach(value => expect(() => new Gameboard(value)).toThrow());
-});
-
 test("receiveAttack should receive the right arguments", () => {
 	const gb = new Gameboard();
 
@@ -19,9 +14,9 @@ test("receiveAttack should receive the right arguments", () => {
 test("Gameboard should keep track of missed attack", () => {
 	const gb = new Gameboard();
 
-	const place = [1, 2];
-	const place1 = [3, 4];
-	const place2 = [5, 6];
+	const place = [0, 0];
+	const place1 = [4, 4];
+	const place2 = [9, 9];
 
 	gb.receiveAttack(place[0], place[1]);
 	gb.receiveAttack(place1[0], place1[1]);
@@ -67,17 +62,50 @@ test("Gameboard cannot place a ship starting beyond the defined places", () => {
 	expect(() => gb.placeShip(numberBeyondLimit, 1)).toThrow();
 });
 
-// test("Gameboard cannot place a ship going beyond the defined places", () => {
-// 	const gb = new Gameboard();
+test("Gameboard cannot place a ship going beyond the defined places", () => {
+	const gb = new Gameboard();
 
-// 	const numberBeyondLimit = 10;
+	const numberBeyondLimit = 10;
 
-// 	expect(() => gb.placeShip(1, 1, numberBeyondLimit)).toThrow();
-// });
+	expect(() => gb.placeShip(1, 1, numberBeyondLimit)).toThrow();
+});
 
-test("Gameboard cannot place a ship in the place occupied by another ship", () => {});
+test("Gameboard cannot place a ship with invalid length", () => {
+	const gb = new Gameboard();
 
-test("Gameboard should be able to place sunk all the ships", () => {
+	const invalidShipLength = [-1, 0, NaN, "1", false, {}, []];
+	invalidShipLength.forEach(shipLength =>
+		expect(() => gb.placeShip(1, 1, shipLength)).toThrow()
+	);
+});
+
+test("Gameboard cannot place a ship in the place occupied by another ship, case with the same ship", () => {
+	const gb = new Gameboard();
+	gb.placeShip(1, 2, 3, "horizontal");
+	expect(() => gb.placeShip(1, 2, 3, "horizontal")).toThrow();
+});
+
+test("Gameboard cannot place a ship in the place occupied by another ship, case with same starting place", () => {
+	const gb = new Gameboard();
+	gb.placeShip(1, 2, 3, "horizontal");
+	expect(() => gb.placeShip(1, 2, 5, "vertical")).toThrow();
+});
+
+test("Gameboard cannot place a ship in the place occupied by another ship, case with tail collision", () => {
+	const gb = new Gameboard();
+	gb.placeShip(5, 5, 5, "horizontal");
+	expect(() => gb.placeShip(9, 2, 5, "vertical")).toThrow();
+});
+
+test("An Error when placing a ship must not create occupied places", () => {
+	const gb = new Gameboard();
+	gb.placeShip(5, 5, 5, "horizontal");
+	expect(() => gb.placeShip(9, 2, 5, "vertical")).toThrow();
+	expect(() => gb.placeShip(9, 3, 2, "vertical")).not.toThrow();
+	expect(() => gb.placeShip(9, 6, 2, "vertical")).not.toThrow();
+});
+
+test("Gameboard should be able to sunk all the ships", () => {
 	const gb = new Gameboard();
 
 	gb.placeShip(1, 2, 3);
