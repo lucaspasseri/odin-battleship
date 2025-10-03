@@ -44,14 +44,21 @@ console.log({ grid });
 grid.forEach(row => {
 	row.forEach(cell => {
 		const li = document.createElement("li");
-		if (cell === undefined) {
-			li.classList.add("water");
-		} else if (cell === false) {
-			li.classList.add("damage");
-		} else {
-			li.classList.add("ship");
-		}
+		const btn = document.createElement("button");
 
+		btn.classList.add("water");
+		btn.addEventListener("click", () => {
+			console.log(cell);
+
+			const ship = cell;
+			if (ship !== undefined && ship !== false) {
+				ship.hit();
+				cell = false;
+				btn.classList.remove("ship");
+				btn.classList.add("damage");
+			}
+		});
+		li.appendChild(btn);
 		ul.appendChild(li);
 	});
 });
