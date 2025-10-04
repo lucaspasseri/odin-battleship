@@ -1,3 +1,7 @@
+:root {
+	--cell-size: 2em;
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -34,13 +38,32 @@ li {
 	}
 }
 
+.miss {
+	background-color: red;
+}
+
 .water {
 	background-color: blue;
 }
 
-.damage {
-	background-color: red;
+.hit {
+	background-color: green;
 }
 .ship {
 	background-color: black;
+}
+
+.grid {
+	border: 1px solid red;
+	display: grid;
+	grid-template-columns: repeat(10, var(--cell-size));
+	> div {
+		border: 1px solid black;
+		height: var(--cell-size);
+		width: var(--cell-size);
+		> button {
+			height: 100%;
+			width: 100%;
+		}
+	}
 }

@@ -7,7 +7,7 @@ export default class Gameboard {
 	constructor() {}
 
 	get occupiedPlaces() {
-		return Object.entries(this.#occupiedPlaces);
+		return { ...this.#occupiedPlaces };
 	}
 
 	get missedAttacks() {
