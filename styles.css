@@ -22,7 +22,7 @@ body {
 	padding: 1em;
 }
 
-.miss {
+.water {
 	background-color: blue;
 }
 
@@ -30,7 +30,7 @@ body {
 	background-color: #fdfdfd;
 }
 
-.hit {
+.ship {
 	background-color: black;
 }
 

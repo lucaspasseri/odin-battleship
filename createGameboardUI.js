@@ -1,16 +1,18 @@
-export default function createGameboardUI(player) {
+export default function createGameboardUI(gbi) {
 	const ROWS = 10;
 	const COLS = 10;
 
-	const occupiedPlaces = player.gameboard.occupiedPlaces;
+	const occupiedPlaces = gbi.gameboard.occupiedPlaces;
 
 	const gridContainer = document.createElement("div");
 	gridContainer.className = "gridContainer";
 	const h1 = document.createElement("h1");
-	h1.textContent = `${player.type}`;
+	h1.textContent = `${gbi.player.type}`;
 
 	const h4 = document.createElement("h4");
-	h4.textContent = "Game status: in progress...";
+	h4.textContent = `Game status:${
+		gbi.player.gameboard.isThereAnyShipLeft() ? "in progress..." : "game over"
+	}  `;
 
 	const grid = document.createElement("div");
 	grid.className = "grid";
@@ -18,26 +20,22 @@ export default function createGameboardUI(player) {
 	for (let i = 0; i < ROWS * COLS; i++) {
 		const cell = document.createElement("div");
 
-		const btn = document.createElement("button");
-		btn.className = "initial";
-
 		const x = i % COLS;
 		const y = Math.abs(Math.floor(i / COLS) - 9);
 
-		const currCoordinate = `${x},${y}`;
+		const btn = document.createElement("button");
+		const cellState = gbi.checkCell(x, y);
+
+		btn.className = cellState;
 
 		btn.addEventListener("click", () => {
-			const ship = occupiedPlaces[currCoordinate];
-			console.log({ currCoordinate, ship });
+			const hit = gbi.hit(x, y);
+			if (hit) {
+				const body = document.querySelector("body");
+				body.innerHTML = "";
+				const grid = createGameboardUI(gbi);
 
-			if (ship === undefined) {
-				btn.classList.remove("initial");
-				btn.classList.add("miss");
-			} else if (ship === false) {
-				return;
-			} else {
-				btn.classList.remove("initial");
-				btn.classList.add("hit");
+				body.appendChild(grid);
 			}
 		});
 		cell.appendChild(btn);

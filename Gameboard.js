@@ -34,11 +34,11 @@ export default class Gameboard {
 			if (!this.#missedAttacks.includes(place)) {
 				this.#missedAttacks.push(place);
 			}
-			return;
+			return undefined;
 		}
 
 		if (currShip === false) {
-			return;
+			return false;
 		}
 
 		currShip.hit();
@@ -47,6 +47,8 @@ export default class Gameboard {
 		if (currShip.isSunk()) {
 			this.#numberOfShips -= 1;
 		}
+
+		return currShip;
 	}
 
 	placeShip(x, y, shipLength = 1, direction = "horizontal") {
