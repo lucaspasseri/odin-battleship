@@ -3,7 +3,14 @@ export default function createGameboardUI(player) {
 	const COLS = 10;
 
 	const occupiedPlaces = player.gameboard.occupiedPlaces;
-	console.log({ occupiedPlaces });
+
+	const gridContainer = document.createElement("div");
+	gridContainer.className = "gridContainer";
+	const h1 = document.createElement("h1");
+	h1.textContent = `${player.type}`;
+
+	const h4 = document.createElement("h4");
+	h4.textContent = "Game status: in progress...";
 
 	const grid = document.createElement("div");
 	grid.className = "grid";
@@ -12,12 +19,10 @@ export default function createGameboardUI(player) {
 		const cell = document.createElement("div");
 
 		const btn = document.createElement("button");
-		btn.className = "water";
+		btn.className = "initial";
 
 		const x = i % COLS;
 		const y = Math.abs(Math.floor(i / COLS) - 9);
-
-		console.log({ x, y });
 
 		const currCoordinate = `${x},${y}`;
 
@@ -26,12 +31,12 @@ export default function createGameboardUI(player) {
 			console.log({ currCoordinate, ship });
 
 			if (ship === undefined) {
-				btn.classList.remove("water");
+				btn.classList.remove("initial");
 				btn.classList.add("miss");
 			} else if (ship === false) {
 				return;
 			} else {
-				btn.classList.remove("water");
+				btn.classList.remove("initial");
 				btn.classList.add("hit");
 			}
 		});
@@ -39,7 +44,7 @@ export default function createGameboardUI(player) {
 		grid.appendChild(cell);
 	}
 
-	console.log({ grid });
+	gridContainer.append(h1, h4, grid);
 
-	return grid;
+	return gridContainer;
 }

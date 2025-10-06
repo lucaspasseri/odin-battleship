@@ -14,42 +14,23 @@ body {
 	align-items: center;
 	border: 1px solid purple;
 	min-height: 100vh;
+	gap: 4em;
 }
 
-ul {
-	border: 1px solid black;
-	list-style: none;
-	display: flex;
-	flex-wrap: wrap;
-	width: 21em;
-	height: 20em;
-	padding: 0;
-	justify-content: center;
-}
-
-li {
-	border: 1px solid rgb(165, 79, 79);
-	height: 2em;
-	width: 2em;
-
-	button {
-		width: 100%;
-		height: 100%;
-	}
+.gridContainer {
+	background-color: aqua;
+	padding: 1em;
 }
 
 .miss {
-	background-color: red;
-}
-
-.water {
 	background-color: blue;
 }
 
-.hit {
-	background-color: green;
+.initial {
+	background-color: #fdfdfd;
 }
-.ship {
+
+.hit {
 	background-color: black;
 }
 
@@ -64,6 +45,7 @@ li {
 		> button {
 			height: 100%;
 			width: 100%;
+			cursor: pointer;
 		}
 	}
 }

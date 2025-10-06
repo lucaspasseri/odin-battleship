@@ -15,4 +15,8 @@ export default class Player {
 	get gameboard() {
 		return this.#gameboard;
 	}
+
+	get type() {
+		return this.#playerType;
+	}
 }
