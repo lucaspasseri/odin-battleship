@@ -1,10 +1,8 @@
-import BattleShip from "./Battleship.js";
 import GameboardInterface from "./GameboardInterface.js";
 import Player from "./Player.js";
-import render from "./render.js";
-import state from "./state.js";
+import createGameboardUI from "./createGameboardUI.js";
 
-const game = new BattleShip();
+const body = document.querySelector("body");
 
 const p1 = new Player("real");
 
@@ -18,9 +16,12 @@ p2.gameboard.placeShip(0, 0, 5, "vertical");
 p2.gameboard.placeShip(4, 4, 5, "horizontal");
 p2.gameboard.placeShip(5, 1, 3, "vertical");
 
-game.addPlayer(p1);
-game.addPlayer(p2);
+const gbi1 = new GameboardInterface(p1);
 
-state.boards = game.players.map(player => new GameboardInterface(player));
+const grid1 = createGameboardUI(gbi1);
 
-render();
+const gbi2 = new GameboardInterface(p2);
+
+const grid2 = createGameboardUI(gbi2);
+
+body.append(grid1, grid2);

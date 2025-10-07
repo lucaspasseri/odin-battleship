@@ -22,3 +22,11 @@ it("should be able to check the state of a grid cell, ship state", () => {
 	gbi.hit(0, 0);
 	expect(gbi.checkCell(0, 0)).toBe("ship");
 });
+
+it("should be able to hit a grid cell if the state of the cell is the initial state", () => {
+	const player = new Player("real");
+	const gbi = new GameboardInterface(player);
+
+	expect(gbi.hit(0, 0)).toBe(true);
+	expect(gbi.hit(0, 0)).toBe(false);
+});

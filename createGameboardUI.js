@@ -1,8 +1,8 @@
+import render from "./render.js";
+
 export default function createGameboardUI(gbi) {
 	const ROWS = 10;
 	const COLS = 10;
-
-	const occupiedPlaces = gbi.gameboard.occupiedPlaces;
 
 	const gridContainer = document.createElement("div");
 	gridContainer.className = "gridContainer";
@@ -31,11 +31,7 @@ export default function createGameboardUI(gbi) {
 		btn.addEventListener("click", () => {
 			const hit = gbi.hit(x, y);
 			if (hit) {
-				const body = document.querySelector("body");
-				body.innerHTML = "";
-				const grid = createGameboardUI(gbi);
-
-				body.appendChild(grid);
+				render();
 			}
 		});
 		cell.appendChild(btn);
