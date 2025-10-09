@@ -3,6 +3,19 @@ export default function createUI(game) {
 	container.innerHTML = "";
 	container.className = "container";
 
+	const h1 = document.createElement("h1");
+	h1.textContent = `Current player: ${game.currPlayer.name}`;
+
+	const h2GameStatus = document.createElement("h2");
+	h2GameStatus.textContent = `Game status:${
+		game.isThereAnyShipLeft ? "in progress..." : "game over"
+	}  `;
+
+	container.append(h1, h2GameStatus);
+
+	const boardsContainer = document.createElement("div");
+	boardsContainer.className = "boardsContainer";
+
 	game.players.forEach((player, index) => {
 		const ROWS = 10;
 		const COLS = 10;
@@ -12,10 +25,11 @@ export default function createUI(game) {
 		const h1 = document.createElement("h1");
 		h1.textContent = `${player.name}-${player.type}`;
 
-		const h4 = document.createElement("h4");
-		h4.textContent = `Game status:${
-			player.gameboard.isThereAnyShipLeft() ? "in progress..." : "game over"
-		}  `;
+		const h2ShipsLeft = document.createElement("h2");
+		h2ShipsLeft.textContent = `# ships: ${player.gameboard.numberOfShips}`;
+
+		const h2Moves = document.createElement("h2");
+		h2Moves.textContent = `# moves: ${player.gameboard.playedPlaces.size}`;
 
 		const grid = document.createElement("div");
 		grid.className = "grid";
@@ -33,7 +47,6 @@ export default function createUI(game) {
 
 			btn.addEventListener("click", () => {
 				if (game.currPlayer.name !== game.players[index].name) {
-					console.log(1);
 					return;
 				}
 				game.hitCellByPlayerIndex(x, y, index);
@@ -44,7 +57,8 @@ export default function createUI(game) {
 			grid.appendChild(cell);
 		}
 
-		gridContainer.append(h1, h4, grid);
-		container.appendChild(gridContainer);
+		gridContainer.append(h1, h2ShipsLeft, h2Moves, grid);
+		boardsContainer.appendChild(gridContainer);
 	});
+	container.appendChild(boardsContainer);
 }

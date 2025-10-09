@@ -91,7 +91,6 @@ export default class Game {
 
 	hitCellByPlayerIndex(x, y, playerIndex) {
 		const cellState = this.checkCellByPlayerIndex(x, y, playerIndex);
-		console.log(cellState);
 		if (cellState === "ship" || cellState === "water") {
 			return;
 		}

@@ -66,6 +66,18 @@ it("should be able to check the state of a grid cell of the chosen player", () =
 	expect(game.checkCellByPlayerIndex(1, 1, 1)).toBe("ship");
 });
 
+it("should be able to change between players", () => {
+	const game = new Game();
+	game.addPlayer("Rosa", "real");
+	game.addPlayer("Caio", "real");
+
+	expect(game.currPlayer.name).toBe("Rosa");
+	game.changePlayer();
+	expect(game.currPlayer.name).toBe("Caio");
+	game.changePlayer();
+	expect(game.currPlayer.name).toBe("Rosa");
+});
+
 test("current player should be able to hit a grid cell", () => {
 	const game = new Game();
 	game.addPlayer("Bruna", "real");
@@ -113,18 +125,6 @@ test("current player should be able to sunk all ships on the grid", () => {
 	game.hitCell(9, 5);
 
 	expect(game.isThereAnyShipLeft).toBe(false);
-});
-
-it("should be able to change between players", () => {
-	const game = new Game();
-	game.addPlayer("Rosa", "real");
-	game.addPlayer("Caio", "real");
-
-	expect(game.currPlayer.name).toBe("Rosa");
-	game.changePlayer();
-	expect(game.currPlayer.name).toBe("Caio");
-	game.changePlayer();
-	expect(game.currPlayer.name).toBe("Rosa");
 });
 
 test("Battleship match between two players", () => {
@@ -203,14 +203,11 @@ test("Battleship match between two players", () => {
 	}
 
 	expect(game.isThereAnyShipLeft).toBe(false);
-	// console.log({
-	// 	name: game.currPlayer.name,
-	// 	ships: game.currPlayer.gameboard.occupiedPlaces,
-	// });
+
 	game.changePlayer();
 	expect(game.isThereAnyShipLeft).toBe(true);
-	// console.log({
-	// 	name: game.currPlayer.name,
-	// 	ships: game.currPlayer.gameboard.occupiedPlaces,
-	// });
 });
+
+// EACH PLAYER SHOULD ONLY HIT THE OPPONENT's BOARD
+
+// GAME OVER FOR ONE OF THE BOARDS SHOULD STOP THE GAME

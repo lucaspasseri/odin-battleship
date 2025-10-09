@@ -19,6 +19,12 @@ body {
 
 .container {
 	display: flex;
+	border: 1px solid red;
+	flex-direction: column;
+}
+
+.boardsContainer {
+	display: flex;
 	gap: 2em;
 }
 
