@@ -1,26 +1,51 @@
-import BattleShip from "./Battleship.js";
-import GameboardInterface from "./GameboardInterface.js";
-import Player from "./Player.js";
-import render from "./render.js";
-import state from "./state.js";
+import createUI from "./createUI.js";
+import Game from "./Game.js";
+const game = new Game();
 
-const game = new BattleShip();
+game.addPlayer("João", "real");
+game.addPlayer("Maria", "real");
 
-const p1 = new Player("real");
+const ships = [
+	{
+		x: 0,
+		y: 0,
+		length: 5,
+		direction: "horizontal",
+	},
+	{
+		x: 9,
+		y: 0,
+		length: 5,
+		direction: "vertical",
+	},
+	// { x: 9, y: 9, length: 1, direction: "horizontal" },
+];
 
-p1.gameboard.placeShip(1, 1, 5, "horizontal");
-p1.gameboard.placeShip(4, 4, 5, "vertical");
-p1.gameboard.placeShip(9, 1, 5, "vertical");
+const ships1 = [
+	{
+		x: 0,
+		y: 7,
+		length: 3,
+		direction: "vertical",
+	},
+	{
+		x: 7,
+		y: 9,
+		length: 3,
+		direction: "horizontal",
+	},
+];
 
-const p2 = new Player("computer");
+ships.forEach(ship =>
+	game.placeShip(ship.x, ship.y, ship.length, ship.direction)
+);
 
-p2.gameboard.placeShip(0, 0, 5, "vertical");
-p2.gameboard.placeShip(4, 4, 5, "horizontal");
-p2.gameboard.placeShip(5, 1, 3, "vertical");
+game.changePlayer();
 
-game.addPlayer(p1);
-game.addPlayer(p2);
+ships1.forEach(ship =>
+	game.placeShip(ship.x, ship.y, ship.length, ship.direction)
+);
 
-state.boards = game.players.map(player => new GameboardInterface(player));
+game.changePlayer();
 
-render();
+createUI(game);

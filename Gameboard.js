@@ -4,6 +4,8 @@ export default class Gameboard {
 	#missedAttacks = [];
 	#occupiedPlaces = {};
 	#numberOfShips = 0;
+	#playedPlaces = new Set();
+
 	constructor() {}
 
 	get occupiedPlaces() {
@@ -12,6 +14,14 @@ export default class Gameboard {
 
 	get missedAttacks() {
 		return [...this.#missedAttacks];
+	}
+
+	get playedPlaces() {
+		return this.#playedPlaces;
+	}
+
+	get numberOfShips() {
+		return this.#numberOfShips;
 	}
 
 	receiveAttack(x, y) {
@@ -29,6 +39,7 @@ export default class Gameboard {
 		}
 
 		const place = `${x},${y}`;
+		this.#playedPlaces.add(place);
 		const currShip = this.#occupiedPlaces[place];
 		if (currShip === undefined) {
 			if (!this.#missedAttacks.includes(place)) {

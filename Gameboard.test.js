@@ -122,3 +122,15 @@ test("Gameboard should be able to sunk all the ships", () => {
 
 	expect(gb.isThereAnyShipLeft()).toBe(false);
 });
+
+test("Gameboard should be able to know all the places that received an attack", () => {
+	const gb = new Gameboard();
+
+	gb.receiveAttack(1, 2);
+	gb.receiveAttack(2, 2);
+	gb.receiveAttack(3, 2);
+	gb.receiveAttack(3, 3);
+	gb.receiveAttack(3, 4);
+
+	expect(gb.playedPlaces.size).toBe(5);
+});

@@ -17,6 +17,11 @@ body {
 	gap: 4em;
 }
 
+.container {
+	display: flex;
+	gap: 2em;
+}
+
 .gridContainer {
 	background-color: aqua;
 	padding: 1em;
