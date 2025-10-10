@@ -19,8 +19,8 @@ body {
 
 .container {
 	display: flex;
-	border: 1px solid red;
 	flex-direction: column;
+	background-color: aliceblue;
 }
 
 .boardsContainer {
@@ -30,7 +30,10 @@ body {
 
 .gridContainer {
 	background-color: aqua;
+	display: flex;
+	flex-direction: column;
 	padding: 1em;
+	max-width: 24em;
 }
 
 .water {
@@ -46,7 +49,9 @@ body {
 }
 
 .grid {
-	border: 1px solid red;
+	border: 1px solid black;
+	width: fit-content;
+	padding: 1em;
 	display: grid;
 	grid-template-columns: repeat(10, var(--cell-size));
 	> div {

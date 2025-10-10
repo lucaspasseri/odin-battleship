@@ -1,8 +1,8 @@
 import Player from "./Player.js";
-
 export default class Game {
 	#players = [];
 	#currPlayerIndex;
+	#isGameOver = false;
 
 	constructor() {}
 
@@ -26,6 +26,10 @@ export default class Game {
 		return this.#players[this.#currPlayerIndex].gameboard.playedPlaces;
 	}
 
+	get isGameOver() {
+		return this.#isGameOver;
+	}
+
 	changePlayer() {
 		this.#currPlayerIndex = (this.#currPlayerIndex + 1) % this.#players.length;
 	}
@@ -47,10 +51,17 @@ export default class Game {
 	}
 
 	checkCell(x, y) {
-		const occupiedCells =
-			this.#players[this.#currPlayerIndex].gameboard.occupiedPlaces;
-		const playedCells =
-			this.#players[this.#currPlayerIndex].gameboard.playedPlaces;
+		const opponent =
+			this.#players[(this.#currPlayerIndex + 1) % this.#players.length];
+
+		if (this.currPlayer === opponent) {
+			throw new Error();
+		}
+
+		const occupiedCells = opponent.gameboard.occupiedPlaces;
+
+		const playedCells = opponent.gameboard.playedPlaces;
+
 		const key = `${x},${y}`;
 
 		if (!playedCells.has(key)) {
@@ -86,7 +97,17 @@ export default class Game {
 			return;
 		}
 
-		this.#players[this.#currPlayerIndex].gameboard.receiveAttack(x, y);
+		const opponent =
+			this.#players[(this.#currPlayerIndex + 1) % this.#players.length];
+
+		if (this.currPlayer === opponent) {
+			throw new Error();
+		}
+
+		opponent.gameboard.receiveAttack(x, y);
+		if (!opponent.gameboard.isThereAnyShipLeft) {
+			this.#isGameOver = true;
+		}
 	}
 
 	hitCellByPlayerIndex(x, y, playerIndex) {
@@ -94,7 +115,20 @@ export default class Game {
 		if (cellState === "ship" || cellState === "water") {
 			return;
 		}
-		this.#players[playerIndex].gameboard.receiveAttack(x, y);
-		this.changePlayer();
+		const chosenPlayer = this.#players[playerIndex];
+
+		chosenPlayer.gameboard.receiveAttack(x, y);
+
+		if (!chosenPlayer.gameboard.isThereAnyShipLeft) {
+			this.#isGameOver = true;
+		}
+
+		return true;
+	}
+
+	playedCellsByPlayerIndex(playerIndex) {
+		const chosenPlayer = this.#players[playerIndex];
+
+		return chosenPlayer.gameboard.playedPlaces;
 	}
 }

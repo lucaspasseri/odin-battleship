@@ -48,9 +48,9 @@ test("Gameboard should not keep track of duplicate missed attacks", () => {
 test("Gameboard should be able to place a ship", () => {
 	const gb = new Gameboard();
 
-	expect(gb.isThereAnyShipLeft()).toBe(false);
+	expect(gb.isThereAnyShipLeft).toBe(false);
 	gb.placeShip(1, 2, 3);
-	expect(gb.isThereAnyShipLeft()).toBe(true);
+	expect(gb.isThereAnyShipLeft).toBe(true);
 });
 
 test("Gameboard cannot place a ship starting beyond the defined places", () => {
@@ -111,7 +111,7 @@ test("Gameboard should be able to sunk all the ships", () => {
 	gb.placeShip(1, 2, 3);
 	gb.placeShip(3, 3, 2, "vertical");
 
-	expect(gb.isThereAnyShipLeft()).toBe(true);
+	expect(gb.isThereAnyShipLeft).toBe(true);
 
 	gb.receiveAttack(1, 2);
 	gb.receiveAttack(2, 2);
@@ -120,7 +120,7 @@ test("Gameboard should be able to sunk all the ships", () => {
 	gb.receiveAttack(3, 3);
 	gb.receiveAttack(3, 4);
 
-	expect(gb.isThereAnyShipLeft()).toBe(false);
+	expect(gb.isThereAnyShipLeft).toBe(false);
 });
 
 test("Gameboard should be able to know all the places that received an attack", () => {

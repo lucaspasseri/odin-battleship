@@ -46,9 +46,10 @@ test("current player should be able to place a ship", () => {
 	expect(game.numberOfShips).toBe(2);
 });
 
-it("should be able to check the state of a grid cell of the current player", () => {
+it("should be able to check the state of a grid cell of the opponent player", () => {
 	const game = new Game();
 	game.addPlayer("Mario", "real");
+	game.addPlayer("Luana", "real");
 
 	expect(game.checkCell(0, 0)).toBe("initial");
 });
@@ -58,12 +59,10 @@ it("should be able to check the state of a grid cell of the chosen player", () =
 	game.addPlayer("Mario", "real");
 	game.addPlayer("Vitor", "real");
 
-	game.changePlayer();
-	game.placeShip(1, 1, 3, "horizontal");
 	game.hitCell(1, 1);
 
 	expect(game.checkCellByPlayerIndex(1, 1, 0)).toBe("initial");
-	expect(game.checkCellByPlayerIndex(1, 1, 1)).toBe("ship");
+	expect(game.checkCellByPlayerIndex(1, 1, 1)).toBe("water");
 });
 
 it("should be able to change between players", () => {
@@ -78,19 +77,31 @@ it("should be able to change between players", () => {
 	expect(game.currPlayer.name).toBe("Rosa");
 });
 
-test("current player should be able to hit a grid cell", () => {
+test("each player can only hit the opponent's board, game with only one player", () => {
 	const game = new Game();
-	game.addPlayer("Bruna", "real");
 
-	expect(game.checkCell(0, 0)).toBe("initial");
+	game.addPlayer("Flávia", "real");
+
+	expect(() => game.hitCell(0, 0)).toThrow();
+});
+
+test("each player can only hit the opponent's board, game with two players", () => {
+	const game = new Game();
+
+	game.addPlayer("Eduardo", "real");
+	game.addPlayer("Cynthia", "real");
+
 	game.hitCell(0, 0);
 
-	expect(game.checkCell(0, 0)).toBe("water");
+	expect(game.checkCellByPlayerIndex(0, 0, 0)).toBe("initial");
+	expect(game.checkCellByPlayerIndex(0, 0, 1)).toBe("water");
 
-	game.placeShip(1, 1, 3, "vertical");
-	expect(game.checkCell(1, 1)).toBe("initial");
+	game.changePlayer();
+
 	game.hitCell(1, 1);
-	expect(game.checkCell(1, 1)).toBe("ship");
+
+	expect(game.checkCellByPlayerIndex(1, 1, 0)).toBe("water");
+	expect(game.checkCellByPlayerIndex(1, 1, 1)).toBe("initial");
 });
 
 test("player chosen by index should be able to hit a grid cell", () => {
@@ -105,24 +116,27 @@ test("player chosen by index should be able to hit a grid cell", () => {
 
 test("current player should be able to sunk all ships on the grid", () => {
 	const game = new Game();
-	game.addPlayer("Bruna", "real");
+	game.addPlayer("Diana", "real");
+	game.addPlayer("Romeu", "real");
 
 	game.placeShip(1, 1, 3, "horizontal");
 	game.placeShip(9, 1, 5, "vertical");
 
 	expect(game.numberOfShips).toBe(2);
 
+	game.changePlayer();
+
 	game.hitCell(1, 1);
 	game.hitCell(2, 1);
 	game.hitCell(3, 1);
-
-	expect(game.isThereAnyShipLeft).toBe(true);
 
 	game.hitCell(9, 1);
 	game.hitCell(9, 2);
 	game.hitCell(9, 3);
 	game.hitCell(9, 4);
 	game.hitCell(9, 5);
+
+	game.changePlayer();
 
 	expect(game.isThereAnyShipLeft).toBe(false);
 });
@@ -153,7 +167,6 @@ test("Battleship match between two players", () => {
 			length: 5,
 			direction: "vertical",
 		},
-		// { x: 9, y: 9, length: 1, direction: "horizontal" },
 	];
 
 	const ships1 = [
@@ -189,25 +202,38 @@ test("Battleship match between two players", () => {
 
 		const cell = `${randX},${randY}`;
 
-		if (game.playedCells.has(cell)) {
-			continue;
-		}
+		// if (game.playedCells.has(cell)) {
+		// 	continue;
+		// }
 
 		game.hitCell(randX, randY);
 
-		if (!game.isThereAnyShipLeft) {
+		if (game.isGameOver) {
 			break;
 		}
 
 		game.changePlayer();
 	}
 
-	expect(game.isThereAnyShipLeft).toBe(false);
-
-	game.changePlayer();
-	expect(game.isThereAnyShipLeft).toBe(true);
+	expect(game.isGameOver).toBe(true);
 });
 
-// EACH PLAYER SHOULD ONLY HIT THE OPPONENT's BOARD
+it("should be able to check the played cells from a player's board by playerIndex", () => {
+	const game = new Game();
 
-// GAME OVER FOR ONE OF THE BOARDS SHOULD STOP THE GAME
+	game.addPlayer("Paulo", "real");
+	game.addPlayer("Renato", "real");
+
+	game.hitCell(0, 0);
+	game.hitCell(0, 9);
+	game.hitCell(9, 9);
+	game.hitCell(9, 0);
+
+	expect(game.playedCellsByPlayerIndex(1).size).toBe(4);
+	expect([...game.playedCellsByPlayerIndex(1)]).toEqual([
+		"0,0",
+		"0,9",
+		"9,9",
+		"9,0",
+	]);
+});

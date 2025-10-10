@@ -24,6 +24,10 @@ export default class Gameboard {
 		return this.#numberOfShips;
 	}
 
+	get isThereAnyShipLeft() {
+		return this.#numberOfShips > 0;
+	}
+
 	receiveAttack(x, y) {
 		if (
 			typeof x !== "number" ||
@@ -92,10 +96,6 @@ export default class Gameboard {
 		this.#numberOfShips += 1;
 
 		places.forEach(place => (this.#occupiedPlaces[place] = newShip));
-	}
-
-	isThereAnyShipLeft() {
-		return this.#numberOfShips > 0;
 	}
 
 	getShipPossiblePlaces(x, y, length, direction) {

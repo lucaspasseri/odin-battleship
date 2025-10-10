@@ -8,7 +8,7 @@ export default function createUI(game) {
 
 	const h2GameStatus = document.createElement("h2");
 	h2GameStatus.textContent = `Game status:${
-		game.isThereAnyShipLeft ? "in progress..." : "game over"
+		game.isGameOver ? "Game over!" : "Game in progress..."
 	}  `;
 
 	container.append(h1, h2GameStatus);
@@ -26,10 +26,14 @@ export default function createUI(game) {
 		h1.textContent = `${player.name}-${player.type}`;
 
 		const h2ShipsLeft = document.createElement("h2");
-		h2ShipsLeft.textContent = `# ships: ${player.gameboard.numberOfShips}`;
+		h2ShipsLeft.textContent = `Ships left (#): ${player.gameboard.numberOfShips}`;
 
-		const h2Moves = document.createElement("h2");
-		h2Moves.textContent = `# moves: ${player.gameboard.playedPlaces.size}`;
+		const moves = [...player.gameboard.playedPlaces]
+			.map(item => `(${item})`)
+			.join(" -> ");
+
+		const h2Moves = document.createElement("div");
+		h2Moves.textContent = `Moves: ${moves}`;
 
 		const grid = document.createElement("div");
 		grid.className = "grid";
@@ -46,10 +50,15 @@ export default function createUI(game) {
 			btn.className = cellState;
 
 			btn.addEventListener("click", () => {
-				if (game.currPlayer.name !== game.players[index].name) {
+				console.log(moves);
+
+				if (game.currPlayer === game.players[index] || game.isGameOver) {
 					return;
 				}
-				game.hitCellByPlayerIndex(x, y, index);
+				const attack = game.hitCellByPlayerIndex(x, y, index);
+				if (attack) {
+					game.changePlayer();
+				}
 				createUI(game);
 			});
 

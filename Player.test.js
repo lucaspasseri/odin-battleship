@@ -14,6 +14,6 @@ test("Each Player should contain it own gameboard", () => {
 
 	player1.gameboard.placeShip(1, 1, 2, "horizontal");
 
-	expect(player1.gameboard.isThereAnyShipLeft()).toBe(true);
-	expect(player2.gameboard.isThereAnyShipLeft()).toBe(false);
+	expect(player1.gameboard.isThereAnyShipLeft).toBe(true);
+	expect(player2.gameboard.isThereAnyShipLeft).toBe(false);
 });
