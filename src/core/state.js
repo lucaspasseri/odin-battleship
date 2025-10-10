@@ -1,5 +1,5 @@
 const state = {
-	boards: null,
+	game: null,
 };
 
 export default state;

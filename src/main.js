@@ -1,9 +1,10 @@
-import createUI from "./createUI.js";
-import Game from "./Game.js";
-const game = new Game();
+import { state } from "./core/index.js";
+import { Game } from "./core/index.js";
+import { goToPage } from "./ui/index.js";
 
+const game = new Game();
+game.addPlayer("Ana", "real");
 game.addPlayer("João", "real");
-game.addPlayer("Maria", "real");
 
 const ships = [
 	{
@@ -18,7 +19,6 @@ const ships = [
 		length: 5,
 		direction: "vertical",
 	},
-	// { x: 9, y: 9, length: 1, direction: "horizontal" },
 ];
 
 const ships1 = [
@@ -48,4 +48,6 @@ ships1.forEach(ship =>
 
 game.changePlayer();
 
-createUI(game);
+state.game = game;
+
+goToPage("initialPage");

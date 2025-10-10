@@ -1,5 +1,4 @@
-import Game from "./Game";
-import Player from "./Player";
+import { Game, Player } from "../src/core/index";
 
 it("should be able to check the players", () => {
 	const game = new Game();

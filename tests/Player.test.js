@@ -1,4 +1,4 @@
-import Player from "./Player";
+import { Player } from "../src/core/index.js";
 test("Player should be instantiated correctly", () => {
 	expect(() => new Player("real")).not.toThrow();
 	expect(() => new Player("computer")).not.toThrow();

@@ -1,4 +1,4 @@
-import Gameboard from "./Gameboard";
+import { Gameboard } from "../src/core/index.js";
 
 test("receiveAttack should receive the right arguments", () => {
 	const gb = new Gameboard();

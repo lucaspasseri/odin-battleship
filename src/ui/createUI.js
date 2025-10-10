@@ -1,7 +1,7 @@
+import { goToPage } from "./index.js";
+
 export default function createUI(game) {
-	const container = document.querySelector("#container");
-	container.innerHTML = "";
-	container.className = "container";
+	const page = document.createElement("div");
 
 	const h1 = document.createElement("h1");
 	h1.textContent = `Current player: ${game.currPlayer.name}`;
@@ -11,7 +11,7 @@ export default function createUI(game) {
 		game.isGameOver ? "Game over!" : "Game in progress..."
 	}  `;
 
-	container.append(h1, h2GameStatus);
+	page.append(h1, h2GameStatus);
 
 	const boardsContainer = document.createElement("div");
 	boardsContainer.className = "boardsContainer";
@@ -50,8 +50,6 @@ export default function createUI(game) {
 			btn.className = cellState;
 
 			btn.addEventListener("click", () => {
-				console.log(moves);
-
 				if (game.currPlayer === game.players[index] || game.isGameOver) {
 					return;
 				}
@@ -59,7 +57,7 @@ export default function createUI(game) {
 				if (attack) {
 					game.changePlayer();
 				}
-				createUI(game);
+				goToPage("mainPage");
 			});
 
 			cell.appendChild(btn);
@@ -69,5 +67,7 @@ export default function createUI(game) {
 		gridContainer.append(h1, h2ShipsLeft, h2Moves, grid);
 		boardsContainer.appendChild(gridContainer);
 	});
-	container.appendChild(boardsContainer);
+	page.appendChild(boardsContainer);
+
+	return page;
 }

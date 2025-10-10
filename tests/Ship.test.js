@@ -1,4 +1,4 @@
-import Ship from "./Ship";
+import { Ship } from "../src/core/index.js";
 
 test("throws error for invalid lengths", () => {
 	const invalidValues = [undefined, null, 0, -1, 11, "2", NaN, false, {}, []];
