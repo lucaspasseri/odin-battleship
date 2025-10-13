@@ -12,7 +12,6 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border: 1px solid purple;
 	min-height: 100vh;
 	gap: 4em;
 }
@@ -20,7 +19,29 @@ body {
 .container {
 	display: flex;
 	flex-direction: column;
-	background-color: aliceblue;
+	background-color: rgb(120, 120, 202);
+	width: 100%;
+	min-height: 100vh;
+}
+
+.navbar {
+	background-color: rgb(104, 90, 235);
+	width: 100%;
+	display: flex;
+	padding: 1em 3em;
+	align-items: center;
+	gap: 1.6em;
+}
+
+.gameName {
+	font-size: 4em;
+	line-height: 0.5em;
+}
+
+.createPlayerSection,
+.createShipSection {
+	border: 1px solid red;
+	margin-bottom: 2em;
 }
 
 .boardsContainer {

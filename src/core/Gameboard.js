@@ -96,6 +96,7 @@ export default class Gameboard {
 		this.#numberOfShips += 1;
 
 		places.forEach(place => (this.#occupiedPlaces[place] = newShip));
+		return newShip;
 	}
 
 	getShipPossiblePlaces(x, y, length, direction) {
