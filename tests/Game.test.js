@@ -38,11 +38,32 @@ it("should be able to check the number of ships of the current player", () => {
 
 test("current player should be able to place a ship", () => {
 	const game = new Game();
-	game.addPlayer("Fabio", "real");
+	game.addPlayer("Fábio", "real");
 
 	game.placeShip(1, 1, 3, "horizontal");
 	game.placeShip(9, 1, 5, "vertical");
 	expect(game.numberOfShips).toBe(2);
+});
+
+it("should be able to check the first player", () => {
+	const game = new Game();
+
+	expect(game.firstPlayer).toBe(undefined);
+	game.addPlayer("André", "real");
+
+	expect(game.firstPlayer).toBeInstanceOf(Player);
+});
+
+it("should be able to check the second player", () => {
+	const game = new Game();
+
+	expect(game.secondPlayer).toBe(undefined);
+	game.addPlayer("Felipe", "real");
+
+	expect(game.secondPlayer).toBe(undefined);
+	game.addPlayer("Berenice", "real");
+
+	expect(game.secondPlayer).toBeInstanceOf(Player);
 });
 
 it("should be able to check the state of a grid cell of the opponent player", () => {

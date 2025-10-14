@@ -2,8 +2,8 @@ import { Game, state } from "./core/index.js";
 import { goToPage } from "./ui/index.js";
 
 const game = new Game();
-game.addPlayer("Ana", "real");
-game.addPlayer("João", "real");
+// game.addPlayer("Ana", "real");
+// game.addPlayer("João", "real");
 
 // const ships = [
 // 	{

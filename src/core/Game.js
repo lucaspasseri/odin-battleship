@@ -1,13 +1,32 @@
 import Player from "./Player.js";
 export default class Game {
 	#players = [];
+	#firstPlayerIndex;
+	#secondPlayerIndex;
 	#currPlayerIndex;
+
 	#isGameOver = false;
 
 	constructor() {}
 
 	get players() {
 		return [...this.#players];
+	}
+
+	get firstPlayer() {
+		return this.#players[this.#firstPlayerIndex];
+	}
+
+	get firstPlayerIndex() {
+		return this.#firstPlayerIndex;
+	}
+
+	get secondPlayer() {
+		return this.#players[this.#secondPlayerIndex];
+	}
+
+	get secondPlayerIndex() {
+		return this.#secondPlayerIndex;
 	}
 
 	get currPlayer() {
@@ -34,11 +53,30 @@ export default class Game {
 		this.#currPlayerIndex = (this.#currPlayerIndex + 1) % this.#players.length;
 	}
 
+	setFirstPlayerIndex(playerIndex) {
+		if (playerIndex < 0 || playerIndex > this.#players.length - 1) {
+			throw newError();
+		}
+
+		this.#firstPlayerIndex = playerIndex;
+	}
+
+	setSecondPlayerIndex(playerIndex) {
+		if (playerIndex < 0 || playerIndex > this.#players.length - 1) {
+			throw newError();
+		}
+
+		this.#secondPlayerIndex = playerIndex;
+	}
+
 	addPlayer(name, type) {
 		const newPlayer = new Player(type, name);
 		this.#players.push(newPlayer);
 		if (this.#players.length === 1) {
 			this.#currPlayerIndex = 0;
+			this.#firstPlayerIndex = 0;
+		} else if (this.#players.length === 2) {
+			this.#secondPlayerIndex = 1;
 		}
 	}
 	placeShip(x, y, length, direction) {

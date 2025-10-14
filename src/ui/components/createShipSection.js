@@ -1,9 +1,12 @@
 import { state } from "../../core/index.js";
+import { goToPage } from "../index.js";
 
 export default function createShipSection() {
 	const section = document.createElement("section");
 	section.className = "createShipSection";
 	const h1 = "Create a ship";
+
+	const playersArr = state.game.players;
 
 	const form = document.createElement("form");
 	form.addEventListener("submit", ev => {
@@ -18,14 +21,8 @@ export default function createShipSection() {
 
 		console.log({ x, y, length, direction, playerIndex });
 
-		const ship = state.game.players[playerIndex].gameboard.placeShip(
-			x,
-			y,
-			length,
-			direction
-		);
-
-		console.log({ ship });
+		playersArr[playerIndex].gameboard.placeShip(x, y, length, direction);
+		goToPage("initialPage");
 	});
 
 	// Player
@@ -39,7 +36,7 @@ export default function createShipSection() {
 	playerInput.id = "playerInput";
 	playerInput.name = "playerInput";
 
-	state.game.players.forEach((player, index) => {
+	playersArr.forEach((player, index) => {
 		const opt = document.createElement("option");
 		opt.value = index;
 		opt.textContent = player.name;
