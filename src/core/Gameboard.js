@@ -4,6 +4,7 @@ export default class Gameboard {
 	#missedAttacks = [];
 	#occupiedPlaces = {};
 	#numberOfShips = 0;
+	#ships = [];
 	#playedPlaces = new Set();
 
 	constructor() {}
@@ -26,6 +27,10 @@ export default class Gameboard {
 
 	get isThereAnyShipLeft() {
 		return this.#numberOfShips > 0;
+	}
+
+	get ships() {
+		return [...this.#ships];
 	}
 
 	receiveAttack(x, y) {
@@ -94,6 +99,7 @@ export default class Gameboard {
 
 		const newShip = new Ship(shipLength);
 		this.#numberOfShips += 1;
+		this.#ships.push(newShip);
 
 		places.forEach(place => (this.#occupiedPlaces[place] = newShip));
 		return newShip;

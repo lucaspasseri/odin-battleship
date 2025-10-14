@@ -33,12 +33,19 @@ export default class Game {
 		return this.#players[this.#currPlayerIndex];
 	}
 
-	get numberOfShips() {
-		return this.#players[this.#currPlayerIndex].gameboard.numberOfShips;
+	get currPlayerIndex() {
+		return this.#currPlayerIndex;
 	}
 
 	get isThereAnyShipLeft() {
-		return this.numberOfShips > 0;
+		const ships = this.getShips(this.#currPlayerIndex);
+
+		const ship = ships.find(ship => ship.isSunk() === false);
+
+		if (ship === undefined) {
+			return false;
+		}
+		return true;
 	}
 
 	get playedCells() {
@@ -47,6 +54,15 @@ export default class Game {
 
 	get isGameOver() {
 		return this.#isGameOver;
+	}
+
+	getShips(playerIndex) {
+		if (playerIndex < 0 || playerIndex > this.#players.length - 1) {
+			throw newError();
+		}
+		const player = this.#players[playerIndex];
+
+		return player?.gameboard.ships;
 	}
 
 	changePlayer() {
@@ -79,38 +95,12 @@ export default class Game {
 			this.#secondPlayerIndex = 1;
 		}
 	}
-	placeShip(x, y, length, direction) {
-		this.#players[this.#currPlayerIndex].gameboard.placeShip(
-			x,
-			y,
-			length,
-			direction
-		);
-	}
 
-	checkCell(x, y) {
-		const opponent =
-			this.#players[(this.#currPlayerIndex + 1) % this.#players.length];
-
-		if (this.currPlayer === opponent) {
-			throw new Error();
+	placeShipByPlayerIndex(x, y, length, direction, playerIndex) {
+		if (playerIndex < 0 || playerIndex > this.#players.length - 1) {
+			throw newError();
 		}
-
-		const occupiedCells = opponent.gameboard.occupiedPlaces;
-
-		const playedCells = opponent.gameboard.playedPlaces;
-
-		const key = `${x},${y}`;
-
-		if (!playedCells.has(key)) {
-			return "initial";
-		}
-
-		if (occupiedCells[key] === undefined) {
-			return "water";
-		}
-
-		return "ship";
+		this.#players[playerIndex]?.gameboard.placeShip(x, y, length, direction);
 	}
 
 	checkCellByPlayerIndex(x, y, playerIndex) {
@@ -127,25 +117,6 @@ export default class Game {
 		}
 
 		return "ship";
-	}
-
-	hitCell(x, y) {
-		const cellState = this.checkCell(x, y);
-		if (cellState === "ship" || cellState === "water") {
-			return;
-		}
-
-		const opponent =
-			this.#players[(this.#currPlayerIndex + 1) % this.#players.length];
-
-		if (this.currPlayer === opponent) {
-			throw new Error();
-		}
-
-		opponent.gameboard.receiveAttack(x, y);
-		if (!opponent.gameboard.isThereAnyShipLeft) {
-			this.#isGameOver = true;
-		}
 	}
 
 	hitCellByPlayerIndex(x, y, playerIndex) {

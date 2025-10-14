@@ -1,25 +1,12 @@
 import { Game, Player } from "../src/core/index";
 
-it("should be able to check the players", () => {
+it("should be able to add players and check the array of players", () => {
 	const game = new Game();
 
-	expect(() => game.players).not.toThrow();
 	expect(game.players.length).toBe(0);
-});
-
-it("should be able to add players", () => {
-	const game = new Game();
-	const p1 = {
-		name: "Lucas",
-		type: "real",
-	};
-	const p2 = {
-		name: "Maria",
-		type: "computer",
-	};
-
-	game.addPlayer(p1.name, p1.type);
-	game.addPlayer(p2.name, p2.type);
+	game.addPlayer("Lucas", "real");
+	game.addPlayer("Maria", "computer");
+	expect(game.players.length).toBe(2);
 });
 
 it("should be able to check the current player", () => {
@@ -27,22 +14,6 @@ it("should be able to check the current player", () => {
 	expect(game.currPlayer).toBe(undefined);
 	game.addPlayer("Mateus", "real");
 	expect(game.currPlayer).toBeInstanceOf(Player);
-});
-
-it("should be able to check the number of ships of the current player", () => {
-	const game = new Game();
-
-	game.addPlayer("João", "real");
-	expect(game.numberOfShips).toBe(0);
-});
-
-test("current player should be able to place a ship", () => {
-	const game = new Game();
-	game.addPlayer("Fábio", "real");
-
-	game.placeShip(1, 1, 3, "horizontal");
-	game.placeShip(9, 1, 5, "vertical");
-	expect(game.numberOfShips).toBe(2);
 });
 
 it("should be able to check the first player", () => {
@@ -66,23 +37,53 @@ it("should be able to check the second player", () => {
 	expect(game.secondPlayer).toBeInstanceOf(Player);
 });
 
-it("should be able to check the state of a grid cell of the opponent player", () => {
+it("should be able to check the current player index", () => {
 	const game = new Game();
-	game.addPlayer("Mario", "real");
-	game.addPlayer("Luana", "real");
-
-	expect(game.checkCell(0, 0)).toBe("initial");
+	expect(game.currPlayerIndex).toBe(undefined);
+	game.addPlayer("Mateus", "real");
+	expect(game.currPlayerIndex).toBe(0);
 });
 
-it("should be able to check the state of a grid cell of the chosen player", () => {
+it("should be able to check the array of ships by player index", () => {
+	const game = new Game();
+
+	game.addPlayer("Elisa", "real");
+	expect(() => game.getShips(game.currPlayerIndex)).not.toThrow();
+	expect(game.getShips(game.currPlayerIndex).length).toBe(0);
+});
+
+it("should be able to place a ship by player index", () => {
+	const game = new Game();
+	game.addPlayer("Fábio", "real");
+
+	game.placeShipByPlayerIndex(1, 1, 3, "horizontal", game.currPlayerIndex);
+	game.placeShipByPlayerIndex(9, 1, 5, "vertical", game.currPlayerIndex);
+	expect(game.getShips(game.currPlayerIndex).length).toBe(2);
+});
+
+it("should be able to check the state of a grid cell by player index", () => {
 	const game = new Game();
 	game.addPlayer("Mario", "real");
 	game.addPlayer("Vitor", "real");
 
-	game.hitCell(1, 1);
+	game.hitCellByPlayerIndex(1, 1, 1);
 
 	expect(game.checkCellByPlayerIndex(1, 1, 0)).toBe("initial");
 	expect(game.checkCellByPlayerIndex(1, 1, 1)).toBe("water");
+});
+
+it("should be able to hit a grid cell by player index", () => {
+	const game = new Game();
+	game.addPlayer("Bruna", "real");
+	game.addPlayer("Ruan", "real");
+
+	expect(game.checkCellByPlayerIndex(0, 0, game.secondPlayerIndex)).toBe(
+		"initial"
+	);
+	game.hitCellByPlayerIndex(0, 0, game.secondPlayerIndex);
+	expect(game.checkCellByPlayerIndex(0, 0, game.secondPlayerIndex)).toBe(
+		"water"
+	);
 });
 
 it("should be able to change between players", () => {
@@ -97,64 +98,27 @@ it("should be able to change between players", () => {
 	expect(game.currPlayer.name).toBe("Rosa");
 });
 
-test("each player can only hit the opponent's board, game with only one player", () => {
-	const game = new Game();
-
-	game.addPlayer("Flávia", "real");
-
-	expect(() => game.hitCell(0, 0)).toThrow();
-});
-
-test("each player can only hit the opponent's board, game with two players", () => {
-	const game = new Game();
-
-	game.addPlayer("Eduardo", "real");
-	game.addPlayer("Cynthia", "real");
-
-	game.hitCell(0, 0);
-
-	expect(game.checkCellByPlayerIndex(0, 0, 0)).toBe("initial");
-	expect(game.checkCellByPlayerIndex(0, 0, 1)).toBe("water");
-
-	game.changePlayer();
-
-	game.hitCell(1, 1);
-
-	expect(game.checkCellByPlayerIndex(1, 1, 0)).toBe("water");
-	expect(game.checkCellByPlayerIndex(1, 1, 1)).toBe("initial");
-});
-
-test("player chosen by index should be able to hit a grid cell", () => {
-	const game = new Game();
-	game.addPlayer("Bruna", "real");
-	game.addPlayer("Ruan", "real");
-
-	expect(game.checkCellByPlayerIndex(0, 0, 1)).toBe("initial");
-	game.hitCellByPlayerIndex(0, 0, 1);
-	expect(game.checkCellByPlayerIndex(0, 0, 1)).toBe("water");
-});
-
 test("current player should be able to sunk all ships on the grid", () => {
 	const game = new Game();
 	game.addPlayer("Diana", "real");
 	game.addPlayer("Romeu", "real");
 
-	game.placeShip(1, 1, 3, "horizontal");
-	game.placeShip(9, 1, 5, "vertical");
+	game.placeShipByPlayerIndex(1, 1, 3, "horizontal", game.firstPlayerIndex);
+	game.placeShipByPlayerIndex(9, 1, 5, "vertical", game.firstPlayerIndex);
 
-	expect(game.numberOfShips).toBe(2);
+	expect(game.getShips(game.firstPlayerIndex).length).toBe(2);
 
 	game.changePlayer();
 
-	game.hitCell(1, 1);
-	game.hitCell(2, 1);
-	game.hitCell(3, 1);
+	game.hitCellByPlayerIndex(1, 1, game.firstPlayerIndex);
+	game.hitCellByPlayerIndex(2, 1, game.firstPlayerIndex);
+	game.hitCellByPlayerIndex(3, 1, game.firstPlayerIndex);
 
-	game.hitCell(9, 1);
-	game.hitCell(9, 2);
-	game.hitCell(9, 3);
-	game.hitCell(9, 4);
-	game.hitCell(9, 5);
+	game.hitCellByPlayerIndex(9, 1, game.firstPlayerIndex);
+	game.hitCellByPlayerIndex(9, 2, game.firstPlayerIndex);
+	game.hitCellByPlayerIndex(9, 3, game.firstPlayerIndex);
+	game.hitCellByPlayerIndex(9, 4, game.firstPlayerIndex);
+	game.hitCellByPlayerIndex(9, 5, game.firstPlayerIndex);
 
 	game.changePlayer();
 
@@ -205,52 +169,68 @@ test("Battleship match between two players", () => {
 	];
 
 	ships.forEach(ship =>
-		game.placeShip(ship.x, ship.y, ship.length, ship.direction)
+		game.placeShipByPlayerIndex(
+			ship.x,
+			ship.y,
+			ship.length,
+			ship.direction,
+			game.firstPlayerIndex
+		)
 	);
-
-	game.changePlayer();
 
 	ships1.forEach(ship =>
-		game.placeShip(ship.x, ship.y, ship.length, ship.direction)
+		game.placeShipByPlayerIndex(
+			ship.x,
+			ship.y,
+			ship.length,
+			ship.direction,
+			game.secondPlayerIndex
+		)
 	);
 
-	game.changePlayer();
-
+	let currPlayerIndex = game.firstPlayerIndex;
+	let opponentPlayerIndex = game.secondPlayerIndex;
 	while (true) {
 		const randX = Math.floor(Math.random() * 10);
 		const randY = Math.floor(Math.random() * 10);
 
 		const cell = `${randX},${randY}`;
 
-		// if (game.playedCells.has(cell)) {
-		// 	continue;
-		// }
+		if (game.playedCellsByPlayerIndex(opponentPlayerIndex).has(cell)) {
+			continue;
+		}
 
-		game.hitCell(randX, randY);
+		game.hitCellByPlayerIndex(randX, randY, opponentPlayerIndex);
 
 		if (game.isGameOver) {
 			break;
 		}
 
-		game.changePlayer();
+		if (currPlayerIndex === game.firstPlayerIndex) {
+			currPlayerIndex = game.secondPlayerIndex;
+			opponentPlayerIndex = game.firstPlayerIndex;
+		} else {
+			currPlayerIndex = game.firstPlayerIndex;
+			opponentPlayerIndex = game.secondPlayerIndex;
+		}
 	}
 
 	expect(game.isGameOver).toBe(true);
 });
 
-it("should be able to check the played cells from a player's board by playerIndex", () => {
+it("should be able to check the played cells from a player by player index", () => {
 	const game = new Game();
 
 	game.addPlayer("Paulo", "real");
 	game.addPlayer("Renato", "real");
 
-	game.hitCell(0, 0);
-	game.hitCell(0, 9);
-	game.hitCell(9, 9);
-	game.hitCell(9, 0);
+	game.hitCellByPlayerIndex(0, 0, game.firstPlayerIndex);
+	game.hitCellByPlayerIndex(0, 9, game.firstPlayerIndex);
+	game.hitCellByPlayerIndex(9, 9, game.firstPlayerIndex);
+	game.hitCellByPlayerIndex(9, 0, game.firstPlayerIndex);
 
-	expect(game.playedCellsByPlayerIndex(1).size).toBe(4);
-	expect([...game.playedCellsByPlayerIndex(1)]).toEqual([
+	expect(game.playedCellsByPlayerIndex(game.firstPlayerIndex).size).toBe(4);
+	expect([...game.playedCellsByPlayerIndex(game.firstPlayerIndex)]).toEqual([
 		"0,0",
 		"0,9",
 		"9,9",

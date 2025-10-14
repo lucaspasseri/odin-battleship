@@ -58,6 +58,24 @@ body {
 	max-width: 24em;
 }
 
+.shipShape {
+	border: 0.1em solid black;
+	display: flex;
+	width: fit-content;
+	padding: 0.2em;
+}
+
+.shipPart {
+	height: 1em;
+	width: 1em;
+	background-color: black;
+	margin-right: 0.15em;
+
+	&:last-of-type {
+		margin-right: 0;
+	}
+}
+
 .water {
 	background-color: blue;
 }

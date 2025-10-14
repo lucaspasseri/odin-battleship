@@ -1,4 +1,5 @@
 import { state } from "../../core/index.js";
+import { shipList } from "../components/index.js";
 import goToPage from "../goToPage.js";
 
 export default function createMatchSection() {
@@ -36,6 +37,13 @@ export default function createMatchSection() {
 	playerOneInput.id = "playerOneInput";
 	playerOneInput.name = "playerOneInput";
 
+	playerOneInput.addEventListener("change", ev => {
+		const value = Number(ev.target.value);
+
+		state.game.setFirstPlayerIndex(value);
+		goToPage("initialPage");
+	});
+
 	playersArr.forEach((player, index) => {
 		const opt = document.createElement("option");
 		opt.value = index;
@@ -47,20 +55,7 @@ export default function createMatchSection() {
 		playerOneInput.appendChild(opt);
 	});
 
-	const playerOneShipList = document.createElement("div");
-	const firstPlayer = state.game.firstPlayer;
-	const playerOneShipNumber = firstPlayer?.gameboard.numberOfShips;
-	console.log({ firstPlayer, playerOneShipNumber });
-
-	let i = 0;
-
-	while (i < playerOneShipNumber) {
-		const div = document.createElement("div");
-		div.textContent = "123";
-
-		playerOneShipList.appendChild(div);
-		i++;
-	}
+	const playerOneShipList = shipList(state.game.firstPlayerIndex);
 
 	playerOneContainer.append(playerOneLabel, playerOneInput, playerOneShipList);
 
@@ -75,9 +70,12 @@ export default function createMatchSection() {
 	playerTwoInput.id = "playerTwoInput";
 	playerTwoInput.name = "playerTwoInput";
 
-	const playerOneChoice = document.querySelector("#playerOneInput");
+	playerTwoInput.addEventListener("change", ev => {
+		const value = Number(ev.target.value);
 
-	console.log({ playerOneChoice });
+		state.game.setSecondPlayerIndex(value);
+		goToPage("initialPage");
+	});
 
 	playersArr
 		// .filter(player => player !== state.game.firstPlayer)
@@ -92,19 +90,8 @@ export default function createMatchSection() {
 			playerTwoInput.appendChild(opt);
 		});
 
-	const playerTwoShipList = document.createElement("div");
+	const playerTwoShipList = shipList(state.game.secondPlayerIndex);
 
-	const secondPlayer = state.game.secondPlayer;
-	const playerTwoShipNumber = secondPlayer?.gameboard.numberOfShips;
-	i = 0;
-
-	while (i < playerTwoShipNumber) {
-		const div = document.createElement("div");
-		div.textContent = "123";
-
-		playerTwoShipList.appendChild(div);
-		i++;
-	}
 	playerTwoContainer.append(playerTwoLabel, playerTwoInput, playerTwoShipList);
 
 	// Btn
