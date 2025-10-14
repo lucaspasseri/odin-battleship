@@ -5,7 +5,7 @@ export default function mainPage() {
 	const page = document.createElement("div");
 
 	const h1 = document.createElement("h1");
-	h1.textContent = `Current player: ${state.game.currPlayer.name}`;
+	h1.textContent = `Current player: ${state.game.firstPlayer.name}`;
 
 	const h2GameStatus = document.createElement("h2");
 	h2GameStatus.textContent = `Game status:${

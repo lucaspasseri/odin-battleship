@@ -3,7 +3,7 @@ export default function navbar() {
 	nav.className = "navbar";
 
 	const gameLogo = document.createElement("img");
-	gameLogo.src = "./imgs/shipLoadedLogo.png";
+	gameLogo.src = "./imgs/battleshipLogo.png";
 	gameLogo.alt = "Game logo (ship)";
 	gameLogo.width = "100";
 	gameLogo.height = "100";

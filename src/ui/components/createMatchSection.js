@@ -1,11 +1,19 @@
 import { state } from "../../core/index.js";
-import { shipList } from "../components/index.js";
-import goToPage from "../goToPage.js";
+import { goToPage } from "../index.js";
+import { playerProfile, shipList } from "../components/index.js";
 
 export default function createMatchSection() {
 	const section = document.createElement("section");
 	section.className = "createMatchSection";
 	const h1 = "Play Battleship";
+
+	const profileContainer = document.createElement("div");
+	profileContainer.className = "profileContainer";
+
+	const playerOneProfile = playerProfile(state.game.firstPlayer);
+	const playerTwoProfile = playerProfile(state.game.secondPlayer);
+
+	profileContainer.append(playerOneProfile, playerTwoProfile);
 
 	const form = document.createElement("form");
 	form.addEventListener("submit", ev => {
@@ -17,12 +25,20 @@ export default function createMatchSection() {
 
 		console.log({ playerOneIndex, playerTwoIndex });
 
-		if (playerOneIndex === playerTwoIndex) {
+		if (
+			playerOneIndex === playerTwoIndex ||
+			state.game.getShips(playerOneIndex).length === 0 ||
+			state.game.getShips(playerTwoIndex).length === 0
+		) {
 			return;
 		}
 
+		state.game.setCurrPlayerIndex(state.game.firstPlayerIndex);
 		goToPage("mainPage");
 	});
+
+	const choosePlayerContainer = document.createElement("div");
+	choosePlayerContainer.className = "choosePlayerContainer";
 
 	const playersArr = state.game.players;
 
@@ -100,9 +116,11 @@ export default function createMatchSection() {
 	playBtn.textContent = "Play";
 	playBtn.className = "playBtn";
 
-	form.append(playerOneContainer, playerTwoContainer, playBtn);
+	choosePlayerContainer.append(playerOneContainer, playerTwoContainer);
 
-	section.append(h1, form);
+	form.append(choosePlayerContainer, playBtn);
+
+	section.append(h1, profileContainer, form);
 
 	return section;
 }

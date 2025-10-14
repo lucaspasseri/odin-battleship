@@ -90,15 +90,20 @@ it("should be able to change between players", () => {
 	const game = new Game();
 	game.addPlayer("Rosa", "real");
 	game.addPlayer("Caio", "real");
+	game.addPlayer("Bruno", "computer");
 
+	game.setFirstPlayerIndex(2);
+	game.setSecondPlayerIndex(0);
+	game.setCurrPlayerIndex(game.firstPlayerIndex);
+
+	expect(game.currPlayer.name).toBe("Bruno");
+	game.changePlayer();
 	expect(game.currPlayer.name).toBe("Rosa");
 	game.changePlayer();
-	expect(game.currPlayer.name).toBe("Caio");
-	game.changePlayer();
-	expect(game.currPlayer.name).toBe("Rosa");
+	expect(game.firstPlayer.name).toBe("Bruno");
 });
 
-test("current player should be able to sunk all ships on the grid", () => {
+it("should be able to sunk all ships on the grid", () => {
 	const game = new Game();
 	game.addPlayer("Diana", "real");
 	game.addPlayer("Romeu", "real");
@@ -107,8 +112,6 @@ test("current player should be able to sunk all ships on the grid", () => {
 	game.placeShipByPlayerIndex(9, 1, 5, "vertical", game.firstPlayerIndex);
 
 	expect(game.getShips(game.firstPlayerIndex).length).toBe(2);
-
-	game.changePlayer();
 
 	game.hitCellByPlayerIndex(1, 1, game.firstPlayerIndex);
 	game.hitCellByPlayerIndex(2, 1, game.firstPlayerIndex);
@@ -119,8 +122,6 @@ test("current player should be able to sunk all ships on the grid", () => {
 	game.hitCellByPlayerIndex(9, 3, game.firstPlayerIndex);
 	game.hitCellByPlayerIndex(9, 4, game.firstPlayerIndex);
 	game.hitCellByPlayerIndex(9, 5, game.firstPlayerIndex);
-
-	game.changePlayer();
 
 	expect(game.isThereAnyShipLeft).toBe(false);
 });
@@ -188,31 +189,23 @@ test("Battleship match between two players", () => {
 		)
 	);
 
-	let currPlayerIndex = game.firstPlayerIndex;
-	let opponentPlayerIndex = game.secondPlayerIndex;
 	while (true) {
 		const randX = Math.floor(Math.random() * 10);
 		const randY = Math.floor(Math.random() * 10);
 
 		const cell = `${randX},${randY}`;
 
-		if (game.playedCellsByPlayerIndex(opponentPlayerIndex).has(cell)) {
+		if (game.playedCellsByPlayerIndex(game.secondPlayerIndex).has(cell)) {
 			continue;
 		}
 
-		game.hitCellByPlayerIndex(randX, randY, opponentPlayerIndex);
+		game.hitCellByPlayerIndex(randX, randY, game.secondPlayerIndex);
 
 		if (game.isGameOver) {
 			break;
 		}
 
-		if (currPlayerIndex === game.firstPlayerIndex) {
-			currPlayerIndex = game.secondPlayerIndex;
-			opponentPlayerIndex = game.firstPlayerIndex;
-		} else {
-			currPlayerIndex = game.firstPlayerIndex;
-			opponentPlayerIndex = game.secondPlayerIndex;
-		}
+		game.changePlayer();
 	}
 
 	expect(game.isGameOver).toBe(true);

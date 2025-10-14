@@ -45,6 +45,37 @@ body {
 	margin-bottom: 2em;
 }
 
+.createMatchSection {
+	padding: 1em;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	form {
+		width: 100%;
+	}
+}
+
+.preGameContainer {
+	ul {
+		list-style: none;
+		display: flex;
+	}
+}
+
+.profileContainer,
+.choosePlayerContainer {
+	border: 0.5em solid purple;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.playerProfileContainer {
+	border: 0.5em solid red;
+	width: fit-content;
+}
+
 .boardsContainer {
 	display: flex;
 	gap: 2em;

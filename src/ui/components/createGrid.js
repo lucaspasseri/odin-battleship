@@ -38,6 +38,8 @@ export default function createGrid(player, playerIndex) {
 		btn.className = cellState;
 
 		btn.addEventListener("click", () => {
+			console.log({ player, c: state.game.currPlayer });
+
 			if (player === state.game.currPlayer || state.game.isGameOver) {
 				return;
 			}

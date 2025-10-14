@@ -66,7 +66,19 @@ export default class Game {
 	}
 
 	changePlayer() {
-		this.#currPlayerIndex = (this.#currPlayerIndex + 1) % this.#players.length;
+		if (this.#currPlayerIndex === this.#firstPlayerIndex) {
+			this.#currPlayerIndex = this.#secondPlayerIndex;
+		} else {
+			this.#currPlayerIndex = this.#firstPlayerIndex;
+		}
+	}
+
+	setCurrPlayerIndex(playerIndex) {
+		if (playerIndex < 0 || playerIndex > this.#players.length - 1) {
+			throw newError();
+		}
+
+		this.#currPlayerIndex = playerIndex;
 	}
 
 	setFirstPlayerIndex(playerIndex) {
