@@ -1,23 +1,23 @@
 export default function playerProfile(player) {
-	const container = document.createElement("div");
-	container.className = "playerProfileContainer";
-
-	const profileImage = document.createElement("img");
-
 	if (player === undefined) {
 		return;
 	}
 
+	const container = document.createElement("div");
+	container.className =
+		"border-2 border-black h-full w-[80px] overflow-x-hidden rounded-lg";
+
+	const profileImage = document.createElement("img");
+	profileImage.width = "80";
+	profileImage.height = "80";
+
 	if (player.type === "real") {
-		profileImage.src = "./imgs/officer.png";
+		profileImage.src = "./imgs/humanBust.png";
 		profileImage.alt = "Human player image";
 	} else if (player.type === "computer") {
-		profileImage.src = "./imgs/officerRobot.png";
+		profileImage.src = "./imgs/robotBust.png";
 		profileImage.alt = "Computer player image";
 	}
-
-	profileImage.width = "100";
-	profileImage.height = "100";
 
 	const p = document.createElement("p");
 	p.textContent = player.name;

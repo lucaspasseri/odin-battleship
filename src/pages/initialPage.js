@@ -16,12 +16,7 @@ export default function initialPage() {
 
 	const page = document.createElement("div");
 
-	page.appendChild(nav);
+	page.append(nav, preGameSec, playerSec, shipSec, matchSec);
 
-	if (preGameSec !== undefined) {
-		page.appendChild(preGameSec);
-	}
-
-	page.append(playerSec, shipSec, matchSec);
 	return page;
 }

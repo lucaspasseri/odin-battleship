@@ -6,3 +6,5 @@ export { default as createGrid } from "./createGrid.js";
 export { default as preGame } from "./preGame.js";
 export { default as shipList } from "./shipList.js";
 export { default as playerProfile } from "./playerProfile.js";
+export { default as playerProfileWrapper } from "./playerProfileWrapper.js";
+export { default as playerList } from "./playerList.js";

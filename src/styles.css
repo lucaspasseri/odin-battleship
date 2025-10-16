@@ -16,6 +16,19 @@ body {
 	gap: 4em;
 }
 
+button {
+	background-color: white;
+	color: black;
+	padding: 0.5rem 1rem;
+	border-radius: 0.5rem;
+	border: 0.1em solid black;
+	transition: background-color 0.2s;
+}
+button:hover {
+	cursor: pointer;
+	background-color: grey;
+}
+
 .container {
 	display: flex;
 	flex-direction: column;
