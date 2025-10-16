@@ -2,7 +2,7 @@ import { playerProfile } from "./index.js";
 
 export default function playerProfileWrapper(player) {
 	const container = document.createElement("div");
-	container.className = "flex";
+	container.className = "flex items-center";
 	const profile = playerProfile(player);
 
 	const ships = player.gameboard.ships;
@@ -13,7 +13,7 @@ export default function playerProfileWrapper(player) {
 	}
 
 	const shipList = document.createElement("div");
-	shipList.className = "flex flex-col gap-[0.2em]";
+	shipList.className = "flex flex-col gap-[0.2em] justify-center";
 
 	ships.forEach(ship => {
 		const shipContainer = document.createElement("div");
@@ -21,7 +21,7 @@ export default function playerProfileWrapper(player) {
 
 		for (let i = 0; i < ship.length; i++) {
 			const shipCell = document.createElement("div");
-			shipCell.className = "bg-black w-6 h-6";
+			shipCell.className = "bg-black w-4 h-4";
 
 			shipContainer.appendChild(shipCell);
 		}

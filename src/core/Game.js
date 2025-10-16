@@ -98,6 +98,10 @@ export default class Game {
 	}
 
 	addPlayer(name, type) {
+		console.log({ name, type });
+		if (name === "") {
+			name = `Player ${this.#players.length + 1}`;
+		}
 		const newPlayer = new Player(type, name);
 		this.#players.push(newPlayer);
 		if (this.#players.length === 1) {
