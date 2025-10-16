@@ -1,17 +1,20 @@
 import Gameboard from "./Gameboard.js";
+import { paths } from "../ui/components/constants.js";
 
 export default class Player {
 	#playerName;
 	#playerType;
 	#gameboard;
+	#imageIndex;
 
-	constructor(type, name = "(default)") {
+	constructor(type, name = "(default)", imageIndex = 0) {
 		if (type !== "real" && type !== "computer") {
 			throw new Error("Invalid Player type");
 		}
 		this.#playerName = name;
 		this.#playerType = type;
 		this.#gameboard = new Gameboard();
+		this.#imageIndex = imageIndex;
 	}
 
 	get gameboard() {
@@ -24,5 +27,13 @@ export default class Player {
 
 	get type() {
 		return this.#playerType;
+	}
+
+	get imageIndex() {
+		return this.#imageIndex;
+	}
+
+	get imagePath() {
+		return paths[this.#imageIndex];
 	}
 }

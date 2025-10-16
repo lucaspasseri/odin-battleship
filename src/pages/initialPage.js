@@ -1,6 +1,7 @@
 import {
 	navbar,
-	createPlayerSection,
+	createPlayer,
+	// createPlayerSection,
 	createShipSection,
 	createMatchSection,
 	preGame,
@@ -10,13 +11,14 @@ export default function initialPage() {
 	const nav = navbar();
 
 	const preGameSec = preGame();
-	const playerSec = createPlayerSection();
+	const createPlayerSec = createPlayer();
+	// const playerSec = createPlayerSection();
 	const shipSec = createShipSection();
 	const matchSec = createMatchSection();
 
 	const page = document.createElement("div");
 
-	page.append(nav, preGameSec, playerSec, shipSec, matchSec);
+	page.append(nav, preGameSec, createPlayerSec, shipSec, matchSec);
 
 	return page;
 }

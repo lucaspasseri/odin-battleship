@@ -97,12 +97,13 @@ export default class Game {
 		this.#secondPlayerIndex = playerIndex;
 	}
 
-	addPlayer(name, type) {
+	addPlayer(name, type, imageIndex) {
 		console.log({ name, type });
 		if (name === "") {
 			name = `Player ${this.#players.length + 1}`;
 		}
-		const newPlayer = new Player(type, name);
+
+		const newPlayer = new Player(type, name, imageIndex);
 		this.#players.push(newPlayer);
 		if (this.#players.length === 1) {
 			this.#currPlayerIndex = 0;

@@ -10,12 +10,11 @@ export default function playerProfile(player) {
 	const profileImage = document.createElement("img");
 	profileImage.width = "80";
 	profileImage.height = "80";
+	profileImage.src = player.imagePath;
 
 	if (player.type === "real") {
-		profileImage.src = "./imgs/humanBust.png";
 		profileImage.alt = "Human player image";
 	} else if (player.type === "computer") {
-		profileImage.src = "./imgs/robotBust.png";
 		profileImage.alt = "Computer player image";
 	}
 

@@ -4,7 +4,7 @@ import { playerProfileWrapper } from "./index.js";
 export default function playerList() {
 	const list = document.createElement("ul");
 	list.className =
-		"border-[0.6em] border-black flex h-[160px] items-center gap-[0.8em] px-[0.4em] rounded-lg overflow-auto";
+		"border-[0.5em] border-black flex h-[160px] items-center gap-[0.8em] px-[0.4em] rounded-lg overflow-auto";
 
 	const players = state.game.players;
 
