@@ -1,3 +1,5 @@
+import { playerList } from "./index.js";
+
 const paths = [
 	"./imgs/humanBust.png",
 	"./imgs/robotBust.png",
@@ -6,4 +8,11 @@ const paths = [
 	"./imgs/human.png",
 ];
 
-export { paths };
+function updatePlayerList() {
+	const wrapper = document.querySelector("#createPlayerWrapper");
+	const oldList = document.querySelector("#playerList");
+	const newList = playerList();
+	wrapper.replaceChild(newList, oldList);
+}
+
+export { paths, updatePlayerList };

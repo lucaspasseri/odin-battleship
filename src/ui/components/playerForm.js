@@ -1,9 +1,9 @@
 import { state } from "../../core/index.js";
-import { goToPage } from "../index.js";
+import { updatePlayerList } from "./constants.js";
 
 export default function playerForm() {
 	const form = document.createElement("form");
-	form.className = "flex flex-col gap-[1em] items-center";
+	form.className = "flex flex-col gap-[1em] items-center mt-[-1em]";
 
 	form.addEventListener("submit", ev => {
 		ev.preventDefault();
@@ -20,10 +20,8 @@ export default function playerForm() {
 
 		const playerType = type === "" ? types[currIndex] : type;
 
-		console.log({ currImgIndex });
-
 		state.game.addPlayer(name, playerType, currImgIndex);
-		goToPage("initialPage");
+		updatePlayerList();
 	});
 
 	const typeInput = document.createElement("select");
@@ -51,19 +49,21 @@ export default function playerForm() {
 	const nameLabel = document.createElement("label");
 	nameLabel.htmlFor = "nameInput";
 	nameLabel.textContent = "Player name:";
+	nameLabel.className = "text-white";
 
 	const nameInput = document.createElement("input");
-	nameInput.className = "text-2xl h-8 rounded pl-4 w-40";
+	nameInput.className = "text-2xl h-8 rounded text-center w-40";
 	nameInput.id = "nameInput";
 	nameInput.type = "text";
 	nameInput.name = "nameInput";
+	nameInput.placeholder = `Player ${state.game.players.length + 1}`;
 
 	nameContainer.append(nameLabel, nameInput);
 
 	const confirmBtn = document.createElement("button");
 	confirmBtn.textContent = "Create";
 	confirmBtn.className =
-		"rounded-2xl w-fit text-2xl px-[0.6em] py-[0.2em] font-mono bg-green-400";
+		"rounded-2xl w-full text-2xl px-[0.6em] py-[0.2em] font-mono bg-green-400 absolute bottom-[-70px]";
 
 	form.append(typeInput, nameContainer, confirmBtn);
 

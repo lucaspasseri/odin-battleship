@@ -6,7 +6,8 @@ import {
 
 export default function createPlayer() {
 	const container = document.createElement("div");
-	container.className = " px-[4em] py-[1em] relative";
+	container.className =
+		"px-[4em] py-[1em] relative border-[0.3em] border-black bg-blue-600 rounded-2xl";
 	const h3 = document.createElement("h3");
 	h3.textContent = "Create player";
 	h3.className = "text-2xl mb-[0.4em]";

@@ -2,7 +2,7 @@ const directionMap = {
 	left: {
 		textContent: "◀",
 		className:
-			"p-2 border border-black absolute left-[-44px] top-[38px] text-xl bg-white",
+			"p-2 border border-black absolute left-[-70px] top-[38px] text-xl bg-white",
 		nextImgIndex: (imgsArr, currImageIndex) =>
 			currImageIndex === 0
 				? imgsArr.length - 1
@@ -11,7 +11,7 @@ const directionMap = {
 	right: {
 		textContent: "▶",
 		className:
-			"p-2 border border-black absolute right-[-44px] top-[38px] text-xl bg-white",
+			"p-2 border border-black absolute right-[-70px] top-[38px] text-xl bg-white",
 		nextImgIndex: (imgsArr, currImageIndex) =>
 			(currImageIndex + 1) % imgsArr.length,
 	},

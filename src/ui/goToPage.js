@@ -1,9 +1,12 @@
-import initialPage from "../pages/initialPage.js";
-import mainPage from "../pages/mainPage.js";
-import lastPage from "../pages/lastPage.js";
+import {
+	playersPage,
+	initialPage,
+	mainPage,
+	lastPage,
+} from "../pages/index.js";
 
 export default function goToPage(page) {
-	const pages = ["initialPage", "mainPage", "lastPage"];
+	const pages = ["playersPage", "initialPage", "mainPage", "lastPage"];
 
 	if (!pages.includes(page)) {
 		throw new Error();
@@ -12,7 +15,11 @@ export default function goToPage(page) {
 	const container = document.querySelector("#container");
 	container.innerHTML = "";
 
-	console.log(pages.includes(page));
+	if (page === "playersPage") {
+		const page = playersPage();
+		container.appendChild(page);
+		return;
+	}
 
 	if (page === "initialPage") {
 		const page = initialPage();

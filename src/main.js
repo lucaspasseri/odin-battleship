@@ -4,4 +4,4 @@ import { goToPage } from "./ui/index.js";
 const game = new Game();
 state.game = game;
 
-goToPage("initialPage");
+goToPage("playersPage");

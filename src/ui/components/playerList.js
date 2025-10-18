@@ -1,10 +1,11 @@
 import { state } from "../../core/index.js";
-import { playerProfileWrapper } from "./index.js";
+import { createPlayerProfile } from "./index.js";
 
 export default function playerList() {
 	const list = document.createElement("ul");
+	list.id = "playerList";
 	list.className =
-		"border-[0.5em] border-black flex h-[160px] items-center gap-[0.8em] px-[0.4em] rounded-lg overflow-auto";
+		"border-[0.3em] border-black flex items-center gap-[0.8em] px-[0.4em] rounded-2xl overflow-auto flex-1";
 
 	const players = state.game.players;
 
@@ -19,7 +20,8 @@ export default function playerList() {
 
 	players.forEach(player => {
 		const li = document.createElement("li");
-		const profile = playerProfileWrapper(player);
+		// const profile = playerProfileWrapper(player);
+		const profile = createPlayerProfile(player);
 
 		li.appendChild(profile);
 		list.appendChild(li);
