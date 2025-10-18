@@ -14,3 +14,5 @@ export { default as playerTypeSelector } from "./playerTypeSelector.js";
 export { default as selectorButton } from "./selectorButton.js";
 export { default as basicButton } from "./basicButton.js";
 export { default as playerForm } from "./playerForm.js";
+export { default as createShip } from "./createShip.js";
+export { default as createShips } from "./createShips.js";
