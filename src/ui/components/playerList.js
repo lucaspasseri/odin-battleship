@@ -5,7 +5,7 @@ export default function playerList() {
 	const list = document.createElement("ul");
 	list.id = "playerList";
 	list.className =
-		"border-[0.3em] border-black flex items-center gap-[0.8em] px-[0.4em] rounded-2xl overflow-auto flex-1";
+		"border-[0.3em] border-black flex items-center gap-[0.8em] px-[0.4em] py-[0.4em] rounded-2xl overflow-x-auto flex-1 h-[400px]";
 
 	const players = state.game.players;
 

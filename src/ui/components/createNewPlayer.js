@@ -6,8 +6,9 @@ import {
 
 export default function createNewPlayer() {
 	const container = document.createElement("div");
+	container.id = "createNewPlayer";
 	container.className =
-		"px-[1em] py-[1em] relative border-[0.3em] border-black bg-blue-600 rounded-2xl";
+		"px-[1em] py-[1em] relative border-[0.3em] border-black bg-blue-600 rounded-2xl h-[361px]";
 
 	const selectionContainer = document.createElement("div");
 	selectionContainer.className = "flex flex-col items-center gap-[1em]";

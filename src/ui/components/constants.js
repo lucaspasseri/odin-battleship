@@ -1,4 +1,4 @@
-import { playerList } from "./index.js";
+import { createNewPlayer, playerList } from "./index.js";
 
 const paths = [
 	"./imgs/humanBust.png",
@@ -8,6 +8,13 @@ const paths = [
 	"./imgs/human.png",
 ];
 
+function updateCreateNewPlayer() {
+	const wrapper = document.querySelector("#createPlayerWrapper");
+	const oldNode = document.querySelector("#createNewPlayer");
+	const newNode = createNewPlayer();
+	wrapper.replaceChild(newNode, oldNode);
+}
+
 function updatePlayerList() {
 	const wrapper = document.querySelector("#createPlayerWrapper");
 	const oldList = document.querySelector("#playerList");
@@ -15,4 +22,4 @@ function updatePlayerList() {
 	wrapper.replaceChild(newList, oldList);
 }
 
-export { paths, updatePlayerList };
+export { paths, updateCreateNewPlayer, updatePlayerList };

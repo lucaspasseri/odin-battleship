@@ -9,7 +9,7 @@ export default function createPlayerSectionNew() {
 	h3.className = "font-mono text-2xl text-blue-600 font-bold mb-[1em]";
 
 	const wrapper = document.createElement("div");
-	wrapper.className = "flex wrap gap-[3em]";
+	wrapper.className = "flex wrap gap-[3em] items-center";
 	wrapper.id = "createPlayerWrapper";
 
 	const create = createNewPlayer();

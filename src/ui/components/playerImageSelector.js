@@ -7,7 +7,7 @@ export default function playerImageSelector() {
 
 	const gallery = document.createElement("div");
 	gallery.className =
-		"gallery flex px-[0.6em] py-[0.2em] gap-[0.6em] w-[200px] h-[200px] overflow-hidden border-4 border-black";
+		"gallery flex gap-[0.6em] w-[200px] h-[200px] overflow-hidden border-4 border-black";
 
 	paths.forEach((path, index) => {
 		const img = document.createElement("img");
