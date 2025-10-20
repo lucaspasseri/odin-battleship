@@ -1,4 +1,4 @@
-import { createNewPlayer, playerList } from "./index.js";
+import { createNewPlayer, playerList, createMatch } from "./index.js";
 
 const paths = [
 	"./imgs/humanBust.png",
@@ -22,4 +22,11 @@ function updatePlayerList() {
 	wrapper.replaceChild(newList, oldList);
 }
 
-export { paths, updateCreateNewPlayer, updatePlayerList };
+function updateMatchSection() {
+	const page = document.querySelector("#createPlayerPage");
+	const oldSection = document.querySelector("#matchContainer");
+	const newSection = createMatch();
+	page.replaceChild(newSection, oldSection);
+}
+
+export { paths, updateCreateNewPlayer, updatePlayerList, updateMatchSection };

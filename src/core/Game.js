@@ -14,6 +14,9 @@ export default class Game {
 	}
 
 	get firstPlayer() {
+		if (this.#firstPlayerIndex === undefined) {
+			return undefined;
+		}
 		return this.#players[this.#firstPlayerIndex];
 	}
 
@@ -22,6 +25,9 @@ export default class Game {
 	}
 
 	get secondPlayer() {
+		if (this.#secondPlayerIndex === undefined) {
+			return undefined;
+		}
 		return this.#players[this.#secondPlayerIndex];
 	}
 

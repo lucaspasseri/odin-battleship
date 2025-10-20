@@ -8,6 +8,7 @@ export default function playersPage() {
 	const nav = navbar();
 
 	const page = document.createElement("div");
+	page.id = "createPlayerPage";
 
 	const createSection = createPlayerSectionNew();
 

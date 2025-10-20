@@ -1,5 +1,9 @@
 import { state } from "../../core/index.js";
-import { updateCreateNewPlayer, updatePlayerList } from "./constants.js";
+import {
+	updateCreateNewPlayer,
+	updateMatchSection,
+	updatePlayerList,
+} from "./constants.js";
 
 export default function playerForm() {
 	const form = document.createElement("form");
@@ -23,6 +27,7 @@ export default function playerForm() {
 		state.game.addPlayer(name, playerType, currImgIndex);
 		updatePlayerList();
 		updateCreateNewPlayer();
+		updateMatchSection();
 	});
 
 	const typeInput = document.createElement("select");

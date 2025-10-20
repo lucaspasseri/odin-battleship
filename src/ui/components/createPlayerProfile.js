@@ -26,7 +26,7 @@ export default function createPlayerProfile(player) {
 	playerType.textContent =
 		player.type === "computer" ? capitalizeFirstLetter(player.type) : "Human";
 	playerType.className =
-		"w-[140px] px-[0.2em] py-[0.1em] border-2 border-white rounded-lg h-full text-2xl font-mono bg-blue-500 text-white text-center";
+		"w-[140px] px-[0.2em] py-[0.1em] border-2 border-white rounded-lg text-2xl font-mono bg-blue-500 text-white text-center";
 
 	selectionContainer.append(imageWrapper, playerName, playerType);
 	container.append(selectionContainer);
