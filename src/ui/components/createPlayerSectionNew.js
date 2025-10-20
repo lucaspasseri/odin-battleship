@@ -2,7 +2,7 @@ import { createNewPlayer, playerList } from "./index.js";
 
 export default function createPlayerSectionNew() {
 	const container = document.createElement("section");
-	container.className = "px-[4em] py-[2em]";
+	container.className = "px-[4em] pt-[2em] pb-[4em]";
 
 	const h3 = document.createElement("h3");
 	h3.textContent = "Create player";

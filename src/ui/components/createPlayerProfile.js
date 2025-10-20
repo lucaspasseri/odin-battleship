@@ -1,3 +1,5 @@
+import { capitalizeFirstLetter } from "../../util/capitalizeFirstLetter.js";
+
 export default function createPlayerProfile(player) {
 	const container = document.createElement("div");
 	container.className =
@@ -21,7 +23,8 @@ export default function createPlayerProfile(player) {
 		"text-2xl h-8 rounded text-center w-40 bg-white mt-[0.33em]";
 
 	const playerType = document.createElement("p");
-	playerType.textContent = player.type;
+	playerType.textContent =
+		player.type === "computer" ? capitalizeFirstLetter(player.type) : "Human";
 	playerType.className =
 		"w-[140px] px-[0.2em] py-[0.1em] border-2 border-white rounded-lg h-full text-2xl font-mono bg-blue-500 text-white text-center";
 
