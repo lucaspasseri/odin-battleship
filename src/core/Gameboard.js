@@ -1,4 +1,4 @@
-import Ship from "./Ship.js";
+import { Ship } from "./index.js";
 
 export default class Gameboard {
 	#missedAttacks = [];

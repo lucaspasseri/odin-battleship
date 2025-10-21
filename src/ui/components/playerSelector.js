@@ -5,7 +5,7 @@ import { updateMatchSection } from "./constants.js";
 export default function playerSelector(playerString) {
 	const container = document.createElement("div");
 	container.className =
-		"border-[0.3em] border-black flex items-center p-[0.4em] rounded-2xl h-[400px] w-[272px] relative";
+		"border-[0.3em] border-black flex items-center p-[0.4em] rounded-2xl h-[383px] w-[272px] relative";
 
 	let player;
 	let playerIndex;

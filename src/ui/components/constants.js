@@ -1,12 +1,10 @@
-import { createNewPlayer, playerList, createMatch } from "./index.js";
-
-const paths = [
-	"./imgs/humanBust.png",
-	"./imgs/robotBust.png",
-	"./imgs/officer.png",
-	"./imgs/officerRobot.png",
-	"./imgs/human.png",
-];
+import { paths } from "../constants/paths.js";
+import {
+	createNewPlayer,
+	playerList,
+	createMatch,
+	createDropTargetGrid,
+} from "./index.js";
 
 function updateCreateNewPlayer() {
 	const wrapper = document.querySelector("#createPlayerWrapper");
@@ -29,4 +27,17 @@ function updateMatchSection() {
 	page.replaceChild(newSection, oldSection);
 }
 
-export { paths, updateCreateNewPlayer, updatePlayerList, updateMatchSection };
+function updateDeployShipGrid() {
+	const main = document.querySelector("#deployShipMain");
+	const oldGrid = document.querySelector("#dropTargetGrid");
+	const newGrid = createDropTargetGrid();
+	main.replaceChild(newGrid, oldGrid);
+}
+
+export {
+	paths,
+	updateCreateNewPlayer,
+	updatePlayerList,
+	updateMatchSection,
+	updateDeployShipGrid,
+};

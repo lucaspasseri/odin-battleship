@@ -72,6 +72,17 @@ it("should be able to check the state of a grid cell by player index", () => {
 	expect(game.checkCellByPlayerIndex(1, 1, 1)).toBe("water");
 });
 
+it("should be able to check the shipState of a grid cell by player index", () => {
+	const game = new Game();
+	game.addPlayer("Samuel", "real");
+	game.addPlayer("Olívia", "real");
+
+	expect(game.checkShipCellByPlayerIndex(1, 1, 0)).toBe("initial");
+	game.placeShipByPlayerIndex(1, 1, 5, "vertical", 0);
+
+	expect(game.checkShipCellByPlayerIndex(1, 1, 0)).toBe("ship");
+});
+
 it("should be able to hit a grid cell by player index", () => {
 	const game = new Game();
 	game.addPlayer("Bruna", "real");

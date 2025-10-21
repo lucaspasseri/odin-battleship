@@ -1,4 +1,6 @@
 import { state } from "../../core/index.js";
+import goToPage from "../goToPage.js";
+import { updateDeployShipGrid } from "./constants.js";
 
 export default function createDropTargetGrid() {
 	const ROWS = 10;
@@ -6,6 +8,7 @@ export default function createDropTargetGrid() {
 
 	const container = document.createElement("div");
 	container.className = "border-4 border-black p-2 bg-red-500 w-fit ml-auto";
+	container.id = "dropTargetGrid";
 
 	const grid = document.createElement("div");
 	grid.className = "grid grid-cols-10 gap-[0.3em]";
@@ -16,7 +19,13 @@ export default function createDropTargetGrid() {
 		const x = i % COLS;
 		const y = Math.abs(Math.floor(i / COLS) - 9);
 
-		cell.className = "w-10 h-10 bg-white";
+		const cellState = state.game.checkShipCellByPlayerIndex(
+			x,
+			y,
+			state.game.currPlayerIndex
+		);
+
+		cell.className = `w-10 h-10 ${cellState}`;
 		cell.addEventListener("dragover", e => {
 			e.preventDefault();
 			// console.log({ dragover: e });
@@ -32,8 +41,39 @@ export default function createDropTargetGrid() {
 			e.preventDefault();
 
 			console.log({ drop: e });
-			const shipId = e.dataTransfer.getData("shipId");
-			console.log({ obj: JSON.parse(shipId) });
+			const ship = JSON.parse(e.dataTransfer.getData("ship"));
+			console.log({ ship, x, y });
+
+			let error = null;
+
+			try {
+				state.game.currPlayer.gameboard.placeShip(
+					x,
+					y,
+					ship.size,
+					ship.direction
+				);
+			} catch (e) {
+				const err = new Error();
+				error = err;
+				throw err;
+			} finally {
+				if (error === null) {
+					updateDeployShipGrid();
+					const shipInterface = document.querySelector(`#${ship.id}`);
+					shipInterface.remove();
+
+					if (state.game.getShips(state.game.currPlayerIndex).length === 4) {
+						if (state.game.currPlayer === state.game.secondPlayer) {
+							state.game.changePlayer();
+							goToPage("mainPage");
+						} else {
+							state.game.changePlayer();
+							goToPage("deployShipsPage");
+						}
+					}
+				}
+			}
 		});
 		grid.appendChild(cell);
 	}

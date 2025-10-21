@@ -62,7 +62,7 @@ export default function createMatch() {
 	}
 
 	deployShipsButton.addEventListener("click", () => {
-		goToPage("mainPage");
+		goToPage("deployShipsPage");
 	});
 
 	buttonWrapper.appendChild(deployShipsButton);

@@ -1,5 +1,5 @@
-import Gameboard from "./Gameboard.js";
-import { paths } from "../ui/components/constants.js";
+import { Gameboard } from "./index.js";
+import { paths } from "../ui/constants/paths.js";
 
 export default class Player {
 	#playerName;

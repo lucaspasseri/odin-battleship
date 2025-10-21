@@ -1,12 +1,21 @@
 import {
 	playersPage,
+	deployShipsPage,
 	initialPage,
 	mainPage,
 	lastPage,
+	errorPage,
 } from "../pages/index.js";
 
 export default function goToPage(page) {
-	const pages = ["playersPage", "initialPage", "mainPage", "lastPage"];
+	const pages = [
+		"playersPage",
+		"deployShipsPage",
+		"initialPage",
+		"mainPage",
+		"lastPage",
+		"errorPage",
+	];
 
 	if (!pages.includes(page)) {
 		throw new Error();
@@ -17,6 +26,12 @@ export default function goToPage(page) {
 
 	if (page === "playersPage") {
 		const page = playersPage();
+		container.appendChild(page);
+		return;
+	}
+
+	if (page === "deployShipsPage") {
+		const page = deployShipsPage();
 		container.appendChild(page);
 		return;
 	}
@@ -35,6 +50,12 @@ export default function goToPage(page) {
 
 	if (page === "lastPage") {
 		const page = lastPage();
+		container.appendChild(page);
+		return;
+	}
+
+	if (page === "errorPage") {
+		const page = errorPage();
 		container.appendChild(page);
 		return;
 	}

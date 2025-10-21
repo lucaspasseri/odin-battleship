@@ -1,4 +1,4 @@
-import Player from "./Player.js";
+import { Player } from "./index.js";
 export default class Game {
 	#players = [];
 	#firstPlayerIndex;
@@ -104,7 +104,6 @@ export default class Game {
 	}
 
 	addPlayer(name, type, imageIndex) {
-		console.log({ name, type });
 		if (name === "") {
 			name = `Player ${this.#players.length + 1}`;
 		}
@@ -124,6 +123,17 @@ export default class Game {
 			throw newError();
 		}
 		this.#players[playerIndex]?.gameboard.placeShip(x, y, length, direction);
+	}
+
+	checkShipCellByPlayerIndex(x, y, playerIndex) {
+		const occupiedCells = this.#players[playerIndex].gameboard.occupiedPlaces;
+		const key = `${x},${y}`;
+
+		if (occupiedCells[key] === undefined) {
+			return "initial";
+		}
+
+		return "ship";
 	}
 
 	checkCellByPlayerIndex(x, y, playerIndex) {
