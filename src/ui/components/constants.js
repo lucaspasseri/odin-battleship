@@ -4,6 +4,7 @@ import {
 	playerList,
 	createMatch,
 	createDropTargetGrid,
+	nextPlayerButton,
 } from "./index.js";
 
 function updateCreateNewPlayer() {
@@ -34,10 +35,20 @@ function updateDeployShipGrid() {
 	main.replaceChild(newGrid, oldGrid);
 }
 
+function updateNextPlayerButton() {
+	const div = document.querySelector("#nextPlayerButtonContainer");
+
+	console.log({ div });
+	const oldButton = document.querySelector("#nextPlayerButton");
+	const newButton = nextPlayerButton();
+	div.replaceChild(newButton, oldButton);
+}
+
 export {
 	paths,
 	updateCreateNewPlayer,
 	updatePlayerList,
 	updateMatchSection,
 	updateDeployShipGrid,
+	updateNextPlayerButton,
 };

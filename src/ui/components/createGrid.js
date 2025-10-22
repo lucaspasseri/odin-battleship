@@ -24,7 +24,7 @@ export default function createGrid(player, playerIndex) {
 	h2Moves.textContent = `Moves: ${moves}`;
 
 	const grid = document.createElement("div");
-	grid.className = "grid";
+	grid.className = "grid-old";
 
 	for (let i = 0; i < ROWS * COLS; i++) {
 		const cell = document.createElement("div");

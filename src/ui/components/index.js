@@ -26,3 +26,4 @@ export { default as playerTypeRightButton } from "./playerTypeRightButton.js";
 export { default as createPlayerProfile } from "./createPlayerProfile.js";
 export { default as createMatch } from "./createMatch.js";
 export { default as playerSelector } from "./playerSelector.js";
+export { default as nextPlayerButton } from "./nextPlayerButton.js";

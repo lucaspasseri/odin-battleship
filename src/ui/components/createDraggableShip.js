@@ -2,7 +2,7 @@ export default function createDraggableShip(size, direction, id) {
 	const container = document.createElement("div");
 	container.id = `${id}`;
 	container.draggable = true;
-	container.className = `border-[0.1em] border-black p-[0.2em] flex gap-[0.2em] w-fit rounded absolute ${
+	container.className = `border-[0.1em] border-black p-[0.2em] flex gap-[0.2em] w-fit rounded absolute cursor-grab ${
 		direction === "vertical" ? "flex-col" : ""
 	} ${id}`;
 
