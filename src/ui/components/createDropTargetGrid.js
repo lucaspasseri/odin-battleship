@@ -27,10 +27,10 @@ export default function createDropTargetGrid() {
 		);
 
 		cell.className = `w-10 h-10 ${cellState} rounded hover:cursor-no-drop`;
-		cell.addEventListener("dragover", e => {
-			e.preventDefault();
-			// console.log({ dragover: e });
-		});
+		// cell.addEventListener("dragover", e => {
+		// 	e.preventDefault();
+		// 	console.log({ dragover: e });
+		// });
 		cell.addEventListener("dragenter", () => {
 			cell.classList.add("border-[0.4em]", "border-blue-800", "border-double");
 		});
@@ -69,8 +69,12 @@ export default function createDropTargetGrid() {
 			} finally {
 				if (error === null) {
 					updateDeployShipGrid();
-					const shipInterface = document.querySelector(`#${ship.id}`);
-					shipInterface.remove();
+					const shipH = `ship-${state.game.currPlayer.id}-h${ship.size}`;
+					const shipV = `ship-${state.game.currPlayer.id}-v${ship.size}`;
+					const shipHInterface = document.querySelector(`#${shipH}`);
+					const shipVInterface = document.querySelector(`#${shipV}`);
+					shipHInterface.remove();
+					shipVInterface.remove();
 					updateNextPlayerButton();
 				}
 			}

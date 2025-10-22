@@ -33,7 +33,7 @@ export default function createShips() {
 
 	const shipsContainer = document.createElement("div");
 	shipsContainer.className =
-		"flex flex-col gap-[3em]  min-w-[200px] min-h-[300px] flex-1";
+		"flex flex-col gap-[3em] min-w-[200px] min-h-[300px] flex-1 border-4 border-red-800";
 
 	const h5 = document.createElement("h5");
 	h5.textContent = "Drag the ships and drop them on the board:";
@@ -43,9 +43,20 @@ export default function createShips() {
 
 	for (let i = 2; i < 6; i++) {
 		const shipWrapper = document.createElement("div");
-		shipWrapper.className = "relative w-fit";
-		const ship = createDraggableShip(i, "horizontal", `ship-${Date.now()}`);
-		shipWrapper.appendChild(ship);
+		shipWrapper.className = "relative flex ";
+		const shipH = createDraggableShip(
+			i,
+			"horizontal",
+			`ship-${currPlayer.id}-h${i}`
+		);
+
+		const shipV = createDraggableShip(
+			i,
+			"vertical",
+			`ship-${currPlayer.id}-v${i}`,
+			`top-[-${2.18 * i - 2.1}em] left-[${3 * i}em]`
+		);
+		shipWrapper.append(shipH, shipV);
 
 		shipsContainer.appendChild(shipWrapper);
 	}
@@ -55,7 +66,7 @@ export default function createShips() {
 	const grid = createDropTargetGrid();
 
 	const main = document.createElement("div");
-	main.className = "flex flex-wrap gap-[2em]";
+	main.className = "flex flex-wrap gap-[2em] border-4 border-orange-800";
 	main.id = "deployShipMain";
 
 	main.append(currPlayerContainer, grid);

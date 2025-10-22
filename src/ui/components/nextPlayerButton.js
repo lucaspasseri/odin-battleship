@@ -18,7 +18,7 @@ export default function nextPlayerButton() {
 		state.game.getShips(state.game.currPlayerIndex).length === 4;
 
 	nextPlayerButton.disabled = !wereAllShipsDeployer;
-	nextPlayerButton.className = `px-[0.8em] py-[0.4em] text-lg ${
+	nextPlayerButton.className = `"rounded-2xl w-fit text-2xl px-[0.6em] py-[0.2em] font-mono bg-green-400 bottom-[-70px]"; ${
 		wereAllShipsDeployer ? "bg-green-600" : "bg-gray-500"
 	}`;
 

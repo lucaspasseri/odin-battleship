@@ -1,10 +1,15 @@
-export default function createDraggableShip(size, direction, id) {
+export default function createDraggableShip(
+	size,
+	direction,
+	id,
+	customClassname
+) {
 	const container = document.createElement("div");
-	container.id = `${id}`;
+	container.id = id;
 	container.draggable = true;
 	container.className = `border-[0.1em] border-black p-[0.2em] flex gap-[0.2em] w-fit rounded absolute cursor-grab ${
-		direction === "vertical" ? "flex-col" : ""
-	} ${id}`;
+		direction === "vertical" ? "flex-col" : "flex-row"
+	} ${customClassname !== undefined ? customClassname : ""}`;
 
 	for (let i = 0; i < size; i++) {
 		const shipCell = document.createElement("div");

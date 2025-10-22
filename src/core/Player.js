@@ -6,6 +6,7 @@ export default class Player {
 	#playerType;
 	#gameboard;
 	#imageIndex;
+	#id;
 
 	constructor(type, name = "(default)", imageIndex = 0) {
 		if (type !== "real" && type !== "computer") {
@@ -15,10 +16,15 @@ export default class Player {
 		this.#playerType = type;
 		this.#gameboard = new Gameboard();
 		this.#imageIndex = imageIndex;
+		this.#id = Date.now();
 	}
 
 	get gameboard() {
 		return this.#gameboard;
+	}
+
+	get id() {
+		return this.#id;
 	}
 
 	get name() {
