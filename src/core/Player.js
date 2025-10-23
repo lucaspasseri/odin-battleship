@@ -16,7 +16,7 @@ export default class Player {
 		this.#playerType = type;
 		this.#gameboard = new Gameboard();
 		this.#imageIndex = imageIndex;
-		this.#id = Date.now();
+		this.#id = crypto.randomUUID();
 	}
 
 	get gameboard() {

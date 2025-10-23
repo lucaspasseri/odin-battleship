@@ -15,8 +15,6 @@ export default function createShips() {
 
 	const currPlayer = state.game.currPlayer;
 
-	console.log({ currPlayer });
-
 	const currPlayerContainer = document.createElement("div");
 	currPlayerContainer.className = "flex flex-1 flex-wrap gap-[2em]";
 

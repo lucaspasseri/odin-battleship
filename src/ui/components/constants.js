@@ -1,3 +1,5 @@
+import { state } from "../../core/index.js";
+
 import { paths } from "../constants/paths.js";
 import {
 	createNewPlayer,
@@ -5,6 +7,7 @@ import {
 	createMatch,
 	createDropTargetGrid,
 	nextPlayerButton,
+	createGrid,
 } from "./index.js";
 
 function updateCreateNewPlayer() {
@@ -37,11 +40,35 @@ function updateDeployShipGrid() {
 
 function updateNextPlayerButton() {
 	const div = document.querySelector("#nextPlayerButtonContainer");
-
-	console.log({ div });
 	const oldButton = document.querySelector("#nextPlayerButton");
 	const newButton = nextPlayerButton();
 	div.replaceChild(newButton, oldButton);
+}
+
+function updateMatchGrid(player) {
+	let currPlayer;
+	let currIndex;
+
+	if (player === state.game.firstPlayer) {
+		currPlayer = "p1";
+		currIndex = state.game.firstPlayerIndex;
+	}
+	if (player === state.game.secondPlayer) {
+		currPlayer = "p2";
+		currIndex = state.game.secondPlayerIndex;
+	}
+
+	console.log({ player, currPlayer, currIndex });
+
+	if (currPlayer === undefined || currIndex === undefined) return;
+
+	const playerContainer = document.querySelector(`#${currPlayer}Container`);
+	const oldGrid = document.querySelector(`#gridContainer-${player.id}`);
+	const newGrid = createGrid(player, currIndex);
+
+	console.log({ playerContainer, oldGrid, newGrid });
+
+	playerContainer.replaceChild(newGrid, oldGrid);
 }
 
 export {
@@ -51,4 +78,5 @@ export {
 	updateMatchSection,
 	updateDeployShipGrid,
 	updateNextPlayerButton,
+	updateMatchGrid,
 };

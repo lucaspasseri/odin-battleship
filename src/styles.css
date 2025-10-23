@@ -1,10 +1,8 @@
-:root {
+/* :root {
 	--cell-size: 2em;
 }
 
-* {
-	box-sizing: border-box;
-}
+
 
 body {
 	background-color: grey;
@@ -120,17 +118,7 @@ button:hover {
 	}
 }
 
-.water {
-	background-color: blue;
-}
 
-.initial {
-	background-color: #fdfdfd;
-}
-
-.ship {
-	background-color: black;
-}
 
 .grid-old {
 	border: 1px solid black;
@@ -148,4 +136,20 @@ button:hover {
 			cursor: pointer;
 		}
 	}
+} */
+
+/* * {
+	box-sizing: border-box;
+} */
+
+.water {
+	background-color: blue;
+}
+
+.initial {
+	background-color: #fdfdfd;
+}
+
+.ship {
+	background-color: black;
 }

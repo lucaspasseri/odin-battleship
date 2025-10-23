@@ -1,5 +1,4 @@
 import { state } from "../../core/index.js";
-import goToPage from "../goToPage.js";
 import { updateDeployShipGrid, updateNextPlayerButton } from "./constants.js";
 
 export default function createDropTargetGrid() {
@@ -27,10 +26,9 @@ export default function createDropTargetGrid() {
 		);
 
 		cell.className = `w-10 h-10 ${cellState} rounded hover:cursor-no-drop`;
-		// cell.addEventListener("dragover", e => {
-		// 	e.preventDefault();
-		// 	console.log({ dragover: e });
-		// });
+		cell.addEventListener("dragover", e => {
+			e.preventDefault();
+		});
 		cell.addEventListener("dragenter", () => {
 			cell.classList.add("border-[0.4em]", "border-blue-800", "border-double");
 		});

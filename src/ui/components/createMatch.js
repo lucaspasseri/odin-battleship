@@ -48,7 +48,7 @@ export default function createMatch() {
 	const deployShipsButton = document.createElement("button");
 	deployShipsButton.textContent = "Deploy ships";
 	deployShipsButton.className =
-		"rounded-2xl w-fit text-2xl px-[0.6em] py-[0.2em] font-mono bg-green-400 bottom-[-70px]";
+		"rounded-2xl w-fit text-2xl px-[0.6em] py-[0.2em] font-mono bg-green-400 bottom-[-70px] border-[0.1em] border-black";
 
 	const isDisabled =
 		state.game.firstPlayer === undefined ||

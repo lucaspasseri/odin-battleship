@@ -69,7 +69,7 @@ export default function playerForm() {
 	const confirmBtn = document.createElement("button");
 	confirmBtn.textContent = "Create";
 	confirmBtn.className =
-		"rounded-2xl w-full text-2xl px-[0.6em] py-[0.2em] font-mono bg-green-400 absolute bottom-[-70px]";
+		"rounded-2xl w-full text-2xl px-[0.6em] py-[0.2em] font-mono bg-green-400 absolute bottom-[-70px] border-[0.1em] border-black";
 
 	form.append(typeInput, nameContainer, confirmBtn);
 

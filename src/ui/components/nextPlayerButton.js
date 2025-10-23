@@ -11,21 +11,21 @@ export default function nextPlayerButton() {
 
 	const nextPlayerButton = document.createElement("button");
 	nextPlayerButton.textContent = `${
-		isSecondPlayerDeployingShips ? "PLAY" : "Next player"
+		isSecondPlayerDeployingShips ? "Play!!!" : "Next player"
 	}`;
 
 	const wereAllShipsDeployer =
 		state.game.getShips(state.game.currPlayerIndex).length === 4;
 
 	nextPlayerButton.disabled = !wereAllShipsDeployer;
-	nextPlayerButton.className = `"rounded-2xl w-fit text-2xl px-[0.6em] py-[0.2em] font-mono bg-green-400 bottom-[-70px]"; ${
+	nextPlayerButton.className = `rounded-2xl w-fit text-2xl px-[0.8em] py-[0.3em] font-mono bg-green-400 border-[0.1em] border-black ${
 		wereAllShipsDeployer ? "bg-green-600" : "bg-gray-500"
 	}`;
 
 	nextPlayerButton.addEventListener("click", () => {
 		state.game.changePlayer();
 		if (isSecondPlayerDeployingShips) {
-			goToPage("mainPage");
+			goToPage("newMainPage");
 		} else {
 			goToPage("deployShipsPage");
 		}

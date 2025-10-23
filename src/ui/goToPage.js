@@ -5,6 +5,7 @@ import {
 	mainPage,
 	lastPage,
 	errorPage,
+	newMainPage,
 } from "../pages/index.js";
 
 export default function goToPage(page) {
@@ -15,6 +16,8 @@ export default function goToPage(page) {
 		"mainPage",
 		"lastPage",
 		"errorPage",
+		"errorPage",
+		"newMainPage",
 	];
 
 	if (!pages.includes(page)) {
@@ -56,6 +59,12 @@ export default function goToPage(page) {
 
 	if (page === "errorPage") {
 		const page = errorPage();
+		container.appendChild(page);
+		return;
+	}
+
+	if (page === "newMainPage") {
+		const page = newMainPage();
 		container.appendChild(page);
 		return;
 	}

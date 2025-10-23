@@ -1,61 +1,61 @@
 import { state } from "../../core/index.js";
-import { goToPage } from "../index.js";
+import { updateMatchGrid } from "./constants.js";
 
 export default function createGrid(player, playerIndex) {
 	const ROWS = 10;
 	const COLS = 10;
 
-	const boardsContainer = document.createElement("div");
-	boardsContainer.className = "boardsContainer";
-
 	const gridContainer = document.createElement("div");
-	gridContainer.className = "gridContainer";
-	const h1 = document.createElement("h1");
-	h1.textContent = `${player.name}-${player.type}`;
+	gridContainer.className = "flex flex-col gap-[0.6em]";
+	gridContainer.id = `gridContainer-${player.id}`;
 
-	const h2ShipsLeft = document.createElement("h2");
-	h2ShipsLeft.textContent = `Ships left (#): ${player.gameboard.numberOfShips}`;
-
-	const moves = [...player.gameboard.playedPlaces]
-		.map(item => `(${item})`)
-		.join(" -> ");
-
-	const h2Moves = document.createElement("div");
-	h2Moves.textContent = `Moves: ${moves}`;
+	const h4 = document.createElement("h4");
+	h4.textContent = `Ships left: ${player.gameboard.numberOfShips}`;
+	h4.className = "font-mono text-lg text-blue-600 font-bold";
 
 	const grid = document.createElement("div");
-	grid.className = "grid-old";
+	grid.className =
+		"grid grid-cols-[repeat(10,minmax(40px,40px))] gap-[0.4em] p-[0.8em] border-[0.4em] rounded border-white max-w-[494.2px]";
 
 	for (let i = 0; i < ROWS * COLS; i++) {
-		const cell = document.createElement("div");
+		const cell = document.createElement("button");
 
 		const x = i % COLS;
 		const y = Math.abs(Math.floor(i / COLS) - 9);
 
-		const btn = document.createElement("button");
 		const cellState = state.game.checkCellByPlayerIndex(x, y, playerIndex);
 
-		btn.className = cellState;
+		cell.className = `min-w-10 min-h-10 rounded hover:cursor-pointer shrink-0 ${cellState}`;
 
-		btn.addEventListener("click", () => {
+		cell.addEventListener("click", () => {
 			console.log({ player, c: state.game.currPlayer });
 
 			if (player === state.game.currPlayer || state.game.isGameOver) {
 				return;
 			}
+
 			const attack = state.game.hitCellByPlayerIndex(x, y, playerIndex);
 			if (attack) {
+				if (state.game.isGameOver) {
+					alert("Game is over!");
+				}
 				state.game.changePlayer();
 			}
-			goToPage("mainPage");
+
+			updateMatchGrid(player);
 		});
 
-		cell.appendChild(btn);
 		grid.appendChild(cell);
 	}
 
-	gridContainer.append(h1, h2ShipsLeft, h2Moves, grid);
-	boardsContainer.appendChild(gridContainer);
+	// const moves = [...player.gameboard.playedPlaces]
+	// 	.map(item => `(${item})`)
+	// 	.join(" -> ");
 
-	return boardsContainer;
+	// const h2Moves = document.createElement("div");
+	// h2Moves.textContent = `Moves: ${moves}`;
+
+	gridContainer.append(h4, grid);
+
+	return gridContainer;
 }
