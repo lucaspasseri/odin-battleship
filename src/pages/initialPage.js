@@ -1,33 +1,20 @@
 import {
 	navbar,
-	createPlayer,
-	// createPlayerSection,
-	createShips,
-	createShipSection,
-	createMatchSection,
-	preGame,
+	createPlayerSectionNew,
+	createMatch,
 } from "../ui/components/index.js";
 
 export default function initialPage() {
 	const nav = navbar();
 
-	const preGameSec = preGame();
-	const createPlayerSec = createPlayer();
-	// const playerSec = createPlayerSection();
-	const createShipsSec = createShips();
-	const shipSec = createShipSection();
-	const matchSec = createMatchSection();
-
 	const page = document.createElement("div");
+	page.id = "createPlayerPage";
 
-	page.append(
-		nav,
-		preGameSec,
-		createPlayerSec,
-		createShipsSec,
-		shipSec,
-		matchSec
-	);
+	const createSection = createPlayerSectionNew();
+
+	const match = createMatch();
+
+	page.append(nav, createSection, match);
 
 	return page;
 }

@@ -31,7 +31,7 @@ export default function createShips() {
 
 	const shipsContainer = document.createElement("div");
 	shipsContainer.className =
-		"flex flex-col gap-[3em] min-w-[200px] min-h-[300px] flex-1 border-4 border-red-800";
+		"flex flex-col gap-[3em] min-w-[200px] min-h-[300px] flex-1";
 
 	const h5 = document.createElement("h5");
 	h5.textContent = "Drag the ships and drop them on the board:";
@@ -64,7 +64,7 @@ export default function createShips() {
 	const grid = createDropTargetGrid();
 
 	const main = document.createElement("div");
-	main.className = "flex flex-wrap gap-[2em] border-4 border-orange-800";
+	main.className = "flex flex-wrap gap-[2em]";
 	main.id = "deployShipMain";
 
 	main.append(currPlayerContainer, grid);

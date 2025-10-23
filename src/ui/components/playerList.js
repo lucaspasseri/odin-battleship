@@ -11,7 +11,7 @@ export default function playerList() {
 
 	if (players.length === 0) {
 		const p = document.createElement("p");
-		p.textContent = "( No player found )";
+		p.textContent = "(No player found)";
 		list.appendChild(p);
 
 		list.classList.add("justify-center");

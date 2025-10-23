@@ -47,9 +47,7 @@ export default function createDropTargetGrid() {
 				"border-blue-800",
 				"border-dotted"
 			);
-			console.log({ drop: e });
 			const ship = JSON.parse(e.dataTransfer.getData("ship"));
-			console.log({ ship, x, y });
 
 			let error = null;
 

@@ -19,13 +19,13 @@ export default function nextPlayerButton() {
 
 	nextPlayerButton.disabled = !wereAllShipsDeployer;
 	nextPlayerButton.className = `rounded-2xl w-fit text-2xl px-[0.8em] py-[0.3em] font-mono bg-green-400 border-[0.1em] border-black ${
-		wereAllShipsDeployer ? "bg-green-600" : "bg-gray-500"
+		wereAllShipsDeployer ? "bg-green-400" : "bg-gray-500"
 	}`;
 
 	nextPlayerButton.addEventListener("click", () => {
 		state.game.changePlayer();
 		if (isSecondPlayerDeployingShips) {
-			goToPage("newMainPage");
+			goToPage("mainPage");
 		} else {
 			goToPage("deployShipsPage");
 		}

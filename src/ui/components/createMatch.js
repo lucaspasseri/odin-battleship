@@ -1,6 +1,6 @@
 import { playerSelector } from "./index.js";
 import { state } from "../../core/index.js";
-import goToPage from "../goToPage.js";
+import { goToPage } from "../../ui/index.js";
 
 export default function createMatch() {
 	const container = document.createElement("section");
@@ -12,7 +12,8 @@ export default function createMatch() {
 	h3.className = "font-mono text-2xl text-blue-600 font-bold mb-[1em]";
 
 	const mainWrapper = document.createElement("div");
-	mainWrapper.className = "flex justify-between items-center flex-wrap";
+	mainWrapper.className =
+		"flex justify-between items-center flex-wrap relative";
 
 	const firstPlayerContainer = document.createElement("div");
 	const firstPlayerH4 = document.createElement("h4");
@@ -24,9 +25,11 @@ export default function createMatch() {
 	firstPlayerContainer.append(firstPlayerH4, firstPlayerSelector);
 
 	const versusContainer = document.createElement("div");
+	versusContainer.className =
+		"absolute inset-0 flex justify-center items-center z-[-99]";
 	const p = document.createElement("p");
 	p.textContent = "VS";
-	p.className = "text-9xl font-mono";
+	p.className = "font-mono text-[6em] font-bold";
 	versusContainer.appendChild(p);
 
 	const secondPlayerContainer = document.createElement("div");

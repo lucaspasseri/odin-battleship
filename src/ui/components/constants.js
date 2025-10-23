@@ -58,15 +58,11 @@ function updateMatchGrid(player) {
 		currIndex = state.game.secondPlayerIndex;
 	}
 
-	console.log({ player, currPlayer, currIndex });
-
 	if (currPlayer === undefined || currIndex === undefined) return;
 
 	const playerContainer = document.querySelector(`#${currPlayer}Container`);
 	const oldGrid = document.querySelector(`#gridContainer-${player.id}`);
 	const newGrid = createGrid(player, currIndex);
-
-	console.log({ playerContainer, oldGrid, newGrid });
 
 	playerContainer.replaceChild(newGrid, oldGrid);
 }

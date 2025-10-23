@@ -17,7 +17,7 @@ export default function errorPage() {
 	const button = document.createElement("button");
 	button.textContent = "Go to initial page";
 	button.addEventListener("click", () => {
-		goToPage("playersPage");
+		goToPage("initialPage");
 	});
 
 	page.append(nav, h1, p, button);

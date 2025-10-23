@@ -28,8 +28,6 @@ export default function createGrid(player, playerIndex) {
 		cell.className = `min-w-10 min-h-10 rounded hover:cursor-pointer shrink-0 ${cellState}`;
 
 		cell.addEventListener("click", () => {
-			console.log({ player, c: state.game.currPlayer });
-
 			if (player === state.game.currPlayer || state.game.isGameOver) {
 				return;
 			}
