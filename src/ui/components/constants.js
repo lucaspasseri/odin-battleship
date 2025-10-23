@@ -8,6 +8,7 @@ import {
 	createDropTargetGrid,
 	nextPlayerButton,
 	createGrid,
+	restartButton,
 } from "./index.js";
 
 function updateCreateNewPlayer() {
@@ -67,6 +68,13 @@ function updateMatchGrid(player) {
 	playerContainer.replaceChild(newGrid, oldGrid);
 }
 
+function updateRestartButton() {
+	const div = document.querySelector("#restartButtonWrapper");
+	const oldButton = document.querySelector("#restartButtonContainer");
+	const newButton = restartButton();
+	div.replaceChild(newButton, oldButton);
+}
+
 export {
 	paths,
 	updateCreateNewPlayer,
@@ -75,4 +83,5 @@ export {
 	updateDeployShipGrid,
 	updateNextPlayerButton,
 	updateMatchGrid,
+	updateRestartButton,
 };

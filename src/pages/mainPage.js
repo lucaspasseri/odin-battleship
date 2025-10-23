@@ -4,6 +4,7 @@ import {
 	createPlayerProfile,
 	navbar,
 	createGrid,
+	restartButton,
 } from "../ui/components/index.js";
 
 export default function mainPage() {
@@ -11,7 +12,7 @@ export default function mainPage() {
 	const nav = navbar();
 
 	const main = document.createElement("main");
-	main.className = "px-[4em] py-[2em] flex flex-col gap-[1em] mb-[2em]";
+	main.className = "px-[4em] py-[2em] flex flex-col gap-[1em]";
 
 	const h3 = document.createElement("h3");
 	h3.textContent = "Enjoy the match!";
@@ -55,6 +56,12 @@ export default function mainPage() {
 
 	main.append(h3, content);
 
-	page.append(nav, main);
+	const buttonWrapper = document.createElement("div");
+	buttonWrapper.id = "restartButtonWrapper";
+	const button = restartButton();
+
+	buttonWrapper.appendChild(button);
+
+	page.append(nav, main, buttonWrapper);
 	return page;
 }

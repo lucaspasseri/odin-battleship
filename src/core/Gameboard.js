@@ -128,4 +128,12 @@ export default class Gameboard {
 		}
 		return output;
 	}
+
+	reset() {
+		this.#missedAttacks = [];
+		this.#occupiedPlaces = {};
+		this.#numberOfShips = 0;
+		this.#ships = [];
+		this.#playedPlaces = new Set();
+	}
 }

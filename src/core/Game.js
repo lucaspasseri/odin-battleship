@@ -173,4 +173,10 @@ export default class Game {
 
 		return chosenPlayer.gameboard.playedPlaces;
 	}
+
+	restart() {
+		this.firstPlayer.gameboard.reset();
+		this.secondPlayer.gameboard.reset();
+		this.#isGameOver = false;
+	}
 }

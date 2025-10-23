@@ -1,5 +1,5 @@
 import { state } from "../../core/index.js";
-import { updateMatchGrid } from "./constants.js";
+import { updateMatchGrid, updateRestartButton } from "./constants.js";
 
 export default function createGrid(player, playerIndex) {
 	const ROWS = 10;
@@ -41,6 +41,7 @@ export default function createGrid(player, playerIndex) {
 			}
 
 			updateMatchGrid(player);
+			updateRestartButton();
 		});
 
 		grid.appendChild(cell);
