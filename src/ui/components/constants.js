@@ -22,6 +22,8 @@ function updatePlayerList() {
 	const wrapper = document.querySelector("#createPlayerWrapper");
 	const oldList = document.querySelector("#playerList");
 	const newList = playerList();
+
+	console.log({ wrapper, oldList, newList });
 	wrapper.replaceChild(newList, oldList);
 }
 

@@ -19,3 +19,5 @@ export { default as createMatch } from "./createMatch.js";
 export { default as playerSelector } from "./playerSelector.js";
 export { default as nextPlayerButton } from "./nextPlayerButton.js";
 export { default as restartButton } from "./restartButton.js";
+export { default as playerListLeftButton } from "./playerListLeftButton.js";
+export { default as playerListRightButton } from "./playerListRightButton.js";

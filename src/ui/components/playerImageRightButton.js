@@ -11,13 +11,14 @@ function goRight() {
 	imgs[nextImgIndex].scrollIntoView({
 		inline: "center",
 		behavior: "smooth",
+		block: "nearest",
 	});
 }
 
 const playerImageRightButton = basicButton(
 	"▶",
 	goRight,
-	"h-fit px-[0.35em] border border-black text-2xl bg-white my-auto",
+	"h-fit px-[0.35em] border border-black text-2xl bg-white my-auto rounded",
 	"h-full absolute flex top-0 right-[-44px]"
 );
 
