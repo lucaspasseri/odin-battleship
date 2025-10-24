@@ -8,7 +8,7 @@ export default function initialPage() {
 	const nav = navbar();
 
 	const page = document.createElement("div");
-	page.id = "createPlayerPage";
+	page.id = "initialPage";
 
 	const createSection = createPlayerSectionNew();
 

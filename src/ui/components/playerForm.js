@@ -1,8 +1,10 @@
 import { state } from "../../core/index.js";
 import {
+	scrollIntoViewPlayerSelector,
 	updateCreateNewPlayer,
-	updateMatchSection,
+	updateDeployShipButton,
 	updatePlayerList,
+	updatePlayerSelector,
 } from "./constants.js";
 
 export default function playerForm() {
@@ -27,7 +29,16 @@ export default function playerForm() {
 		state.game.addPlayer(name, playerType, currImgIndex);
 		updatePlayerList();
 		updateCreateNewPlayer();
-		updateMatchSection();
+		updateDeployShipButton();
+		if (state.game.players.length === 1) {
+			updatePlayerSelector("firstPlayer");
+			scrollIntoViewPlayerSelector("firstPlayer");
+		} else {
+			updatePlayerSelector("firstPlayer");
+			updatePlayerSelector("secondPlayer");
+			scrollIntoViewPlayerSelector("firstPlayer");
+			scrollIntoViewPlayerSelector("secondPlayer");
+		}
 	});
 
 	const typeInput = document.createElement("select");

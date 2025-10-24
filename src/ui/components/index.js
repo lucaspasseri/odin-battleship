@@ -21,3 +21,6 @@ export { default as nextPlayerButton } from "./nextPlayerButton.js";
 export { default as restartButton } from "./restartButton.js";
 export { default as playerListLeftButton } from "./playerListLeftButton.js";
 export { default as playerListRightButton } from "./playerListRightButton.js";
+export { default as deployShipButton } from "./deployShipButton.js";
+export { default as playerSelectorLeftButton } from "./playerSelectorLeftButton.js";
+export { default as playerSelectorRightButton } from "./playerSelectorRightButton.js";

@@ -1,6 +1,4 @@
-import { playerSelector } from "./index.js";
-import { state } from "../../core/index.js";
-import { goToPage } from "../../ui/index.js";
+import { deployShipButton, playerSelector } from "./index.js";
 
 export default function createMatch() {
 	const container = document.createElement("section");
@@ -16,6 +14,7 @@ export default function createMatch() {
 		"flex justify-between items-center flex-wrap relative";
 
 	const firstPlayerContainer = document.createElement("div");
+	firstPlayerContainer.id = "firstPlayerContainer";
 	const firstPlayerH4 = document.createElement("h4");
 	firstPlayerH4.textContent = "First player";
 	firstPlayerH4.className = "text-blue-600 text-lg font-bold mb-[0.4em]";
@@ -33,6 +32,7 @@ export default function createMatch() {
 	versusContainer.appendChild(p);
 
 	const secondPlayerContainer = document.createElement("div");
+	secondPlayerContainer.id = "secondPlayerContainer";
 	const secondPlayerH4 = document.createElement("h4");
 	secondPlayerH4.textContent = "Second player";
 	secondPlayerH4.className = "text-blue-600 text-lg font-bold mb-[0.4em]";
@@ -46,30 +46,8 @@ export default function createMatch() {
 		secondPlayerContainer
 	);
 
-	const buttonWrapper = document.createElement("div");
-	buttonWrapper.className = "text-end py-[3em]";
-	const deployShipsButton = document.createElement("button");
-	deployShipsButton.textContent = "Deploy ships";
-	deployShipsButton.className =
-		"rounded-2xl w-fit text-2xl px-[0.6em] py-[0.2em] font-mono bg-green-400 bottom-[-70px] border-[0.1em] border-black";
+	const button = deployShipButton();
 
-	const isDisabled =
-		state.game.firstPlayer === undefined ||
-		state.game.secondPlayer === undefined ||
-		state.game.firstPlayer === state.game.secondPlayer;
-
-	deployShipsButton.disabled = isDisabled;
-
-	if (isDisabled) {
-		deployShipsButton.classList.replace("bg-green-400", "bg-gray-400");
-	}
-
-	deployShipsButton.addEventListener("click", () => {
-		goToPage("deployShipsPage");
-	});
-
-	buttonWrapper.appendChild(deployShipsButton);
-
-	container.append(h3, mainWrapper, buttonWrapper);
+	container.append(h3, mainWrapper, button);
 	return container;
 }

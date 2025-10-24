@@ -2,7 +2,8 @@ export default function basicButton(
 	textContent,
 	cb,
 	className,
-	containerClassName
+	containerClassName,
+	...args
 ) {
 	const container = document.createElement("div");
 	container.className = containerClassName;
@@ -10,7 +11,7 @@ export default function basicButton(
 	const button = document.createElement("button");
 	button.textContent = textContent;
 	button.className = className;
-	button.addEventListener("click", cb);
+	button.addEventListener("click", () => cb(...args));
 
 	container.appendChild(button);
 	return container;

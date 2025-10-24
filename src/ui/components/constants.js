@@ -9,6 +9,8 @@ import {
 	nextPlayerButton,
 	createGrid,
 	restartButton,
+	playerSelector,
+	deployShipButton,
 } from "./index.js";
 
 function updateCreateNewPlayer() {
@@ -22,16 +24,7 @@ function updatePlayerList() {
 	const wrapper = document.querySelector("#createPlayerWrapper");
 	const oldList = document.querySelector("#playerList");
 	const newList = playerList();
-
-	console.log({ wrapper, oldList, newList });
 	wrapper.replaceChild(newList, oldList);
-}
-
-function updateMatchSection() {
-	const page = document.querySelector("#createPlayerPage");
-	const oldSection = document.querySelector("#matchContainer");
-	const newSection = createMatch();
-	page.replaceChild(newSection, oldSection);
 }
 
 function updateDeployShipGrid() {
@@ -77,13 +70,52 @@ function updateRestartButton() {
 	div.replaceChild(newButton, oldButton);
 }
 
+function updatePlayerSelector(playerString) {
+	const playerContainer = document.querySelector(`#${playerString}Container`);
+	const oldPlayerSelector = document.querySelector(
+		`#${playerString}PlayerSelector`
+	);
+	const newPlayerSelector = playerSelector(playerString);
+
+	playerContainer.replaceChild(newPlayerSelector, oldPlayerSelector);
+}
+
+function updateDeployShipButton() {
+	const matchContainer = document.querySelector("#matchContainer");
+	const oldButton = document.querySelector("#deployShipButton");
+	const newButton = deployShipButton();
+	matchContainer.replaceChild(newButton, oldButton);
+}
+
+function scrollIntoViewPlayerSelector(playerString) {
+	const lis = [
+		...document.querySelectorAll(`li.${playerString}-playerProfile`),
+	];
+
+	if (lis.length < 2) {
+		return;
+	}
+
+	lis[
+		playerString === "firstPlayer"
+			? state.game.firstPlayerIndex
+			: state.game.secondPlayerIndex
+	].scrollIntoView({
+		inline: "center",
+		behavior: "instant",
+		block: "nearest",
+	});
+}
+
 export {
 	paths,
 	updateCreateNewPlayer,
 	updatePlayerList,
-	updateMatchSection,
 	updateDeployShipGrid,
 	updateNextPlayerButton,
 	updateMatchGrid,
 	updateRestartButton,
+	updatePlayerSelector,
+	updateDeployShipButton,
+	scrollIntoViewPlayerSelector,
 };
