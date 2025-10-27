@@ -1,6 +1,9 @@
 import { state } from "../../core/index.js";
-import { createPlayerProfile, newDraggableShip } from "./index.js";
-import newDropTargetGrid from "./newDropTargetGrid.js";
+import {
+	createPlayerProfile,
+	newDraggableShip,
+	newDropTargetGrid,
+} from "./index.js";
 
 export default function createShips() {
 	const container = document.createElement("div");

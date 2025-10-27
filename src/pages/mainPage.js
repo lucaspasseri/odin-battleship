@@ -5,6 +5,7 @@ import {
 	navbar,
 	createGrid,
 	restartButton,
+	newGrid,
 } from "../ui/components/index.js";
 
 export default function mainPage() {
@@ -48,7 +49,7 @@ export default function mainPage() {
 	const p2 = state.game.secondPlayer;
 
 	const p2Profile = createPlayerProfile(p2);
-	const p2Grid = createGrid(p2, state.game.secondPlayerIndex);
+	const p2Grid = newGrid(p2, state.game.secondPlayerIndex);
 
 	p2Container.append(p2Profile, p2Grid);
 

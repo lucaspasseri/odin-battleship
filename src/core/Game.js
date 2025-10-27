@@ -130,7 +130,7 @@ export default class Game {
 		const key = `${x},${y}`;
 
 		if (occupiedCells[key] === undefined) {
-			return "initial";
+			return "water";
 		}
 
 		return "ship";

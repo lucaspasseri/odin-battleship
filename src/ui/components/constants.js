@@ -4,13 +4,11 @@ import { paths } from "../constants/paths.js";
 import {
 	createNewPlayer,
 	playerList,
-	createMatch,
-	createDropTargetGrid,
 	nextPlayerButton,
-	createGrid,
 	restartButton,
 	playerSelector,
 	deployShipButton,
+	newGrid,
 } from "./index.js";
 import newDropTargetGrid from "./newDropTargetGrid.js";
 
@@ -59,9 +57,9 @@ function updateMatchGrid(player) {
 
 	const playerContainer = document.querySelector(`#${currPlayer}Container`);
 	const oldGrid = document.querySelector(`#gridContainer-${player.id}`);
-	const newGrid = createGrid(player, currIndex);
+	const grid = newGrid(player, currIndex);
 
-	playerContainer.replaceChild(newGrid, oldGrid);
+	playerContainer.replaceChild(grid, oldGrid);
 }
 
 function updateRestartButton() {
