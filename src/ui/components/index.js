@@ -24,3 +24,4 @@ export { default as playerListRightButton } from "./playerListRightButton.js";
 export { default as deployShipButton } from "./deployShipButton.js";
 export { default as playerSelectorLeftButton } from "./playerSelectorLeftButton.js";
 export { default as playerSelectorRightButton } from "./playerSelectorRightButton.js";
+export { default as newDraggableShip } from "./newDraggableShip.js";

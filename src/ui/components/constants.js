@@ -12,6 +12,7 @@ import {
 	playerSelector,
 	deployShipButton,
 } from "./index.js";
+import newDropTargetGrid from "./newDropTargetGrid.js";
 
 function updateCreateNewPlayer() {
 	const wrapper = document.querySelector("#createPlayerWrapper");
@@ -28,10 +29,10 @@ function updatePlayerList() {
 }
 
 function updateDeployShipGrid() {
-	const main = document.querySelector("#deployShipMain");
+	const container = document.querySelector("#deployShipContainer");
 	const oldGrid = document.querySelector("#dropTargetGrid");
-	const newGrid = createDropTargetGrid();
-	main.replaceChild(newGrid, oldGrid);
+	const newGrid = newDropTargetGrid();
+	container.replaceChild(newGrid, oldGrid);
 }
 
 function updateNextPlayerButton() {

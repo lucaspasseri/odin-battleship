@@ -9,3 +9,13 @@
 .ship {
 	background-color: black;
 }
+
+.draggableShip {
+	position: fixed;
+	will-change: left, top;
+}
+
+.rotate {
+	transform: translateX(-68%) translateY(-245%) rotate(-90deg);
+	top: 0;
+}

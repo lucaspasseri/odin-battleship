@@ -13,8 +13,10 @@ export default function restartButton() {
 	restartButton.textContent = "Restart";
 
 	restartButton.addEventListener("click", () => {
-		state.game.restart();
-		goToPage("initialPage");
+		if (state.game.isGameOver) {
+			state.game.restart();
+			goToPage("initialPage");
+		}
 	});
 
 	buttonContainer.appendChild(restartButton);
