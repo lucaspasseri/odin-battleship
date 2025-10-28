@@ -47,22 +47,57 @@ export default function newGrid(player, playerIndex) {
 		}`;
 
 		topLayer.addEventListener("click", () => {
-			if (player === state.game.currPlayer || state.game.isGameOver) {
+			console.log(1);
+
+			if (player === state.game.currPlayer) {
+				console.log("player cant play on its own board");
+			}
+
+			if (state.game.isGameOver) {
+				console.log("The game is over");
+			}
+
+			if (state.game.currPlayer.type === "computer") {
+				console.log("computer player dont play");
+			}
+
+			if (
+				player === state.game.currPlayer ||
+				state.game.isGameOver ||
+				state.game.currPlayer.type === "computer"
+			) {
 				return;
 			}
 
 			const attack = state.game.hitCellByPlayerIndex(x, y, playerIndex);
+
 			if (attack) {
 				if (state.game.isGameOver) {
 					alert("Game is over!");
 					updateMatchGrid(state.game.firstPlayer);
 					updateMatchGrid(state.game.secondPlayer);
 					updateRestartButton();
+					return;
 				}
+				updateMatchGrid(player);
 				state.game.changePlayer();
+				if (state.game.currPlayer.type === "computer") {
+					const computerAttack = state.game.computerPlays();
+
+					if (state.game.isGameOver) {
+						alert("Game is over!");
+						updateMatchGrid(state.game.firstPlayer);
+						updateMatchGrid(state.game.secondPlayer);
+						updateRestartButton();
+						return;
+					}
+
+					if (computerAttack) {
+						updateMatchGrid(state.game.opponentPlayer);
+						state.game.changePlayer();
+					}
+				}
 			}
-			updateMatchGrid(player);
-			updateRestartButton();
 		});
 
 		cell.append(bottomLayer, topLayer);

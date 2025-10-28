@@ -62,6 +62,29 @@ export default class Game {
 		return this.#isGameOver;
 	}
 
+	get opponentPlayer() {
+		if (
+			this.currPlayer === undefined ||
+			this.firstPlayer === undefined ||
+			this.secondPlayer === undefined
+		)
+			return;
+
+		if (this.currPlayer === this.firstPlayer) {
+			return this.secondPlayer;
+		} else if (this.currPlayer === this.secondPlayer) {
+			return this.firstPlayer;
+		}
+
+		return;
+	}
+
+	getPlayerIndex(targetPlayer) {
+		if (targetPlayer instanceof Player) {
+			return this.#players.findIndex(player => player === targetPlayer);
+		}
+	}
+
 	getShips(playerIndex) {
 		if (playerIndex < 0 || playerIndex > this.#players.length - 1) {
 			throw newError();
@@ -178,5 +201,32 @@ export default class Game {
 		this.firstPlayer.gameboard.reset();
 		this.secondPlayer.gameboard.reset();
 		this.#isGameOver = false;
+	}
+
+	computerPlays() {
+		if (this.currPlayer === undefined || this.currPlayer.type === "real") {
+			throw new Error("Tried to play with invalid player.");
+		}
+
+		if (this.#isGameOver) {
+			throw new Error("The game is already over");
+		}
+
+		while (this.#isGameOver === false) {
+			const randX = Math.floor(Math.random() * 10);
+			const randY = Math.floor(Math.random() * 10);
+
+			const hit = this.hitCellByPlayerIndex(
+				randX,
+				randY,
+				this.getPlayerIndex(this.opponentPlayer)
+			);
+
+			if (hit === true) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

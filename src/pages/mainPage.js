@@ -3,7 +3,6 @@ import { state } from "../core/index.js";
 import {
 	createPlayerProfile,
 	navbar,
-	createGrid,
 	restartButton,
 	newGrid,
 } from "../ui/components/index.js";
@@ -29,7 +28,7 @@ export default function mainPage() {
 	const p1 = state.game.firstPlayer;
 
 	const p1Profile = createPlayerProfile(p1);
-	const p1Grid = createGrid(p1, state.game.firstPlayerIndex);
+	const p1Grid = newGrid(p1, state.game.firstPlayerIndex);
 
 	p1Container.append(p1Profile, p1Grid);
 

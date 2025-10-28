@@ -44,6 +44,40 @@ it("should be able to check the current player index", () => {
 	expect(game.currPlayerIndex).toBe(0);
 });
 
+it("should be able to get the opponent player", () => {
+	const game = new Game();
+
+	expect(game.currPlayer).toBe(undefined);
+	game.addPlayer("Otávio", "real");
+
+	expect(game.currPlayer.name).toBe("Otávio");
+	expect(game.opponentPlayer).toBe(undefined);
+
+	game.addPlayer("Márcia", "real");
+	expect(game.opponentPlayer.name).toBe("Márcia");
+
+	game.changePlayer();
+
+	expect(game.currPlayer.name).toBe("Márcia");
+	expect(game.opponentPlayer.name).toBe("Otávio");
+});
+it("should be able to get the player index from the corresponding player ", () => {
+	const game = new Game();
+
+	game.addPlayer("Luizinho", "real");
+	game.addPlayer("Huguinho", "real");
+	game.addPlayer("Zézinho", "real");
+
+	expect(game.getPlayerIndex(game.currPlayer)).toBe(0);
+	expect(game.getPlayerIndex(game.firstPlayer)).toBe(0);
+	expect(game.getPlayerIndex(game.secondPlayer)).toBe(1);
+	expect(game.getPlayerIndex(game.players[2])).toBe(2);
+
+	game.changePlayer();
+
+	expect(game.getPlayerIndex(game.currPlayer)).toBe(1);
+});
+
 it("should be able to check the array of ships by player index", () => {
 	const game = new Game();
 
@@ -77,7 +111,7 @@ it("should be able to check the shipState of a grid cell by player index", () =>
 	game.addPlayer("Samuel", "real");
 	game.addPlayer("Olívia", "real");
 
-	expect(game.checkShipCellByPlayerIndex(1, 1, 0)).toBe("initial");
+	expect(game.checkShipCellByPlayerIndex(1, 1, 0)).toBe("water");
 	game.placeShipByPlayerIndex(1, 1, 5, "vertical", 0);
 
 	expect(game.checkShipCellByPlayerIndex(1, 1, 0)).toBe("ship");
@@ -240,4 +274,29 @@ it("should be able to check the played cells from a player by player index", () 
 		"9,9",
 		"9,0",
 	]);
+});
+
+it("should be able to handle random plays for player of type computer", () => {
+	const game = new Game();
+
+	game.addPlayer("Maurílio", "real");
+	game.addPlayer("Viviana", "computer");
+
+	game.placeShipByPlayerIndex(1, 1, 3, "horizontal", 0);
+
+	expect(game.currPlayer.type).toBe("real");
+	expect(() => game.computerPlays()).toThrow();
+
+	game.changePlayer();
+	expect(game.currPlayer.type).toBe("computer");
+
+	let i = 0;
+	while (game.isGameOver === false) {
+		game.computerPlays();
+		if (i === 99) {
+			break;
+		}
+	}
+
+	expect(game.isGameOver).toBe(true);
 });
