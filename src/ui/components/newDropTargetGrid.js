@@ -85,6 +85,8 @@ export default function newDropTargetGrid() {
 
 		cell.addEventListener("mouseup", () => {
 			const draggableShip = document.querySelector(".draggableShip");
+
+			if (draggableShip === null) return;
 			const ship = JSON.parse(draggableShip?.dataset.ship);
 
 			const isVertical = draggableShip?.classList.contains("rotate");

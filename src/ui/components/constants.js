@@ -4,11 +4,11 @@ import { paths } from "../constants/paths.js";
 import {
 	createNewPlayer,
 	playerList,
-	nextPlayerButton,
 	restartButton,
 	playerSelector,
 	deployShipButton,
 	newGrid,
+	deployShipPageButton,
 } from "./index.js";
 import newDropTargetGrid from "./newDropTargetGrid.js";
 
@@ -34,9 +34,9 @@ function updateDeployShipGrid() {
 }
 
 function updateNextPlayerButton() {
-	const div = document.querySelector("#nextPlayerButtonContainer");
-	const oldButton = document.querySelector("#nextPlayerButton");
-	const newButton = nextPlayerButton();
+	const div = document.querySelector("#deployShipPageButtonContainer");
+	const oldButton = document.querySelector("#deployShipPageButton");
+	const newButton = deployShipPageButton();
 	div.replaceChild(newButton, oldButton);
 }
 

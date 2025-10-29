@@ -6,50 +6,22 @@ import {
 	errorPage,
 } from "../pages/index.js";
 
-export default function goToPage(page) {
-	const pages = [
-		"deployShipsPage",
-		"initialPage",
-		"mainPage",
-		"lastPage",
-		"errorPage",
-		"errorPage",
-	];
+const pageMap = {
+	deployShipsPage,
+	initialPage,
+	mainPage,
+	lastPage,
+	errorPage,
+};
 
-	if (!pages.includes(page)) {
-		throw new Error();
-	}
-
+export default function goToPage(pageName) {
 	const container = document.querySelector("#container");
 	container.innerHTML = "";
 
-	if (page === "deployShipsPage") {
-		const page = deployShipsPage();
-		container.appendChild(page);
-		return;
-	}
+	const createPage = pageMap[pageName] || errorPage;
+	const pageElement = createPage();
 
-	if (page === "initialPage") {
-		const page = initialPage();
-		container.appendChild(page);
-		return;
-	}
-
-	if (page === "mainPage") {
-		const page = mainPage();
-		container.appendChild(page);
-		return;
-	}
-
-	if (page === "lastPage") {
-		const page = lastPage();
-		container.appendChild(page);
-		return;
-	}
-
-	if (page === "errorPage") {
-		const page = errorPage();
-		container.appendChild(page);
-		return;
+	if (pageElement) {
+		container.appendChild(pageElement);
 	}
 }

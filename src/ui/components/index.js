@@ -27,3 +27,4 @@ export { default as playerSelectorRightButton } from "./playerSelectorRightButto
 export { default as newDraggableShip } from "./newDraggableShip.js";
 export { default as newDropTargetGrid } from "./newDropTargetGrid.js";
 export { default as newGrid } from "./newGrid.js";
+export { default as deployShipPageButton } from "./deployShipPageButton.js";
