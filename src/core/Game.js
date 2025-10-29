@@ -200,6 +200,7 @@ export default class Game {
 	restart() {
 		this.firstPlayer.gameboard.reset();
 		this.secondPlayer.gameboard.reset();
+		this.setCurrPlayerIndex(this.#firstPlayerIndex);
 		this.#isGameOver = false;
 	}
 

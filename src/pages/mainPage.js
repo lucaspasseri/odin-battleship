@@ -8,6 +8,14 @@ import {
 } from "../ui/components/index.js";
 
 export default function mainPage() {
+	const p1 = state.game.firstPlayer;
+	if (p1.type === "computer") {
+		const hit = state.game.computerPlays();
+		if (hit === true) {
+			state.game.changePlayer();
+		}
+	}
+
 	const page = document.createElement("div");
 	const nav = navbar();
 
@@ -24,8 +32,6 @@ export default function mainPage() {
 	const p1Container = document.createElement("div");
 	p1Container.className = "flex flex-col gap-[2em] flex-wrap";
 	p1Container.id = "p1Container";
-
-	const p1 = state.game.firstPlayer;
 
 	const p1Profile = createPlayerProfile(p1);
 	const p1Grid = newGrid(p1, state.game.firstPlayerIndex);

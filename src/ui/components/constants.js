@@ -59,8 +59,6 @@ function updateMatchGrid(player) {
 	const oldGrid = document.querySelector(`#gridContainer-${player.id}`);
 	const grid = newGrid(player, currIndex);
 
-	console.log({ playerContainer, oldGrid, grid });
-
 	playerContainer.replaceChild(grid, oldGrid);
 }
 

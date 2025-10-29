@@ -47,8 +47,6 @@ export default function newGrid(player, playerIndex) {
 		}`;
 
 		topLayer.addEventListener("click", () => {
-			console.log(1);
-
 			if (player === state.game.currPlayer) {
 				console.log("player cant play on its own board");
 			}

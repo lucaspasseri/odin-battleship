@@ -36,6 +36,8 @@ export default function playerSelectorLeftButton(playerString) {
 		goLeft,
 		"h-fit px-[0.35em] border border-black text-2xl bg-white my-auto rounded",
 		"h-full absolute flex left-[-20px] top-0",
+		`${playerString}-playerSelectorLeftButton`,
+		false,
 		playerString
 	);
 }

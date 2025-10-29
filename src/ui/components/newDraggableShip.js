@@ -68,8 +68,6 @@ export default function newDraggableShip(size, id) {
 
 			let isVertical = draggableShip.classList.contains("rotate");
 
-			console.log("down", draggableShip.classList.contains("rotate"));
-
 			const ship = JSON.parse(draggableShip.dataset.ship);
 
 			const prevPlaces = state.game.currPlayer.gameboard.getShipPossiblePlaces(
@@ -103,8 +101,6 @@ export default function newDraggableShip(size, id) {
 				ship.size,
 				isVertical ? "vertical" : "horizontal"
 			);
-
-			console.log({ prevPlaces, newPlaces });
 
 			newPlaces.forEach(place => {
 				const [x, y] = place.split(",");
@@ -167,8 +163,6 @@ export default function newDraggableShip(size, id) {
 				ship.size,
 				isVertical ? "vertical" : "horizontal"
 			);
-
-			console.log({ prevPlaces, newPlaces });
 
 			newPlaces.forEach(place => {
 				const [x, y] = place.split(",");
