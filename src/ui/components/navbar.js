@@ -3,7 +3,8 @@ export default function navbar() {
 	nav.className = "flex bg-blue-600 items-center px-[4em] py-[1em] gap-[2em]";
 
 	const gameLogo = document.createElement("img");
-	gameLogo.src = "./imgs/battleshipLogo.png";
+	gameLogo.className = "rounded-lg";
+	gameLogo.src = "./imgs/logo.png";
 	gameLogo.alt = "Game logo (ship)";
 	gameLogo.width = "100";
 	gameLogo.height = "100";

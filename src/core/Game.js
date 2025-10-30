@@ -1,4 +1,4 @@
-import { Player, Ship } from "./index.js";
+import { Player } from "./index.js";
 import Stack from "../util/Stack.js";
 export default class Game {
 	#players = [];

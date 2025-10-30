@@ -1,7 +1,8 @@
 export const paths = [
+	"./imgs/marine.png",
 	"./imgs/humanBust.png",
+	"./imgs/submarine.png",
 	"./imgs/robotBust.png",
-	"./imgs/officer.png",
-	"./imgs/officerRobot.png",
-	"./imgs/human.png",
+	"./imgs/knight.png",
+	"./imgs/gladiador.png",
 ];
