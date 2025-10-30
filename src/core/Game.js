@@ -1,9 +1,11 @@
 import { Player, Ship } from "./index.js";
+import Stack from "../util/Stack.js";
 export default class Game {
 	#players = [];
 	#firstPlayerIndex;
 	#secondPlayerIndex;
 	#currPlayerIndex;
+	#computerPlayStack = new Stack();
 
 	#isGameOver = false;
 
@@ -205,26 +207,31 @@ export default class Game {
 	}
 
 	computerPlays() {
-		if (this.currPlayer === undefined || this.currPlayer.type === "real") {
+		const currPlayer = this.currPlayer;
+		const opponentIndex = this.getPlayerIndex(this.opponentPlayer);
+
+		if (!currPlayer || currPlayer.type === "real") {
 			throw new Error("Tried to play with invalid player.");
 		}
-
 		if (this.#isGameOver) {
 			throw new Error("The game is already over");
 		}
 
-		while (this.#isGameOver === false) {
-			const randX = Math.floor(Math.random() * 10);
-			const randY = Math.floor(Math.random() * 10);
+		const opponentBoardPlayedCells =
+			this.playedCellsByPlayerIndex(opponentIndex);
 
-			const hit = this.hitCellByPlayerIndex(
-				randX,
-				randY,
-				this.getPlayerIndex(this.opponentPlayer)
-			);
+		if (!this.#computerPlayStack.isEmpty()) {
+			return this.#playStackedMove(opponentIndex, opponentBoardPlayedCells);
+		}
 
-			if (hit === true) {
-				return true;
+		while (!this.#isGameOver && opponentBoardPlayedCells.size < 100) {
+			const position = this.#randomPosition();
+			if (opponentBoardPlayedCells.has(position)) continue;
+
+			if (
+				this.#playPosition(position, opponentIndex, opponentBoardPlayedCells)
+			) {
+				return position;
 			}
 		}
 
@@ -275,5 +282,81 @@ export default class Game {
 				continue;
 			}
 		}
+	}
+
+	getAdjCells(position) {
+		if (typeof position !== "string") {
+			throw new Error();
+		}
+		const [x, y] = position.split(",");
+		const terms = [-1, 1];
+		const output = [];
+
+		for (const term of terms) {
+			const xWithTerm = Number(x) + term;
+			const yWithTerm = Number(y) + term;
+
+			if (xWithTerm >= 0 && xWithTerm < 10) {
+				const adjCell = `${xWithTerm},${y}`;
+				output.push(adjCell);
+			}
+
+			if (yWithTerm >= 0 && yWithTerm < 10) {
+				const adjCell = `${x},${yWithTerm}`;
+				output.push(adjCell);
+			}
+		}
+
+		return output;
+	}
+
+	#playStackedMove(opponentIndex, opponentBoardPlayedCells) {
+		const position = this.#computerPlayStack.pop();
+		const [x, y] = position.split(",").map(Number);
+
+		const shipsBefore = this.opponentPlayer.gameboard.numberOfShips;
+		this.hitCellByPlayerIndex(x, y, opponentIndex);
+		const shipsAfter = this.opponentPlayer.gameboard.numberOfShips;
+
+		const cellState = this.checkCellByPlayerIndex(x, y, opponentIndex);
+
+		if (cellState === "water") return position;
+
+		if (shipsBefore !== shipsAfter) {
+			this.#computerPlayStack.reset();
+			return position;
+		}
+
+		this.#queueAdjacentCells(position, opponentBoardPlayedCells);
+		return position;
+	}
+
+	#playPosition(position, opponentIndex, opponentBoardPlayedCells) {
+		const [x, y] = position.split(",").map(Number);
+		const hit = this.hitCellByPlayerIndex(x, y, opponentIndex);
+		opponentBoardPlayedCells.add(position);
+
+		if (!hit) return false;
+
+		const cellState = this.checkCellByPlayerIndex(x, y, opponentIndex);
+		if (cellState === "ship") {
+			this.#queueAdjacentCells(position, opponentBoardPlayedCells);
+		}
+		return true;
+	}
+
+	#queueAdjacentCells(position, opponentBoardPlayedCells) {
+		const adjCells = this.getAdjCells(position);
+		for (const cell of adjCells) {
+			if (!opponentBoardPlayedCells.has(cell)) {
+				this.#computerPlayStack.push(cell);
+			}
+		}
+	}
+
+	#randomPosition() {
+		const x = Math.floor(Math.random() * 10);
+		const y = Math.floor(Math.random() * 10);
+		return `${x},${y}`;
 	}
 }

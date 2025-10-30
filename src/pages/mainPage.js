@@ -11,7 +11,7 @@ export default function mainPage() {
 	const p1 = state.game.firstPlayer;
 	if (p1.type === "computer") {
 		const hit = state.game.computerPlays();
-		if (hit === true) {
+		if (typeof hit === "string") {
 			state.game.changePlayer();
 		}
 	}

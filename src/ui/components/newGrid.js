@@ -47,6 +47,7 @@ export default function newGrid(player, playerIndex) {
 		}`;
 
 		topLayer.addEventListener("click", () => {
+			console.log(1);
 			if (player === state.game.currPlayer) {
 				console.log("player cant play on its own board");
 			}
@@ -89,9 +90,11 @@ export default function newGrid(player, playerIndex) {
 						updateRestartButton();
 						return;
 					}
-
-					if (computerAttack) {
-						updateMatchGrid(state.game.opponentPlayer);
+					console.log({ computerAttack });
+					if (typeof computerAttack === "string") {
+						// updateMatchGrid(state.game.opponentPlayer);
+						updateMatchGrid(state.game.firstPlayer);
+						updateMatchGrid(state.game.secondPlayer);
 						state.game.changePlayer();
 					}
 				}

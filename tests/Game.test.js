@@ -276,56 +276,6 @@ it("should be able to check the played cells from a player by player index", () 
 	]);
 });
 
-it("should be able to handle random plays for player of type computer", () => {
-	const game = new Game();
-
-	game.addPlayer("Maurílio", "real");
-	game.addPlayer("Viviana", "computer");
-
-	game.placeShipByPlayerIndex(1, 1, 3, "horizontal", 0);
-
-	expect(game.currPlayer.type).toBe("real");
-	expect(() => game.computerPlays()).toThrow();
-
-	game.changePlayer();
-	expect(game.currPlayer.type).toBe("computer");
-
-	let i = 0;
-	while (game.isGameOver === false) {
-		game.computerPlays();
-		if (i === 99) {
-			break;
-		}
-	}
-
-	expect(game.isGameOver).toBe(true);
-});
-
-it("should be able to handle random plays for player of type computer", () => {
-	const game = new Game();
-
-	game.addPlayer("Maurílio", "real");
-	game.addPlayer("Viviana", "computer");
-
-	game.placeShipByPlayerIndex(1, 1, 3, "horizontal", 0);
-
-	expect(game.currPlayer.type).toBe("real");
-	expect(() => game.computerPlays()).toThrow();
-
-	game.changePlayer();
-	expect(game.currPlayer.type).toBe("computer");
-
-	let i = 0;
-	while (game.isGameOver === false) {
-		game.computerPlays();
-		if (i === 99) {
-			break;
-		}
-	}
-
-	expect(game.isGameOver).toBe(true);
-});
-
 it("should be able to handle random ship deployment for player of type computer", () => {
 	const game = new Game();
 
@@ -345,3 +295,122 @@ it("should be able to handle random ship deployment for player of type computer"
 
 	expect(game.getShips(game.currPlayerIndex).length).toBe(4);
 });
+
+it("should be able to handle random plays for player of type computer", () => {
+	const game = new Game();
+
+	game.addPlayer("Maurílio", "real");
+	game.addPlayer("Viviana", "computer");
+
+	game.placeShipByPlayerIndex(1, 1, 3, "horizontal", 0);
+
+	expect(game.currPlayer.type).toBe("real");
+	expect(() => game.computerPlays()).toThrow();
+
+	game.changePlayer();
+	expect(game.currPlayer.type).toBe("computer");
+
+	let i = 0;
+	while (game.isGameOver === false) {
+		game.computerPlays();
+		if (i === 99) {
+			break;
+		}
+	}
+
+	expect(game.isGameOver).toBe(true);
+});
+
+it("should be able to able to check the adjacent cells from a chosen position ('x,y')", () => {
+	const game = new Game();
+
+	const possiblePositions = [
+		"0,0",
+		"0,9",
+		"9,0",
+		"9,9",
+		"0,4",
+		"4,0",
+		"4,9",
+		"9,4",
+		"4,4",
+	];
+
+	const expectArr = {
+		"0,0": ["0,1", "1,0"],
+		"0,9": ["0,8", "1,9"],
+		"9,0": ["9,1", "8,0"],
+		"9,9": ["9,8", "8,9"],
+		"0,4": ["0,3", "0,5", "1,4"],
+		"4,0": ["4,1", "3,0", "5,0"],
+		"4,9": ["4,8", "3,9", "5,9"],
+		"9,4": ["9,3", "9,5", "8,4"],
+		"4,4": ["4,3", "4,5", "3,4", "5,4"],
+	};
+
+	possiblePositions.forEach(position => {
+		const arr = game.getAdjCells(position);
+		expect(arr).toEqual(expect.arrayContaining(expectArr[position]));
+	});
+});
+
+it("should be able to handle random plays for player of type computer: After hit a ship cell, it should keep aiming for adjacent cells until it hit another ship cell", () => {
+	const game = new Game();
+
+	game.addPlayer("Maurílio", "real");
+	game.addPlayer("Viviana", "computer");
+
+	game.placeShipByPlayerIndex(0, 0, 5, "horizontal", 0);
+
+	game.changePlayer();
+	expect(game.currPlayer.type).toBe("computer");
+
+	let attackedPosition;
+
+	let i = 0;
+	while (i < 100) {
+		const hit = game.computerPlays();
+		console.log({ hit });
+
+		if (hit) {
+			attackedPosition = hit;
+			const [x, y] = attackedPosition.split(",");
+
+			const cellState = game.checkCellByPlayerIndex(
+				Number(x),
+				Number(y),
+				game.getPlayerIndex(game.opponentPlayer)
+			);
+
+			if (cellState === "ship") {
+				break;
+			}
+		}
+		i++;
+	}
+
+	const adjCells = game.getAdjCells(attackedPosition);
+
+	let newCellState;
+
+	while (newCellState !== "ship") {
+		const hit = game.computerPlays();
+		expect(adjCells.includes(hit)).toBe(true);
+
+		const [newX, newY] = hit.split(",");
+		newCellState = game.checkCellByPlayerIndex(
+			Number(newX),
+			Number(newY),
+			game.getPlayerIndex(game.opponentPlayer)
+		);
+	}
+});
+
+// it("should be able to handle random plays for player of type computer: After hit a ship cell, it should keep aiming for that ship until it sinks", () => {
+// 	const game = new Game();
+
+// 	const test0 = game.getAdjCells("0,0");
+// 	const test1 = game.getAdjCells("1,0");
+
+// 	console.log({ test0, test1 });
+// });
