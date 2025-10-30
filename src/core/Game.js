@@ -1,4 +1,4 @@
-import { Player } from "./index.js";
+import { Player, Ship } from "./index.js";
 export default class Game {
 	#players = [];
 	#firstPlayerIndex;
@@ -229,5 +229,51 @@ export default class Game {
 		}
 
 		return false;
+	}
+
+	computerDeploysShip(size) {
+		const currPlayer = this.currPlayer;
+
+		if (
+			currPlayer === undefined ||
+			currPlayer.type === "real" ||
+			typeof size !== "number" ||
+			size < 2 ||
+			size > 5
+		) {
+			throw new Error();
+		}
+
+		const directions = ["horizontal", "vertical"];
+		const tries = {};
+		let i = 0;
+
+		while (i < 100) {
+			const randX = Math.floor(Math.random() * 10);
+			const randY = Math.floor(Math.random() * 10);
+			const randDirection = directions[Math.floor(Math.random() * 2)];
+
+			const attempt = `${randX},${randY},${size},${randDirection}`;
+
+			if (tries[attempt] === true) {
+				continue;
+			}
+
+			try {
+				this.placeShipByPlayerIndex(
+					randX,
+					randY,
+					size,
+					randDirection,
+					this.#currPlayerIndex
+				);
+
+				return true;
+			} catch (_e) {
+				tries[attempt] = true;
+				i++;
+				continue;
+			}
+		}
 	}
 }

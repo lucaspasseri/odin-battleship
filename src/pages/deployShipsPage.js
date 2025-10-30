@@ -7,40 +7,6 @@ import {
 } from "../ui/components/index.js";
 import goToPage from "../ui/goToPage.js";
 
-function populate() {
-	state.game.placeShipByPlayerIndex(
-		0,
-		0,
-		5,
-		"horizontal",
-		state.game.currPlayerIndex
-	);
-
-	state.game.placeShipByPlayerIndex(
-		1,
-		1,
-		4,
-		"horizontal",
-		state.game.currPlayerIndex
-	);
-
-	state.game.placeShipByPlayerIndex(
-		2,
-		2,
-		3,
-		"horizontal",
-		state.game.currPlayerIndex
-	);
-
-	state.game.placeShipByPlayerIndex(
-		3,
-		3,
-		2,
-		"horizontal",
-		state.game.currPlayerIndex
-	);
-}
-
 export default function deployShipsPage() {
 	const currPlayer = state.game.currPlayer;
 
@@ -54,7 +20,9 @@ export default function deployShipsPage() {
 
 	if (currPlayer === state.game.firstPlayer) {
 		if (currPlayer.type === "computer") {
-			populate();
+			for (let i = 2; i < 6; i++) {
+				state.game.computerDeploysShip(i);
+			}
 			state.game.changePlayer();
 			goToPage("deployShipsPage");
 			return;
@@ -78,7 +46,9 @@ export default function deployShipsPage() {
 	}
 
 	if (currPlayer.type === "computer") {
-		populate();
+		for (let i = 2; i < 6; i++) {
+			state.game.computerDeploysShip(i);
+		}
 		state.game.changePlayer();
 		goToPage("mainPage");
 		return;

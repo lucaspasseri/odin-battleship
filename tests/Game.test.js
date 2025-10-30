@@ -300,3 +300,48 @@ it("should be able to handle random plays for player of type computer", () => {
 
 	expect(game.isGameOver).toBe(true);
 });
+
+it("should be able to handle random plays for player of type computer", () => {
+	const game = new Game();
+
+	game.addPlayer("Maurílio", "real");
+	game.addPlayer("Viviana", "computer");
+
+	game.placeShipByPlayerIndex(1, 1, 3, "horizontal", 0);
+
+	expect(game.currPlayer.type).toBe("real");
+	expect(() => game.computerPlays()).toThrow();
+
+	game.changePlayer();
+	expect(game.currPlayer.type).toBe("computer");
+
+	let i = 0;
+	while (game.isGameOver === false) {
+		game.computerPlays();
+		if (i === 99) {
+			break;
+		}
+	}
+
+	expect(game.isGameOver).toBe(true);
+});
+
+it("should be able to handle random ship deployment for player of type computer", () => {
+	const game = new Game();
+
+	game.addPlayer("Maurílio", "real");
+	game.addPlayer("Viviana", "computer");
+
+	expect(game.currPlayer.type).toBe("real");
+	expect(() => game.computerDeploysShip(5)).toThrow();
+
+	game.changePlayer();
+
+	expect(game.currPlayer.type).toBe("computer");
+	expect(() => game.computerDeploysShip(5)).not.toThrow();
+	game.computerDeploysShip(4);
+	game.computerDeploysShip(3);
+	game.computerDeploysShip(2);
+
+	expect(game.getShips(game.currPlayerIndex).length).toBe(4);
+});
