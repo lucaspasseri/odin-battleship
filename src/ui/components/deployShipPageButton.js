@@ -10,8 +10,6 @@ export default function deployShipPageButton() {
 	const nextPlayerIsComputerType =
 		state.game.opponentPlayer.type === "computer";
 
-	console.log({ curr: state.game.currPlayer, isDisabled });
-
 	if (isFirstPlayer) {
 		return basicButton(
 			nextPlayerIsComputerType ? "Play!" : "Next player",

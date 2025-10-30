@@ -370,7 +370,6 @@ it("should be able to handle random plays for player of type computer: After hit
 	let i = 0;
 	while (i < 100) {
 		const hit = game.computerPlays();
-		console.log({ hit });
 
 		if (hit) {
 			attackedPosition = hit;
@@ -406,11 +405,45 @@ it("should be able to handle random plays for player of type computer: After hit
 	}
 });
 
-// it("should be able to handle random plays for player of type computer: After hit a ship cell, it should keep aiming for that ship until it sinks", () => {
-// 	const game = new Game();
+it("should be able to handle random plays for player of type computer: After hit a ship cell, it should keep aiming for that ship until it sinks", () => {
+	const game = new Game();
 
-// 	const test0 = game.getAdjCells("0,0");
-// 	const test1 = game.getAdjCells("1,0");
+	game.addPlayer("Márcia", "real");
+	game.addPlayer("Alexandre", "computer");
 
-// 	console.log({ test0, test1 });
-// });
+	game.placeShipByPlayerIndex(0, 0, 5, "horizontal", 0);
+	game.placeShipByPlayerIndex(4, 4, 4, "vertical", 0);
+	game.changePlayer();
+
+	const opponentPlayerIndex = game.getPlayerIndex(game.opponentPlayer);
+	const opponentBoardCellsPlayed =
+		game.playedCellsByPlayerIndex(opponentPlayerIndex);
+
+	let attackedPosition;
+
+	while (opponentBoardCellsPlayed.size <= 100) {
+		const hit = game.computerPlays();
+
+		if (typeof hit === "string") {
+			attackedPosition = hit;
+			const [x, y] = attackedPosition.split(",").map(Number);
+
+			const cellState = game.checkCellByPlayerIndex(x, y, opponentPlayerIndex);
+
+			if (cellState === "ship") {
+				break;
+			}
+		}
+	}
+
+	expect(game.opponentPlayer.gameboard.numberOfShips).toBe(2);
+
+	let i = 0;
+
+	while (i < 7) {
+		game.computerPlays();
+		i++;
+	}
+
+	expect(game.opponentPlayer.gameboard.numberOfShips).toBe(1);
+});

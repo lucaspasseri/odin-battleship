@@ -13,6 +13,10 @@ export default function newGrid(player, playerIndex) {
 	h4.textContent = `Ships left: ${player.gameboard.numberOfShips}`;
 	h4.className = "font-mono text-lg text-blue-600 font-bold";
 
+	const anotherH4 = document.createElement("h4");
+	anotherH4.textContent = `Number of moves: ${player.gameboard.playedPlaces.size}`;
+	anotherH4.className = "font-mono text-lg text-blue-600 font-bold";
+
 	const grid = document.createElement("div");
 	grid.className =
 		"grid grid-cols-[repeat(10,minmax(40px,40px))] gap-[0.4em] p-[0.8em] border-[0.4em] rounded border-white max-w-[494.2px]";
@@ -47,19 +51,6 @@ export default function newGrid(player, playerIndex) {
 		}`;
 
 		topLayer.addEventListener("click", () => {
-			console.log(1);
-			if (player === state.game.currPlayer) {
-				console.log("player cant play on its own board");
-			}
-
-			if (state.game.isGameOver) {
-				console.log("The game is over");
-			}
-
-			if (state.game.currPlayer.type === "computer") {
-				console.log("computer player dont play");
-			}
-
 			if (
 				player === state.game.currPlayer ||
 				state.game.isGameOver ||
@@ -90,9 +81,8 @@ export default function newGrid(player, playerIndex) {
 						updateRestartButton();
 						return;
 					}
-					console.log({ computerAttack });
+
 					if (typeof computerAttack === "string") {
-						// updateMatchGrid(state.game.opponentPlayer);
 						updateMatchGrid(state.game.firstPlayer);
 						updateMatchGrid(state.game.secondPlayer);
 						state.game.changePlayer();
@@ -105,7 +95,7 @@ export default function newGrid(player, playerIndex) {
 		grid.appendChild(cell);
 	}
 
-	gridContainer.append(h4, grid);
+	gridContainer.append(h4, anotherH4, grid);
 
 	return gridContainer;
 }

@@ -6,6 +6,7 @@ export default class Game {
 	#secondPlayerIndex;
 	#currPlayerIndex;
 	#computerPlayStack = new Stack();
+	#matchlessShipCell = new Set();
 
 	#isGameOver = false;
 
@@ -204,6 +205,8 @@ export default class Game {
 		this.secondPlayer.gameboard.reset();
 		this.setCurrPlayerIndex(this.#firstPlayerIndex);
 		this.#isGameOver = false;
+		this.#computerPlayStack.reset();
+		this.#matchlessShipCell.clear();
 	}
 
 	computerPlays() {
@@ -323,9 +326,11 @@ export default class Game {
 		if (cellState === "water") return position;
 
 		if (shipsBefore !== shipsAfter) {
-			this.#computerPlayStack.reset();
+			this.#matchlessShipCell.clear();
 			return position;
 		}
+
+		this.#matchlessShipCell.add(position);
 
 		this.#queueAdjacentCells(position, opponentBoardPlayedCells);
 		return position;
@@ -341,12 +346,55 @@ export default class Game {
 		const cellState = this.checkCellByPlayerIndex(x, y, opponentIndex);
 		if (cellState === "ship") {
 			this.#queueAdjacentCells(position, opponentBoardPlayedCells);
+			this.#matchlessShipCell.add(position);
 		}
 		return true;
 	}
 
 	#queueAdjacentCells(position, opponentBoardPlayedCells) {
-		const adjCells = this.getAdjCells(position);
+		let adjCells = this.getAdjCells(position);
+
+		let alignmentAxis;
+
+		if (this.#matchlessShipCell.size > 1) {
+			const reg = {};
+			const cells = [...this.#matchlessShipCell];
+			cells.forEach(position => {
+				const [x, y] = position.split(",").map(Number);
+
+				if (reg["x"] === undefined) {
+					reg["x"] = x;
+				} else if (reg["x"] === x) {
+					alignmentAxis = {
+						axis: "x",
+						value: x,
+					};
+				}
+
+				if (reg["y"] === undefined) {
+					reg["y"] = y;
+				} else if (reg["y"] === y) {
+					alignmentAxis = {
+						axis: "y",
+						value: y,
+					};
+				}
+			});
+
+			adjCells = adjCells.filter(position => {
+				const [x, y] = position.split(",").map(Number);
+
+				if (alignmentAxis.axis === "x") {
+					if (alignmentAxis.value === x) {
+						return true;
+					}
+				} else if (alignmentAxis.axis === "y") {
+					if (alignmentAxis.value === y) {
+						return true;
+					}
+				}
+			});
+		}
 		for (const cell of adjCells) {
 			if (!opponentBoardPlayedCells.has(cell)) {
 				this.#computerPlayStack.push(cell);
