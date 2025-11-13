@@ -1,18 +1,43 @@
 import { Game, state } from "./core/index.js";
-import { goToPage } from "./ui/index.js";
+import { navbar } from "./ui/components/index.js";
+import app from "./ui/state/app.js";
+import { Preferences } from "./ui/state/Preferences.js";
 
 const game = new Game();
 state.game = game;
 
-// game.addPlayer("123", "real", 0);
-// game.addPlayer("abc", "computer", 1);
+const changePreference = new EventTarget();
+changePreference.addEventListener("preferenceChange", e => {
+	const { preference } = e.detail;
+	if (preference === "light-mode") {
+		const darkModeElements = [...document.querySelectorAll(".dark-mode")];
+		darkModeElements.forEach(el =>
+			el.classList.replace("dark-mode", "light-mode")
+		);
+	} else {
+		const lightModeElements = [...document.querySelectorAll(".light-mode")];
+		lightModeElements.forEach(el =>
+			el.classList.replace("light-mode", "dark-mode")
+		);
+	}
 
-// game.placeShipByPlayerIndex(0, 0, 5, "horizontal", 0);
-// game.placeShipByPlayerIndex(0, 1, 5, "vertical", 0);
+	Preferences.toggleTheme();
+});
 
-// game.placeShipByPlayerIndex(0, 0, 5, "horizontal", 1);
-// game.placeShipByPlayerIndex(0, 1, 5, "vertical", 1);
+app.state = changePreference;
 
-// goToPage("mainPage");
+document.body.className = Preferences.themePreference;
 
-goToPage("initialPage");
+const container = document.querySelector("#container");
+console.log({ container });
+
+const header = document.createElement("div");
+header.id = "header";
+const nav = navbar();
+
+header.appendChild(nav);
+
+const main = document.createElement("main");
+const footer = document.createElement("div");
+
+container.append(header, main, footer);

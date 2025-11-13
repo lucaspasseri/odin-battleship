@@ -1,6 +1,10 @@
+import preferenceSettings from "./preferenceSettings.js";
+
 export default function navbar() {
 	const nav = document.createElement("nav");
-	nav.className = "flex bg-blue-600 items-center px-[4em] py-[1em] gap-[2em]";
+	nav.id = "navbar";
+	nav.className =
+		"flex bg-[lch(54% 82 21)] items-center px-[1em] md:px-[4em] py-[1em] gap-[2em]";
 
 	const gameLogo = document.createElement("img");
 	gameLogo.className = "rounded-lg";
@@ -11,8 +15,10 @@ export default function navbar() {
 
 	const gameName = document.createElement("h1");
 	gameName.textContent = "Battleship";
-	gameName.className = "text-[3.5em] text-white font-mono";
+	gameName.className = "text-[3.2em] text-white font-mono hidden md:block";
 
-	nav.append(gameLogo, gameName);
+	const settings = preferenceSettings();
+
+	nav.append(gameLogo, gameName, settings);
 	return nav;
 }

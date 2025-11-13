@@ -1,3 +1,9 @@
+body {
+	background-color: lch(18% 132 300);
+	transition: background-color 0.5s ease, color 0.5s ease;
+	/* border-color 0.5s ease; */
+}
+
 .water {
 	background-color: blue;
 }
@@ -15,7 +21,169 @@
 	will-change: left, top;
 }
 
-.rotate {
+.dark-mode {
+	background-color: lch(18% 132 300);
+	color: white;
+}
+.light-mode {
+	background-color: lch(66% 132 259);
+	color: black;
+}
+
+#navbar {
+	background-color: lch(0% 132 290 / 32%);
+}
+
+.visually-hidden:not(:focus):not(:active) {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+/* .rotate {
 	transform: translateX(-68%) translateY(-245%) rotate(-90deg);
 	top: 0;
 }
+
+@keyframes grow {
+	to {
+		transform: scale(2);
+	}
+}
+
+#svg-circle-2 {
+	animation: grow 1000ms infinite;
+	transform-origin: center;
+}
+
+.dev {
+	border: 1px solid black;
+	background-color: white;
+
+	path {
+		stroke-width: 0.4em;
+		stroke: black;
+		fill: none;
+		transform-origin: center;
+	}
+} */
+
+/* @keyframes moonPoke {
+	15% {
+		transform: rotate(90deg);
+	}
+
+	25% {
+		transform: rotate(0deg);
+	}
+
+	40% {
+		transform: rotate(-90deg);
+	}
+
+	50% {
+		transform: rotate((0deg));
+	}
+
+	65% {
+		transform: rotate(45deg);
+	}
+
+	75% {
+		transform: rotate(0deg);
+	}
+
+	90% {
+		transform: rotate(-45deg);
+	}
+
+	100% {
+		transform: rotate(0deg);
+	}
+} */
+
+/* .dev:hover {
+	border: 1px solid red;
+	path {
+		transition: 0.5s;
+		d: path("M 50,10 A 40,40 0 1 0 90,50 A 40,40 0 0 0 50, 10 Z");
+	}
+
+	path {
+		animation: moonPoke 600ms alternate forwards;
+	}
+} */
+
+/* @keyframes moonToCircle {
+	to {
+		d: path("M 10, 50 A 40, 40 0 0 0 90, 50 A 40, 40 0 0 0 10, 50 Z");
+	}
+}
+
+#moonPath {
+	transform-origin: center;
+}
+
+.moonSvg,
+.circleSvg {
+	fill: none;
+	stroke-width: 0.6em;
+	stroke: black;
+	cursor: pointer;
+
+	&:hover {
+		path {
+			animation: moonToCircle 300ms forwards;
+		}
+	}
+}
+
+.moonPoke {
+	--boop-spring: linear(
+		0,
+		0.011,
+		0.045 1.4%,
+		0.184 3%,
+		0.913 8.2%,
+		1.156,
+		1.304 12.3%,
+		1.345,
+		1.365,
+		1.367,
+		1.359 15.8%,
+		1.31 17.5%,
+		1.027 23.1%,
+		0.937 25.3%,
+		0.888 27.1%,
+		0.873,
+		0.866 29%,
+		0.867,
+		0.88,
+		0.905 33.5%,
+		0.982 37.5%,
+		1.014 39.4%,
+		1.038,
+		1.049 43.7% 45.2%,
+		1.044 46.7%,
+		0.995 54.2%,
+		0.986,
+		0.982 58.4%,
+		0.984 61.5%,
+		1.002 68.9%,
+		1.006 72.9%,
+		0.998 87.3%,
+		1.001
+	);
+	--boop-spring-duration: 1.2s;
+
+	transition: transform var(--boop-spring) var(--boop-spring-duration);
+	transform-origin: center;
+} */
+
+/* .moonPoke.beingPoked {
+	transform: rotate(-20deg);
+} */
