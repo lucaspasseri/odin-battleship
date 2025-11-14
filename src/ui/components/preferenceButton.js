@@ -1,3 +1,4 @@
+import { sampleOne } from "../../util/sampleOne.js";
 import app from "../state/app.js";
 
 export default function preferenceButton(preference) {
@@ -31,6 +32,18 @@ export default function preferenceButton(preference) {
 		sun: circlePath,
 	};
 
+	const SPRITE_MAP = {
+		a: [11, 78],
+		b: [107, 167],
+		c: [182, 250],
+	};
+
+	const sound = new Howl({
+		src: ["./src/assets/clickMp3.mp3"],
+		sprite: SPRITE_MAP,
+		volume: 0.25,
+	});
+
 	let current = "moon";
 
 	const morphTo = (from, to) => {
@@ -53,6 +66,11 @@ export default function preferenceButton(preference) {
 					detail: { preference: "light-mode", btnId: "darkModeBtn" },
 				})
 			);
+
+			console.log({ app });
+			const spriteId = sampleOne(Object.keys(SPRITE_MAP));
+
+			sound.play(spriteId);
 			button.onclick = handleClickStates.sun;
 		},
 		sun: () => {
@@ -63,6 +81,10 @@ export default function preferenceButton(preference) {
 					detail: { preference: "dark-mode", btnId: "lightModeBtn" },
 				})
 			);
+			console.log({ app });
+			const spriteId = sampleOne(Object.keys(SPRITE_MAP));
+
+			sound?.play(spriteId);
 			button.onclick = handleClickStates.moon;
 		},
 	};

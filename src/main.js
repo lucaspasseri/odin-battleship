@@ -2,6 +2,7 @@ import { Game, state } from "./core/index.js";
 import { navbar } from "./ui/components/index.js";
 import app from "./ui/state/app.js";
 import { Preferences } from "./ui/state/Preferences.js";
+import { sampleOne } from "./util/sampleOne.js";
 
 const game = new Game();
 state.game = game;
@@ -41,3 +42,6 @@ const main = document.createElement("main");
 const footer = document.createElement("div");
 
 container.append(header, main, footer);
+
+// app.sound = sound;
+// app.sprite = SPRITE_MAP;
