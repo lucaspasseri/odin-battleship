@@ -28,3 +28,6 @@ export { default as newDraggableShip } from "./newDraggableShip.js";
 export { default as newDropTargetGrid } from "./newDropTargetGrid.js";
 export { default as newGrid } from "./newGrid.js";
 export { default as deployShipPageButton } from "./deployShipPageButton.js";
+export { default as motionButton } from "./motionButton.js";
+export { default as themeButton } from "./themeButton.js";
+export { default as soundButton } from "./soundButton.js";

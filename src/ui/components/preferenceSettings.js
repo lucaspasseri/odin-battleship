@@ -1,10 +1,10 @@
-import themeButton from "./themeButton.js";
 import { Preferences } from "../state/Preferences.js";
-import soundButton from "./soundButton.js";
+import { motionButton, themeButton, soundButton } from "./index.js";
 
 export default function preferenceSettings() {
 	const theme = Preferences.themePreference;
 	const sound = Preferences.soundPreference;
+	const motion = Preferences.motionPreference;
 
 	const container = document.createElement("div");
 	container.className = "ml-auto";
@@ -13,15 +13,17 @@ export default function preferenceSettings() {
 
 	const themeLi = document.createElement("li");
 	const themeBtn = themeButton(theme);
-
 	themeLi.appendChild(themeBtn);
 
 	const soundLi = document.createElement("li");
 	const soundBtn = soundButton(sound);
-
 	soundLi.appendChild(soundBtn);
 
-	settings.append(themeLi, soundLi);
+	const motionLi = document.createElement("li");
+	const motionBtn = motionButton(motion);
+	motionLi.appendChild(motionBtn);
+
+	settings.append(themeLi, soundLi, motionLi);
 
 	container.appendChild(settings);
 

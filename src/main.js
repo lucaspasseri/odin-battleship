@@ -9,22 +9,26 @@ state.game = game;
 const changePreference = new EventTarget();
 changePreference.addEventListener("preferenceChange", e => {
 	const { preference } = e.detail;
-
+	console.log({ preference });
 	switch (preference) {
 		case "light-mode":
 			const darkModeElements = [...document.querySelectorAll(".dark-mode")];
 			darkModeElements.forEach(el =>
 				el.classList.replace("dark-mode", "light-mode")
 			);
+			Preferences.toggleTheme();
 			break;
 		case "dark-mode":
 			const lightModeElements = [...document.querySelectorAll(".light-mode")];
 			lightModeElements.forEach(el =>
 				el.classList.replace("light-mode", "dark-mode")
 			);
+			Preferences.toggleTheme();
+			break;
+		case "no-preference":
+		case "reduced":
+			Preferences.toggleMotion();
 	}
-
-	Preferences.toggleTheme();
 });
 
 app.state = changePreference;

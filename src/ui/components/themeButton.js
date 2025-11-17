@@ -52,6 +52,7 @@ export default function themeButton(preference) {
 
 		animate(0, 1, {
 			duration: 0.5,
+			ease: "easeOut",
 			onUpdate: progress => {
 				path.setAttribute("d", interpolator(progress));
 			},
