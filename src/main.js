@@ -26,7 +26,7 @@ changePreference.addEventListener("preferenceChange", e => {
 			Preferences.toggleTheme();
 			break;
 		case "no-preference":
-		case "reduced":
+		case "reduce":
 			Preferences.toggleMotion();
 	}
 });

@@ -46,6 +46,7 @@ export default function motionButton(preference) {
 		v 18
 		h -7
 		v -18
+		Z
 	`;
 
 	const rect2Path = `
@@ -54,6 +55,7 @@ export default function motionButton(preference) {
 		v 18
 		h -7
 		v -18
+		Z
 	`;
 
 	const linePath = `
@@ -116,7 +118,7 @@ export default function motionButton(preference) {
 
 			app.state.dispatchEvent(
 				new CustomEvent("preferenceChange", {
-					detail: { preference: "reduced" },
+					detail: { preference: "reduce" },
 				})
 			);
 
