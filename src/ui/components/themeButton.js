@@ -1,7 +1,8 @@
 import { sampleOne } from "../../util/sampleOne.js";
 import app from "../state/app.js";
+import { Preferences } from "../state/Preferences.js";
 
-export default function preferenceButton(preference) {
+export default function themeButton(preference) {
 	const svgNS = "http://www.w3.org/2000/svg";
 	const button = document.createElement("button");
 	const svg = document.createElementNS(svgNS, "svg");
@@ -13,7 +14,7 @@ export default function preferenceButton(preference) {
 
 	path.setAttribute("fill", "none");
 	path.setAttribute("stroke", "white");
-	path.setAttribute("stroke-width", "10px");
+	path.setAttribute("stroke-width", "8px");
 	path.setAttribute("stroke-linejoin", "round");
 	svg.appendChild(path);
 
@@ -63,14 +64,15 @@ export default function preferenceButton(preference) {
 			current = "sun";
 			app.state.dispatchEvent(
 				new CustomEvent("preferenceChange", {
-					detail: { preference: "light-mode", btnId: "darkModeBtn" },
+					detail: { preference: "light-mode" },
 				})
 			);
 
-			console.log({ app });
-			const spriteId = sampleOne(Object.keys(SPRITE_MAP));
+			if (Preferences.soundPreference === "sound-on") {
+				const spriteId = sampleOne(Object.keys(SPRITE_MAP));
+				sound.play(spriteId);
+			}
 
-			sound.play(spriteId);
 			button.onclick = handleClickStates.sun;
 		},
 		sun: () => {
@@ -78,13 +80,14 @@ export default function preferenceButton(preference) {
 			current = "moon";
 			app.state.dispatchEvent(
 				new CustomEvent("preferenceChange", {
-					detail: { preference: "dark-mode", btnId: "lightModeBtn" },
+					detail: { preference: "dark-mode" },
 				})
 			);
-			console.log({ app });
-			const spriteId = sampleOne(Object.keys(SPRITE_MAP));
 
-			sound?.play(spriteId);
+			if (Preferences.soundPreference === "sound-on") {
+				const spriteId = sampleOne(Object.keys(SPRITE_MAP));
+				sound.play(spriteId);
+			}
 			button.onclick = handleClickStates.moon;
 		},
 	};

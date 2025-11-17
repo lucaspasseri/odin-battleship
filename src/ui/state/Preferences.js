@@ -36,9 +36,7 @@ export const Preferences = {
 	},
 
 	toggleTheme() {
-		console.log(1);
 		const currTheme = this.themePreference;
-
 		if (currTheme === "dark-mode") {
 			this.themePreference = "light-mode";
 		} else {
@@ -53,7 +51,6 @@ export const Preferences = {
 		setItem(STORAGE_KEYS.SOUND_STATE, value);
 	},
 	toggleSound() {
-		console.log(2);
 		const currSound = this.soundPreference;
 		if (currSound === "sound-on") {
 			this.soundPreference = "sound-off";

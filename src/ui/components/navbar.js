@@ -3,8 +3,7 @@ import preferenceSettings from "./preferenceSettings.js";
 export default function navbar() {
 	const nav = document.createElement("nav");
 	nav.id = "navbar";
-	nav.className =
-		"flex bg-[lch(54% 82 21)] items-center px-[1em] md:px-[4em] py-[1em] gap-[2em]";
+	nav.className = "flex items-center px-[1em] md:px-[4em] py-[1em] gap-[2em]";
 
 	const gameLogo = document.createElement("img");
 	gameLogo.className = "rounded-lg";

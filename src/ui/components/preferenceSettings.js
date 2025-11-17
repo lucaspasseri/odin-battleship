@@ -1,28 +1,27 @@
-import preferenceButton from "./preferenceButton.js";
+import themeButton from "./themeButton.js";
 import { Preferences } from "../state/Preferences.js";
+import soundButton from "./soundButton.js";
 
 export default function preferenceSettings() {
 	const theme = Preferences.themePreference;
-	// const sound = Preferences.soundPreference;
-	// const motion = Preferences.motionPreference;
-
-	const preferences = [{ id: "themeLi", value: theme }];
+	const sound = Preferences.soundPreference;
 
 	const container = document.createElement("div");
 	container.className = "ml-auto";
 	const settings = document.createElement("ul");
 	settings.className = " flex gap-[1em]";
 
-	preferences.forEach(preference => {
-		const { id, value } = preference;
-		const li = document.createElement("li");
-		li.id = id;
-		console.log({ value });
-		const button = preferenceButton(value);
-		li.appendChild(button);
+	const themeLi = document.createElement("li");
+	const themeBtn = themeButton(theme);
 
-		settings.appendChild(li);
-	});
+	themeLi.appendChild(themeBtn);
+
+	const soundLi = document.createElement("li");
+	const soundBtn = soundButton(sound);
+
+	soundLi.appendChild(soundBtn);
+
+	settings.append(themeLi, soundLi);
 
 	container.appendChild(settings);
 
