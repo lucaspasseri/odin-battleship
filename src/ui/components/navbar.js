@@ -7,7 +7,7 @@ export default function navbar() {
 
 	const gameLogo = document.createElement("img");
 	gameLogo.className = "rounded-lg";
-	gameLogo.src = "./imgs/logo.png";
+	gameLogo.src = "./src/assets/imgs/logo.png";
 	gameLogo.alt = "Game logo (ship)";
 	gameLogo.width = "100";
 	gameLogo.height = "100";

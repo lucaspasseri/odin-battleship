@@ -16,13 +16,6 @@ export default function themeButton(preference) {
 	path.setAttribute("stroke", "white");
 	path.setAttribute("stroke-width", "8px");
 	path.setAttribute("stroke-linejoin", "round");
-	svg.appendChild(path);
-
-	const span = document.createElement("span");
-	span.className = "visually-hidden";
-	span.textContent = "Change theme preference";
-	button.append(svg, span);
-	document.body.appendChild(button);
 
 	const { animate } = window.Motion;
 
@@ -100,6 +93,13 @@ export default function themeButton(preference) {
 		path.setAttribute("d", shapes.sun);
 		button.onclick = handleClickStates.sun;
 	}
+
+	svg.appendChild(path);
+
+	const span = document.createElement("span");
+	span.className = "visually-hidden";
+	span.textContent = "Change theme preference";
+	button.append(svg, span);
 
 	return button;
 }

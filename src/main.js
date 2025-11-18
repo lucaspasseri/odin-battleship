@@ -1,5 +1,5 @@
 import { Game, state } from "./core/index.js";
-import { navbar } from "./ui/components/index.js";
+import { createPlayerSection, navbar } from "./ui/components/index.js";
 import app from "./ui/state/app.js";
 import { Preferences } from "./ui/state/Preferences.js";
 
@@ -44,6 +44,10 @@ const nav = navbar();
 header.appendChild(nav);
 
 const main = document.createElement("main");
+
+const createPlayerSec = createPlayerSection();
+main.appendChild(createPlayerSec);
+
 const footer = document.createElement("div");
 
 container.append(header, main, footer);

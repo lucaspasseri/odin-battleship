@@ -9,7 +9,7 @@ export { default as playerForm } from "./playerForm.js";
 export { default as createDraggableShip } from "./createDraggableShip.js";
 export { default as createShips } from "./createShips.js";
 export { default as createDropTargetGrid } from "./createDropTargetGrid.js";
-export { default as createPlayerSectionNew } from "./createPlayerSectionNew.js";
+export { default as createPlayerSection } from "./createPlayerSection.js";
 export { default as playerImageLeftButton } from "./playerImageLeftButton.js";
 export { default as playerImageRightButton } from "./playerImageRightButton.js";
 export { default as playerTypeLeftButton } from "./playerTypeLeftButton.js";
@@ -28,6 +28,9 @@ export { default as newDraggableShip } from "./newDraggableShip.js";
 export { default as newDropTargetGrid } from "./newDropTargetGrid.js";
 export { default as newGrid } from "./newGrid.js";
 export { default as deployShipPageButton } from "./deployShipPageButton.js";
+
 export { default as motionButton } from "./motionButton.js";
 export { default as themeButton } from "./themeButton.js";
 export { default as soundButton } from "./soundButton.js";
+export { default as imageSelector } from "./imageSelector.js";
+export { default as leftTriangleSvg } from "./leftTriangleSvg.js";

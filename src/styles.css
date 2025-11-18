@@ -12,6 +12,26 @@ body {
 	color: black;
 }
 
+#playerProfileSprite {
+	transition: all 400ms;
+}
+
+@keyframes keyPress {
+	0% {
+		transform: scale(1) translate(var(--x), var(--y));
+	}
+	50% {
+		transform: scale(0.8) translate(var(--x), var(--y));
+	}
+	100% {
+		transform: scale(1) translate(var(--x), var(--y));
+	}
+}
+
+.arrowPress {
+	animation: keyPress var(--duration) cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
 .water {
 	background-color: blue;
 }

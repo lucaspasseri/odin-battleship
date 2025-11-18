@@ -1,6 +1,6 @@
 import {
 	navbar,
-	createPlayerSectionNew,
+	createPlayerSection,
 	createMatch,
 } from "../ui/components/index.js";
 
@@ -10,7 +10,7 @@ export default function initialPage() {
 	const page = document.createElement("div");
 	page.id = "initialPage";
 
-	const createSection = createPlayerSectionNew();
+	const createSection = createPlayerSection();
 
 	const match = createMatch();
 

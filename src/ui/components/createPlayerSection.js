@@ -1,6 +1,6 @@
 import { createNewPlayer, playerList } from "./index.js";
 
-export default function createPlayerSectionNew() {
+export default function createPlayerSection() {
 	const container = document.createElement("section");
 	container.className = "px-[4em] pt-[2em] pb-[4em]";
 
