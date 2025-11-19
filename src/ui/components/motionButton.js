@@ -6,6 +6,7 @@ export default function motionButton(preference) {
 	const svgNS = "http://www.w3.org/2000/svg";
 	const button = document.createElement("button");
 	button.id = "motionButton";
+	button.className = "poke";
 	const svg = document.createElementNS(svgNS, "svg");
 	svg.setAttribute("viewBox", "0 0 24 24");
 	svg.style.width = "32px";

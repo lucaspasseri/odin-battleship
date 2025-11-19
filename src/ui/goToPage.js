@@ -5,6 +5,7 @@ import {
 	lastPage,
 	errorPage,
 	gameMode,
+	deployShips,
 } from "../pages/index.js";
 
 const pageMap = {
@@ -14,6 +15,7 @@ const pageMap = {
 	lastPage,
 	errorPage,
 	gameMode,
+	deployShips,
 };
 
 export default function goToPage(pageName) {
@@ -24,6 +26,8 @@ export default function goToPage(pageName) {
 	const pageElement = createPage();
 
 	if (pageElement) {
-		main.appendChild(pageElement);
+		document.startViewTransition(() => {
+			main.appendChild(pageElement);
+		});
 	}
 }

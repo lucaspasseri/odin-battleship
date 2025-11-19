@@ -9,6 +9,7 @@ export default function themeButton(preference) {
 	const svgNS = "http://www.w3.org/2000/svg";
 	const button = document.createElement("button");
 	button.id = "themeButton";
+	button.className = "poke";
 	const svg = document.createElementNS(svgNS, "svg");
 	const path = document.createElementNS(svgNS, "path");
 

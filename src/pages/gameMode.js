@@ -11,14 +11,16 @@ export default function gameMode() {
 
 	const playerTypes = [
 		{
-			value: "human",
+			value: "singlePlayer",
 			svg: 123,
 			text: "P1 vs CPU",
+			nextPage: "deployShips",
 		},
 		{
-			value: "computer",
+			value: "multiPlayer",
 			svg: 123,
 			text: "P1 vs P2",
+			nextPage: "errorPage",
 		},
 	];
 
@@ -34,7 +36,7 @@ export default function gameMode() {
 			"flex-1 rounded border-[var(--color)] border-2 bg-gray-700";
 		button.textContent = type.text;
 		button.addEventListener("click", () => {
-			goToPage("errorPage");
+			goToPage(type.nextPage);
 		});
 
 		li.appendChild(button);

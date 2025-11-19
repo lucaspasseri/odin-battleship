@@ -167,7 +167,14 @@ body {
 	}
 }
 
-.moonPoke {
+
+} */
+
+/* .moonPoke.beingPoked {
+	transform: rotate(-20deg);
+} */
+
+.poke {
 	--boop-spring: linear(
 		0,
 		0.011,
@@ -207,8 +214,8 @@ body {
 
 	transition: transform var(--boop-spring) var(--boop-spring-duration);
 	transform-origin: center;
-} */
+}
 
-/* .moonPoke.beingPoked {
+.poke:hover {
 	transform: rotate(-20deg);
-} */
+}
