@@ -35,7 +35,15 @@ export default function imageSelector() {
 
 	const rightButton = document.createElement("button");
 	rightButton.className = "absolute right-0 top-[50%] z-10";
+
 	const rightSvg = leftTriangleSvg();
+
+	const spanR = document.createElement("span");
+	spanR.className = "visually-hidden";
+	spanR.textContent = "Change profile image (right arrow)";
+
+	rightButton.append(rightSvg, spanR);
+
 	rightSvg.style.setProperty("transform", "rotate(180deg)");
 	const xInitialR = "50%";
 	const yInitialR = "-50%";
@@ -63,7 +71,13 @@ export default function imageSelector() {
 	const leftButton = document.createElement("button");
 	leftButton.className = "absolute left-0 top-[50%] z-10";
 	const leftSvg = leftTriangleSvg();
-	leftButton.appendChild(leftSvg);
+
+	const spanL = document.createElement("span");
+	spanL.className = "visually-hidden";
+	spanL.textContent = "Change profile image (left arrow)";
+
+	leftButton.append(leftSvg, spanL);
+
 	const xInitialL = "-50%";
 	const yInitialL = "-50%";
 

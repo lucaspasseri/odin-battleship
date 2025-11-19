@@ -8,7 +8,6 @@ export default function leftTriangleSvg() {
 	svg.style.width = "28px";
 	svg.style.height = "28px";
 
-	// --- CREATE FILTER for triangular shadow ---
 	const defs = document.createElementNS(svgNS, "defs");
 	const filter = document.createElementNS(svgNS, "filter");
 
@@ -19,23 +18,20 @@ export default function leftTriangleSvg() {
 	filter.setAttribute("height", "200%");
 
 	const shadow = document.createElementNS(svgNS, "feDropShadow");
-	shadow.setAttribute("dx", "4"); // horizontal shadow offset
-	shadow.setAttribute("dy", "4"); // vertical shadow offset
-	shadow.setAttribute("stdDeviation", "3"); // blur
+	shadow.setAttribute("dx", "4");
+	shadow.setAttribute("dy", "4");
+	shadow.setAttribute("stdDeviation", "3");
 	shadow.setAttribute("flood-color", "rgba(0,0,0,0.45)");
 
 	filter.appendChild(shadow);
 	defs.appendChild(filter);
 	svg.appendChild(defs);
-	// ----------------------------------------------
 
-	// TRIANGLE PATH
 	path.setAttribute("stroke", "white");
 	path.setAttribute("stroke-width", "8px");
 	path.setAttribute("stroke-linejoin", "round");
 	path.setAttribute("stroke-linecap", "round");
 
-	// Apply triangular shadow
 	path.setAttribute("filter", "url(#triangleShadow)");
 
 	const leftTriangle = `

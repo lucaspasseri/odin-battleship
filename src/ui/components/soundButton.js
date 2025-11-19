@@ -3,34 +3,52 @@ import { sampleOne } from "../../util/sampleOne.js";
 import app from "../state/app.js";
 
 export default function soundButton(preference) {
+	const MORPH_DURATION = 0.5;
+
 	const svgNS = "http://www.w3.org/2000/svg";
 	const button = document.createElement("button");
+	button.id = "soundButton";
 	const svg = document.createElementNS(svgNS, "svg");
 	svg.setAttribute("viewBox", "0 0 24 24");
 	svg.style.width = "32px";
 	svg.style.height = "32px";
 	svg.style.overflow = "visible";
 
+	const strokeColor =
+		Preferences.themePreference === "light-mode" ? "#000000" : "#ffffff";
+
 	const mainPath = document.createElementNS(svgNS, "path");
 	mainPath.setAttribute("fill", "none");
-	mainPath.setAttribute("stroke", "white");
+	mainPath.setAttribute("stroke", strokeColor);
 	mainPath.setAttribute("stroke-width", "2px");
 	mainPath.setAttribute("stroke-linejoin", "round");
 	svg.appendChild(mainPath);
 
 	const wave1Path = document.createElementNS(svgNS, "path");
 	wave1Path.setAttribute("fill", "none");
-	wave1Path.setAttribute("stroke", "white");
+	wave1Path.setAttribute("stroke", strokeColor);
 	wave1Path.setAttribute("stroke-width", "2px");
 	wave1Path.setAttribute("stroke-linejoin", "round");
 	svg.appendChild(wave1Path);
 
 	const wave2Path = document.createElementNS(svgNS, "path");
 	wave2Path.setAttribute("fill", "none");
-	wave2Path.setAttribute("stroke", "white");
+	wave2Path.setAttribute("stroke", strokeColor);
 	wave2Path.setAttribute("stroke-width", "2px");
 	wave2Path.setAttribute("stroke-linejoin", "round");
 	svg.appendChild(wave2Path);
+
+	const SPRITE_MAP = {
+		a: [11, 78],
+		b: [107, 167],
+		c: [182, 250],
+	};
+
+	const sound = new Howl({
+		src: ["./src/assets/clickMp3.mp3"],
+		sprite: SPRITE_MAP,
+		volume: 0.25,
+	});
 
 	const shapes = {
 		stereo: `
@@ -75,25 +93,13 @@ export default function soundButton(preference) {
 		const interpolator = flubber.interpolate(from, to);
 
 		animate(0, 1, {
-			duration: 0.5,
+			duration: MORPH_DURATION,
 			ease: "easeOut",
 			onUpdate: progress => {
 				wavePath.setAttribute("d", interpolator(progress));
 			},
 		});
 	};
-
-	const SPRITE_MAP = {
-		a: [11, 78],
-		b: [107, 167],
-		c: [182, 250],
-	};
-
-	const sound = new Howl({
-		src: ["./src/assets/clickMp3.mp3"],
-		sprite: SPRITE_MAP,
-		volume: 0.25,
-	});
 
 	const handleClickStates = {
 		soundOn: () => {
@@ -146,6 +152,6 @@ export default function soundButton(preference) {
 	span.className = "visually-hidden";
 	span.textContent = "Change sound preference";
 	button.append(svg, span);
-	document.body.appendChild(button);
+
 	return button;
 }

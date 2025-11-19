@@ -5,22 +5,26 @@ import { Preferences } from "../state/Preferences.js";
 export default function motionButton(preference) {
 	const svgNS = "http://www.w3.org/2000/svg";
 	const button = document.createElement("button");
+	button.id = "motionButton";
 	const svg = document.createElementNS(svgNS, "svg");
 	svg.setAttribute("viewBox", "0 0 24 24");
 	svg.style.width = "32px";
 	svg.style.height = "32px";
 	svg.style.overflow = "visible";
 
+	const strokeColor =
+		Preferences.themePreference === "light-mode" ? "#000000" : "#ffffff";
+
 	const path = document.createElementNS(svgNS, "path");
 	path.setAttribute("fill", "none");
-	path.setAttribute("stroke", "white");
+	path.setAttribute("stroke", strokeColor);
 	path.setAttribute("stroke-width", "2px");
 	path.setAttribute("stroke-linejoin", "round");
 	svg.appendChild(path);
 
 	const rect2 = document.createElementNS(svgNS, "path");
 	rect2.setAttribute("fill", "none");
-	rect2.setAttribute("stroke", "white");
+	rect2.setAttribute("stroke", strokeColor);
 	rect2.setAttribute("stroke-width", "2px");
 	rect2.setAttribute("stroke-linejoin", "round");
 	svg.appendChild(rect2);
@@ -159,6 +163,6 @@ export default function motionButton(preference) {
 	span.className = "visually-hidden";
 	span.textContent = "Change motion animation preference";
 	button.append(svg, span);
-	document.body.appendChild(button);
+
 	return button;
 }

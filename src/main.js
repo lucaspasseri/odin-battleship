@@ -1,5 +1,6 @@
 import { Game, state } from "./core/index.js";
-import { createPlayerSection, navbar } from "./ui/components/index.js";
+import { navbar } from "./ui/components/index.js";
+import goToPage from "./ui/goToPage.js";
 import app from "./ui/state/app.js";
 import { Preferences } from "./ui/state/Preferences.js";
 
@@ -12,18 +13,20 @@ changePreference.addEventListener("preferenceChange", e => {
 	console.log({ preference });
 	switch (preference) {
 		case "light-mode":
-			const darkModeElements = [...document.querySelectorAll(".dark-mode")];
-			darkModeElements.forEach(el =>
-				el.classList.replace("dark-mode", "light-mode")
-			);
+			// const darkModeElements = [...document.querySelectorAll(".dark-mode")];
+			// darkModeElements.forEach(el =>
+			// 	el.classList.replace("dark-mode", "light-mode")
+			// );
 			Preferences.toggleTheme();
+			document.documentElement.setAttribute("data-theme", preference);
 			break;
 		case "dark-mode":
-			const lightModeElements = [...document.querySelectorAll(".light-mode")];
-			lightModeElements.forEach(el =>
-				el.classList.replace("light-mode", "dark-mode")
-			);
+			// const lightModeElements = [...document.querySelectorAll(".light-mode")];
+			// lightModeElements.forEach(el =>
+			// 	el.classList.replace("light-mode", "dark-mode")
+			// );
 			Preferences.toggleTheme();
+			document.documentElement.setAttribute("data-theme", preference);
 			break;
 		case "no-preference":
 		case "reduce":
@@ -33,7 +36,10 @@ changePreference.addEventListener("preferenceChange", e => {
 
 app.state = changePreference;
 
-document.body.className = `${Preferences.themePreference}`;
+const preferredTheme = Preferences.themePreference;
+console.log({ preferredTheme });
+
+document.documentElement.setAttribute("data-theme", preferredTheme);
 
 const container = document.querySelector("#container");
 
@@ -44,10 +50,10 @@ const nav = navbar();
 header.appendChild(nav);
 
 const main = document.createElement("main");
-
-const createPlayerSec = createPlayerSection();
-main.appendChild(createPlayerSec);
+main.id = "main";
 
 const footer = document.createElement("div");
 
 container.append(header, main, footer);
+
+goToPage("gameMode");

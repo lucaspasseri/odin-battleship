@@ -1,15 +1,16 @@
-body {
-	background-color: lch(18% 132 300);
-	transition: background-color 0.5s ease, color 0.5s ease;
+:root[data-theme="light-mode"] {
+	--bg: lch(66% 132 259);
+	--color: #000;
 }
 
-.dark-mode {
-	background-color: lch(18% 132 300);
-	color: white;
+:root[data-theme="dark-mode"] {
+	--bg: lch(18% 132 300);
+	--color: #fff;
 }
-.light-mode {
-	background-color: lch(66% 132 259);
-	color: black;
+
+body {
+	background-color: var(--bg);
+	color: var(--color);
 }
 
 #playerProfileSprite {
@@ -42,6 +43,11 @@ body {
 
 .ship {
 	background-color: black;
+}
+
+.playerTypeSelected {
+	background-color: rgb(236, 89, 5) !important;
+	color: white;
 }
 
 .draggableShip {

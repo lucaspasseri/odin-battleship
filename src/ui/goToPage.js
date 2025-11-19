@@ -4,6 +4,7 @@ import {
 	mainPage,
 	lastPage,
 	errorPage,
+	gameMode,
 } from "../pages/index.js";
 
 const pageMap = {
@@ -12,16 +13,17 @@ const pageMap = {
 	mainPage,
 	lastPage,
 	errorPage,
+	gameMode,
 };
 
 export default function goToPage(pageName) {
-	const container = document.querySelector("#container");
-	container.innerHTML = "";
+	const main = document.querySelector("#main");
+	main.innerHTML = "";
 
 	const createPage = pageMap[pageName] || errorPage;
 	const pageElement = createPage();
 
 	if (pageElement) {
-		container.appendChild(pageElement);
+		main.appendChild(pageElement);
 	}
 }
