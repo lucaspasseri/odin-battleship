@@ -6,6 +6,7 @@ import {
 	errorPage,
 	gameMode,
 	deployShips,
+	playMatch,
 } from "../pages/index.js";
 
 const pageMap = {
@@ -16,6 +17,7 @@ const pageMap = {
 	errorPage,
 	gameMode,
 	deployShips,
+	playMatch,
 };
 
 export default function goToPage(pageName) {

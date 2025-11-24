@@ -1,3 +1,6 @@
+import startSinglePlayerGame from "../core/orchestration/startSinglePlayerGame.js";
+import startMultiPlayerGame from "../core/orchestration/startMultiPlayerGame.js";
+
 import goToPage from "../ui/goToPage.js";
 
 export default function gameMode() {
@@ -20,7 +23,7 @@ export default function gameMode() {
 			value: "multiPlayer",
 			svg: 123,
 			text: "P1 vs P2",
-			nextPage: "errorPage",
+			nextPage: "deployShips",
 		},
 	];
 
@@ -36,6 +39,12 @@ export default function gameMode() {
 			"flex-1 rounded border-[var(--color)] border-2 bg-gray-700";
 		button.textContent = type.text;
 		button.addEventListener("click", () => {
+			if (type.value === "singlePlayer") {
+				startSinglePlayerGame();
+			} else {
+				startMultiPlayerGame();
+			}
+
 			goToPage(type.nextPage);
 		});
 

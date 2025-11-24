@@ -152,6 +152,8 @@ export default class Game {
 	}
 
 	checkShipCellByPlayerIndex(x, y, playerIndex) {
+		if (x < 0 || x > 9 || y < 0 || y > 9) return null;
+
 		const occupiedCells = this.#players[playerIndex].gameboard.occupiedPlaces;
 		const key = `${x},${y}`;
 

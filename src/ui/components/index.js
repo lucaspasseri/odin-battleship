@@ -34,3 +34,4 @@ export { default as themeButton } from "./themeButton.js";
 export { default as soundButton } from "./soundButton.js";
 export { default as imageSelector } from "./imageSelector.js";
 export { default as leftTriangleSvg } from "./leftTriangleSvg.js";
+export { default as grid } from "./grid.js";
