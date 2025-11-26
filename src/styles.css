@@ -1,3 +1,42 @@
+:root {
+	--boop-spring: linear(
+		0,
+		0.011,
+		0.045 1.4%,
+		0.184 3%,
+		0.913 8.2%,
+		1.156,
+		1.304 12.3%,
+		1.345,
+		1.365,
+		1.367,
+		1.359 15.8%,
+		1.31 17.5%,
+		1.027 23.1%,
+		0.937 25.3%,
+		0.888 27.1%,
+		0.873,
+		0.866 29%,
+		0.867,
+		0.88,
+		0.905 33.5%,
+		0.982 37.5%,
+		1.014 39.4%,
+		1.038,
+		1.049 43.7% 45.2%,
+		1.044 46.7%,
+		0.995 54.2%,
+		0.986,
+		0.982 58.4%,
+		0.984 61.5%,
+		1.002 68.9%,
+		1.006 72.9%,
+		0.998 87.3%,
+		1.001
+	);
+	--boop-spring-duration: 1.2s;
+}
+
 :root[data-theme="light-mode"] {
 	--bg: lch(66% 132 259);
 	--color: #000;
@@ -17,7 +56,7 @@ body {
 	transition: all 400ms;
 }
 
-@keyframes grow {
+/* @keyframes grow {
 	to {
 		transform: scale(2);
 	}
@@ -26,7 +65,7 @@ body {
 .gridCell:hover,
 .ship:hover {
 	animation: grow 1s;
-}
+} */
 
 @keyframes keyPress {
 	0% {
@@ -81,7 +120,33 @@ body {
 }
 
 .playableGrid {
-	outline: dashed red;
+	outline: 2px dashed red;
+}
+
+@keyframes greenPulse {
+	to {
+		border-top: lch(78% 132 143) 0.2em solid;
+		border-left: lch(78% 132 143) 0.4em solid;
+		border-bottom: lch(78% 132 143) 0.2em solid;
+		border-right: lch(78% 132 143) 0.4em solid;
+	}
+}
+
+@keyframes redPulse {
+	to {
+		border-top: red 0.2em solid;
+		border-left: red 0.4em solid;
+		border-bottom: red 0.2em solid;
+		border-right: red 0.4em solid;
+	}
+}
+
+.gridCellRedPulse {
+	animation: redPulse var(--boop-spring) var(--boop-spring-duration) infinite;
+}
+
+.gridCellGreenPulse {
+	animation: greenPulse var(--boop-spring) var(--boop-spring-duration) infinite;
 }
 
 /* .rotate {
@@ -190,43 +255,6 @@ body {
 } */
 
 .poke {
-	--boop-spring: linear(
-		0,
-		0.011,
-		0.045 1.4%,
-		0.184 3%,
-		0.913 8.2%,
-		1.156,
-		1.304 12.3%,
-		1.345,
-		1.365,
-		1.367,
-		1.359 15.8%,
-		1.31 17.5%,
-		1.027 23.1%,
-		0.937 25.3%,
-		0.888 27.1%,
-		0.873,
-		0.866 29%,
-		0.867,
-		0.88,
-		0.905 33.5%,
-		0.982 37.5%,
-		1.014 39.4%,
-		1.038,
-		1.049 43.7% 45.2%,
-		1.044 46.7%,
-		0.995 54.2%,
-		0.986,
-		0.982 58.4%,
-		0.984 61.5%,
-		1.002 68.9%,
-		1.006 72.9%,
-		0.998 87.3%,
-		1.001
-	);
-	--boop-spring-duration: 1.2s;
-
 	transition: transform var(--boop-spring) var(--boop-spring-duration);
 	transform-origin: center;
 }

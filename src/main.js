@@ -10,7 +10,7 @@ state.game = game;
 const changePreference = new EventTarget();
 changePreference.addEventListener("preferenceChange", e => {
 	const { preference } = e.detail;
-	console.log({ preference });
+
 	switch (preference) {
 		case "light-mode":
 			// const darkModeElements = [...document.querySelectorAll(".dark-mode")];
@@ -37,7 +37,6 @@ changePreference.addEventListener("preferenceChange", e => {
 app.state = changePreference;
 
 const preferredTheme = Preferences.themePreference;
-console.log({ preferredTheme });
 
 document.documentElement.setAttribute("data-theme", preferredTheme);
 

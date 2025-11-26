@@ -27,7 +27,6 @@ export default function createNewPlayer() {
 	humanButton.className = "bg-white rounded-xl p-[0.4em]";
 	humanButton.textContent = "Human";
 	humanButton.addEventListener("click", () => {
-		console.log(1);
 		humanButton.classList.add("playerTypeSelected");
 		computerButton.classList.remove("playerTypeSelected");
 	});
@@ -41,7 +40,6 @@ export default function createNewPlayer() {
 	computerButton.className = "bg-white rounded-xl p-[0.4em]";
 	computerButton.textContent = "Computer";
 	computerButton.addEventListener("click", () => {
-		console.log(2);
 		computerButton.classList.add("playerTypeSelected");
 		humanButton.classList.remove("playerTypeSelected");
 	});

@@ -17,11 +17,11 @@ export default function deployShips() {
 	const h2 = "Deploy ships";
 
 	const shipsAndGridContainer = document.createElement("div");
-	shipsAndGridContainer.className = "flex border flex-col";
+	shipsAndGridContainer.className = "flex flex-wrap justify-between";
 
 	const shipsContainer = document.createElement("div");
 	shipsContainer.className =
-		"border-[0.3em] border-purple-700 flex flex-col gap-[0.4em] relative";
+		"flex flex-col gap-[0.4em] relative min-w-[160px] sm:min-w-[240px] min-h-[180px] sm:min-h-[260px] shrink-0";
 
 	let offsetLeft = 0;
 	let offsetTop = 0;
@@ -32,6 +32,7 @@ export default function deployShips() {
 		targetShip.removeEventListener("pointerup", endDrag);
 
 		const element = document.elementFromPoint(e.clientX, e.clientY);
+
 		if (element === null || !element.classList.contains("gridCell")) {
 			targetShip.style.transform = `translate(0px, 0px)`;
 			return;
@@ -42,31 +43,20 @@ export default function deployShips() {
 		const x = Number(element.dataset.x);
 		const y = Number(element.dataset.y);
 
-		const possiblePlaces =
-			state.game.currPlayer.gameboard.getShipPossiblePlaces(
-				x,
-				y,
-				shipSize,
-				"horizontal"
-			);
-
-		const hasCollision = possiblePlaces.reduce((acc, curr) => {
-			const [x, y] = curr.split(",");
-			const cellState = state.game.checkShipCellByPlayerIndex(
-				Number(x),
-				Number(y),
-				state.game.currPlayerIndex
-			);
-
-			if (cellState !== "water") {
-				acc = true;
-			}
-
-			return acc;
-		}, false);
+		const hasCollision = state.game.placeShipHasCollision(
+			x,
+			y,
+			shipSize,
+			"horizontal",
+			state.game.currPlayerIndex
+		);
 
 		if (hasCollision) {
 			targetShip.style.transform = `translate(0px, 0px)`;
+			lastHoveredCell.classList.remove(
+				"gridCellRedPulse",
+				"gridCellGreenPulse"
+			);
 			return;
 		}
 
@@ -88,11 +78,52 @@ export default function deployShips() {
 		targetShip.remove();
 	}
 
+	let lastHoveredCell = null;
+
 	function onDrag(e) {
 		if (targetShip === null) return;
 
-		const x = e.clientX - offsetLeft;
-		const y = e.clientY - offsetTop;
+		const element = document.elementFromPoint(e.clientX, e.clientY);
+
+		const isGridCell = element && element.classList.contains("gridCell");
+
+		if (isGridCell && element !== lastHoveredCell) {
+			if (lastHoveredCell) {
+				lastHoveredCell.classList.remove(
+					"gridCellRedPulse",
+					"gridCellGreenPulse"
+				);
+			}
+
+			const x = Number(element.dataset.x);
+			const y = Number(element.dataset.y);
+
+			const { size: shipSize } = JSON.parse(targetShip?.dataset.ship);
+
+			const hasCollision = state.game.placeShipHasCollision(
+				x,
+				y,
+				shipSize,
+				"horizontal",
+				state.game.currPlayerIndex
+			);
+
+			if (hasCollision) {
+				element.classList.add("gridCellRedPulse");
+			} else {
+				element.classList.add("gridCellGreenPulse");
+			}
+
+			lastHoveredCell = element;
+		} else if (!isGridCell && lastHoveredCell) {
+			lastHoveredCell.classList.remove(
+				"gridCellRedPulse",
+				"gridCellGreenPulse"
+			);
+			lastHoveredCell = null;
+		}
+		const x = e.clientX - offsetLeft + 10;
+		const y = e.clientY - offsetTop + 10;
 		targetShip.style.transform = `translate(${x}px,${y}px)`;
 	}
 
@@ -104,7 +135,8 @@ export default function deployShips() {
 		ship.id = `draggableShip-${index}`;
 		ship.className =
 			"flex gap-[0.2em] p-[0.2em] border-black border-[0.2em] w-fit touch-none absolute will-change-transform";
-		ship.style.top = `calc(${index} * 50px)`;
+		const topValue = index * 60;
+		ship.classList.add(`sm:top-[${topValue}px]`, `top-[${topValue / 1.5}px]`);
 		ship.setAttribute("data-ship", JSON.stringify(shipData));
 
 		function startDrag(e) {
@@ -124,7 +156,7 @@ export default function deployShips() {
 
 		range(index + 2).forEach(i => {
 			const cell = document.createElement("div");
-			cell.className = "w-6 h-6 bg-black";
+			cell.className = "w-6 h-6 sm:w-10 sm:h-10 bg-black";
 
 			ship.appendChild(cell);
 		});

@@ -151,6 +151,36 @@ export default class Game {
 		this.#players[playerIndex]?.gameboard.placeShip(x, y, length, direction);
 	}
 
+	placeShipHasCollision(x, y, length, direction, playerIndex) {
+		if (playerIndex < 0 || playerIndex > this.#players.length - 1) {
+			throw newError();
+		}
+
+		const possiblePlaces = this.currPlayer.gameboard.getShipPossiblePlaces(
+			x,
+			y,
+			length,
+			direction
+		);
+
+		const hasCollision = possiblePlaces.reduce((acc, curr) => {
+			const [x, y] = curr.split(",");
+			const cellState = this.checkShipCellByPlayerIndex(
+				Number(x),
+				Number(y),
+				this.currPlayerIndex
+			);
+
+			if (cellState !== "water") {
+				acc = true;
+			}
+
+			return acc;
+		}, false);
+
+		return hasCollision;
+	}
+
 	checkShipCellByPlayerIndex(x, y, playerIndex) {
 		if (x < 0 || x > 9 || y < 0 || y > 9) return null;
 

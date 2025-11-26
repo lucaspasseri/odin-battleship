@@ -8,11 +8,11 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 		container = document.createElement("div");
 		container.id = "shipDeploymentGrid";
 		container.className =
-			"grid grid-cols-10 p-[0.2em] gap-[0.2em] w-fit border-white border-[0.2em]";
+			"grid grid-cols-10 p-[0.2em] gap-[0.2em] min-w-[282px] border-white border-[0.2em]";
 
 		range(100).forEach(index => {
 			const cell = document.createElement("div");
-			cell.className = "w-6 h-6 gridCell";
+			cell.className = "w-6 h-6 gridCell sm:w-10 sm:h-10 outline-0";
 
 			const x = index % 10;
 			const y = 9 - Math.floor(index / 10);
@@ -33,7 +33,7 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 		const opponentPlayerIndex = state.game.getPlayerIndex(
 			state.game.opponentPlayer
 		);
-		console.log(opponentPlayerIndex);
+
 		container = document.createElement("div");
 		container.id = `playMatchGrid-${gameboardIndex}`;
 		container.className =
@@ -57,8 +57,6 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 			cell.dataset.y = y;
 
 			cell.addEventListener("click", () => {
-				console.log({ gameboardIndex, c: state.game.currPlayerIndex });
-
 				if (gameboardIndex === state.game.currPlayerIndex) return;
 
 				const hitAnInitialStateCell = state.game.hitCellByPlayerIndex(
@@ -68,8 +66,6 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 				);
 
 				if (!hitAnInitialStateCell) return;
-
-				console.log({ hitAnInitialStateCell });
 
 				const parentNode = document.querySelector(
 					`#gridContainer-${gameboardIndex}`
@@ -84,7 +80,7 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 				const currentPlayerGrid = document.querySelector(
 					`#playMatchGrid-${state.game.currPlayerIndex}`
 				);
-				console.log({ currentPlayerGrid });
+
 				currentPlayerGrid.classList.add("playableGrid");
 
 				parentNode.replaceChild(newGrid, oldGrid);

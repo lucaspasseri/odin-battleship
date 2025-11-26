@@ -67,7 +67,6 @@ export const Preferences = {
 	},
 
 	toggleMotion() {
-		console.log(3);
 		const currMotion = this.motionPreference;
 		if (currMotion === "no-preference") {
 			this.motionPreference = "reduce";
