@@ -2,6 +2,9 @@ import goToPage from "../ui/goToPage.js";
 import { state } from "../core/index.js";
 import { range } from "../util/range.js";
 import { grid } from "../ui/components/index.js";
+import { Preferences } from "../ui/state/Preferences.js";
+import { sampleOne } from "../util/sampleOne.js";
+
 export default function deployShips() {
 	const hasCurrentPlayerAlreadyDeployed =
 		state.game.getShips(state.game.currPlayerIndex).length > 0;
@@ -26,6 +29,17 @@ export default function deployShips() {
 	let offsetLeft = 0;
 	let offsetTop = 0;
 	let targetShip = null;
+	let lastHoveredCell = null;
+
+	const SPRITE_MAP_HONK = {
+		a: [48070, 3000],
+		b: [52175, 3000],
+	};
+	const shipHonk = new Howl({
+		src: ["./src/assets/honk.wav"],
+		sprite: SPRITE_MAP_HONK,
+		volume: 0.15,
+	});
 
 	function endDrag(e) {
 		targetShip.removeEventListener("pointermove", onDrag);
@@ -68,17 +82,37 @@ export default function deployShips() {
 			state.game.currPlayerIndex
 		);
 
-		const parentNode = document.querySelector("#shipDeploymentGridContainer");
+		const gridCellsToUpdate =
+			state.game.currPlayer.gameboard.getShipPossiblePlaces(
+				x,
+				y,
+				shipSize,
+				"horizontal"
+			);
 
-		const oldGrid = document.querySelector("#shipDeploymentGrid");
-		const newGrid = grid();
+		gridCellsToUpdate.forEach((cell, index) => {
+			const [x, y] = cell.split(",");
+			const gridCell = document.querySelector(`#gridCell_${x}-${y}`);
+			gridCell.classList.remove("ship", "gridCellGreenPulse");
+			lastHoveredCell = null;
 
-		parentNode.replaceChild(newGrid, oldGrid);
+			if (Preferences.motionPreference === "no-preference") {
+				setTimeout(() => {
+					gridCell.classList.add("newShip");
+				}, index * 300);
+			} else {
+				gridCell.classList.add("ship");
+			}
+		});
 
 		targetShip.remove();
-	}
 
-	let lastHoveredCell = null;
+		if (Preferences.soundPreference === "sound-on") {
+			const spriteId = sampleOne(Object.keys(SPRITE_MAP_HONK));
+			const id = shipHonk.play(spriteId);
+			shipHonk.rate(1.2, id);
+		}
+	}
 
 	function onDrag(e) {
 		if (targetShip === null) return;

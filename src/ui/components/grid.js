@@ -23,7 +23,7 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 				state.game.currPlayerIndex
 			);
 			cell.classList.add(cellState);
-			cell.id = `gridCell-${x},${y}`;
+			cell.id = `gridCell_${x}-${y}`;
 			cell.dataset.x = x;
 			cell.dataset.y = y;
 
@@ -52,7 +52,7 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 
 			const cellState = state.game.checkCellByPlayerIndex(x, y, gameboardIndex);
 			cell.classList.add(cellState);
-			cell.id = `gridCell-${x},${y}`;
+			cell.id = `gridCell_${x}-${y}`;
 			cell.dataset.x = x;
 			cell.dataset.y = y;
 

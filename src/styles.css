@@ -52,47 +52,6 @@ body {
 	color: var(--color);
 }
 
-#playerProfileSprite {
-	transition: all 400ms;
-}
-
-/* @keyframes grow {
-	to {
-		transform: scale(2);
-	}
-}
-
-.gridCell:hover,
-.ship:hover {
-	animation: grow 1s;
-} */
-
-@keyframes keyPress {
-	0% {
-		transform: scale(1) translate(var(--x), var(--y));
-	}
-	50% {
-		transform: scale(0.8) translate(var(--x), var(--y));
-	}
-	100% {
-		transform: scale(1) translate(var(--x), var(--y));
-	}
-}
-
-.arrowPress {
-	animation: keyPress var(--duration) cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.playerTypeSelected {
-	background-color: rgb(236, 89, 5) !important;
-	color: white;
-}
-
-.draggableShip {
-	position: fixed;
-	will-change: left, top;
-}
-
 #navbar {
 	background-color: lch(0% 132 290 / 32%);
 }
@@ -119,8 +78,27 @@ body {
 	background-color: black;
 }
 
+.draggableShip {
+	position: fixed;
+	will-change: left, top;
+}
+
 .playableGrid {
 	outline: 2px dashed red;
+}
+
+@keyframes deployShip {
+	50% {
+		transform: scale(1.5);
+	}
+	100% {
+		background-color: black;
+		transform: scale(1);
+	}
+}
+
+.newShip {
+	animation: deployShip 400ms forwards;
 }
 
 @keyframes greenPulse {
@@ -148,6 +126,42 @@ body {
 .gridCellGreenPulse {
 	animation: greenPulse var(--boop-spring) var(--boop-spring-duration) infinite;
 }
+
+#playerProfileSprite {
+	transition: all 400ms;
+}
+
+/* @keyframes grow {
+	to {
+		transform: scale(2);
+	}
+}
+
+.gridCell:hover,
+.ship:hover {
+	animation: grow 1s;
+} */
+
+/* @keyframes keyPress {
+	0% {
+		transform: scale(1) translate(var(--x), var(--y));
+	}
+	50% {
+		transform: scale(0.8) translate(var(--x), var(--y));
+	}
+	100% {
+		transform: scale(1) translate(var(--x), var(--y));
+	}
+}
+
+.arrowPress {
+	animation: keyPress var(--duration) cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.playerTypeSelected {
+	background-color: rgb(236, 89, 5) !important;
+	color: white;
+} */
 
 /* .rotate {
 	transform: translateX(-68%) translateY(-245%) rotate(-90deg);
