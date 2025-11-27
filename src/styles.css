@@ -78,11 +78,6 @@ body {
 	background-color: black;
 }
 
-.draggableShip {
-	position: fixed;
-	will-change: left, top;
-}
-
 .playableGrid {
 	outline: 2px dashed red;
 }
@@ -98,7 +93,31 @@ body {
 }
 
 .newShip {
-	animation: deployShip 400ms forwards;
+	animation: deployShip 400ms both;
+}
+
+@keyframes shipToVerticalRotation {
+	to {
+		transform: rotate(0.25turn) translateY(100%);
+	}
+}
+
+@keyframes shipToHorizontalRotation {
+	from {
+		transform: rotate(0.25turn) translateY(100%);
+	}
+}
+
+.draggableShip .rotateShip {
+	transform-origin: var(--left) var(--top);
+}
+
+.draggableShip.rotating-vertical > .rotateShip {
+	animation: shipToVerticalRotation 0.4s forwards;
+}
+
+.draggableShip.rotating-horizontal > .rotateShip {
+	animation: shipToHorizontalRotation 0.4s forwards;
 }
 
 @keyframes greenPulse {

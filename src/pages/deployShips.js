@@ -4,6 +4,7 @@ import { range } from "../util/range.js";
 import { grid } from "../ui/components/index.js";
 import { Preferences } from "../ui/state/Preferences.js";
 import { sampleOne } from "../util/sampleOne.js";
+import { normalize } from "../util/normalize.js";
 
 export default function deployShips() {
 	const hasCurrentPlayerAlreadyDeployed =
@@ -20,16 +21,17 @@ export default function deployShips() {
 	const h2 = "Deploy ships";
 
 	const shipsAndGridContainer = document.createElement("div");
-	shipsAndGridContainer.className = "flex flex-wrap justify-between";
+	shipsAndGridContainer.className = "flex flex-wrap";
 
 	const shipsContainer = document.createElement("div");
 	shipsContainer.className =
-		"flex flex-col gap-[0.4em] relative min-w-[160px] sm:min-w-[240px] min-h-[180px] sm:min-h-[260px] shrink-0";
+		"flex flex-col gap-[0.4em] relative min-w-[326px] min-h-[360px] shrink-0 m-auto";
 
 	let offsetLeft = 0;
 	let offsetTop = 0;
 	let targetShip = null;
 	let lastHoveredCell = null;
+	let lastPreviewedCells = [];
 
 	const SPRITE_MAP_HONK = {
 		a: [48070, 3000],
@@ -45,6 +47,11 @@ export default function deployShips() {
 		targetShip.removeEventListener("pointermove", onDrag);
 		targetShip.removeEventListener("pointerup", endDrag);
 
+		lastPreviewedCells.forEach(cell => {
+			cell.classList.remove("gridCellGreenPulse", "gridCellRedPulse");
+		});
+		lastPreviewedCells = [];
+
 		const element = document.elementFromPoint(e.clientX, e.clientY);
 
 		if (element === null || !element.classList.contains("gridCell")) {
@@ -52,7 +59,8 @@ export default function deployShips() {
 			return;
 		}
 
-		const { size: shipSize } = JSON.parse(targetShip?.dataset.ship);
+		const shipSize = Number(targetShip.dataset.size);
+		const direction = targetShip.dataset.direction;
 
 		const x = Number(element.dataset.x);
 		const y = Number(element.dataset.y);
@@ -61,16 +69,18 @@ export default function deployShips() {
 			x,
 			y,
 			shipSize,
-			"horizontal",
+			direction,
 			state.game.currPlayerIndex
 		);
 
 		if (hasCollision) {
 			targetShip.style.transform = `translate(0px, 0px)`;
-			lastHoveredCell.classList.remove(
-				"gridCellRedPulse",
-				"gridCellGreenPulse"
-			);
+			if (lastHoveredCell) {
+				lastHoveredCell.classList.remove(
+					"gridCellRedPulse",
+					"gridCellGreenPulse"
+				);
+			}
 			return;
 		}
 
@@ -78,7 +88,7 @@ export default function deployShips() {
 			x,
 			y,
 			shipSize,
-			"horizontal",
+			direction,
 			state.game.currPlayerIndex
 		);
 
@@ -87,7 +97,7 @@ export default function deployShips() {
 				x,
 				y,
 				shipSize,
-				"horizontal"
+				direction
 			);
 
 		gridCellsToUpdate.forEach((cell, index) => {
@@ -117,89 +127,145 @@ export default function deployShips() {
 	function onDrag(e) {
 		if (targetShip === null) return;
 
-		const element = document.elementFromPoint(e.clientX, e.clientY);
+		const shipSize = Number(targetShip.dataset.size);
+		const direction = targetShip.dataset.direction;
 
+		const element = document.elementFromPoint(e.clientX, e.clientY);
 		const isGridCell = element && element.classList.contains("gridCell");
 
-		if (isGridCell && element !== lastHoveredCell) {
-			if (lastHoveredCell) {
-				lastHoveredCell.classList.remove(
-					"gridCellRedPulse",
-					"gridCellGreenPulse"
-				);
-			}
+		lastPreviewedCells.forEach(cell => {
+			cell.classList.remove("gridCellGreenPulse", "gridCellRedPulse");
+		});
+		lastPreviewedCells = [];
 
+		if (isGridCell) {
 			const x = Number(element.dataset.x);
 			const y = Number(element.dataset.y);
 
-			const { size: shipSize } = JSON.parse(targetShip?.dataset.ship);
+			const rawCells = state.game.currPlayer.gameboard.getShipPossiblePlaces(
+				x,
+				y,
+				shipSize,
+				direction
+			);
+
+			const shipCells = rawCells.map(c => c.split(",").map(Number));
 
 			const hasCollision = state.game.placeShipHasCollision(
 				x,
 				y,
 				shipSize,
-				"horizontal",
+				direction,
 				state.game.currPlayerIndex
 			);
 
-			if (hasCollision) {
-				element.classList.add("gridCellRedPulse");
-			} else {
-				element.classList.add("gridCellGreenPulse");
-			}
+			shipCells.forEach(([cx, cy]) => {
+				const cellEl = document.querySelector(`#gridCell_${cx}-${cy}`);
+				if (!cellEl) return;
 
-			lastHoveredCell = element;
-		} else if (!isGridCell && lastHoveredCell) {
-			lastHoveredCell.classList.remove(
-				"gridCellRedPulse",
-				"gridCellGreenPulse"
-			);
-			lastHoveredCell = null;
+				cellEl.classList.add(
+					hasCollision ? "gridCellRedPulse" : "gridCellGreenPulse"
+				);
+
+				lastPreviewedCells.push(cellEl);
+			});
 		}
-		const x = e.clientX - offsetLeft + 10;
-		const y = e.clientY - offsetTop + 10;
-		targetShip.style.transform = `translate(${x}px,${y}px)`;
+
+		let newX;
+		let newY;
+		if (direction === "vertical") {
+			newX = e.clientX - offsetLeft + 57;
+			newY = e.clientY - offsetTop - 50;
+		} else {
+			newX = e.clientX - offsetLeft + 1;
+			newY = e.clientY - offsetTop + 1;
+		}
+
+		targetShip.style.transform = `translate(${newX}px,${newY}px)`;
 	}
 
 	const NUMBER_OF_SHIPS = 4;
 
 	range(NUMBER_OF_SHIPS).forEach(index => {
-		const shipData = { id: index, size: index + 2 };
+		const shipWrapper = document.createElement("div");
+		shipWrapper.className =
+			"touch-none absolute will-change-transform draggableShip";
+		shipWrapper.id = `draggableShip-${index}`;
+
+		shipWrapper.dataset.id = `draggableShip`;
+		shipWrapper.dataset.size = index + 2;
+		shipWrapper.dataset.direction = "horizontal";
+
+		const complIndex = NUMBER_OF_SHIPS - index - 1;
+
+		const topValue = normalize(complIndex, 0, 3, 0, 200);
+		const leftValue = normalize(complIndex, 0, 3, 54, 230);
+
+		shipWrapper.classList.add(`top-[${topValue}px]`, `left-[${leftValue}px]`);
+
 		const ship = document.createElement("div");
-		ship.id = `draggableShip-${index}`;
 		ship.className =
-			"flex gap-[0.2em] p-[0.2em] border-black border-[0.2em] w-fit touch-none absolute will-change-transform";
-		const topValue = index * 60;
-		ship.classList.add(`sm:top-[${topValue}px]`, `top-[${topValue / 1.5}px]`);
-		ship.setAttribute("data-ship", JSON.stringify(shipData));
+			"flex gap-[0.2em] p-[0.2em] border-black border-[0.2em] w-fit rotateShip";
+
+		ship.style.setProperty("--top", "100%");
+		ship.style.setProperty("--left", "0%");
 
 		function startDrag(e) {
+			e.stopPropagation();
+			if (e.target.closest(".rotate-btn")) {
+				return;
+			}
+
 			const parentRect = shipsContainer.getBoundingClientRect();
 
-			targetShip = ship;
-			offsetLeft = parentRect.left + ship.offsetLeft;
-			offsetTop = parentRect.top + ship.offsetTop;
+			targetShip = shipWrapper;
+			offsetLeft = parentRect.left + shipWrapper.offsetLeft;
+			offsetTop = parentRect.top + shipWrapper.offsetTop;
 
-			ship.classList.add("dragTarget");
-			ship.setPointerCapture(e.pointerId);
-			ship.addEventListener("pointermove", onDrag);
-			ship.addEventListener("pointerup", endDrag);
+			shipWrapper.setPointerCapture(e.pointerId);
+			shipWrapper.addEventListener("pointermove", onDrag);
+			shipWrapper.addEventListener("pointerup", endDrag);
 		}
 
-		ship.addEventListener("pointerdown", startDrag);
+		shipWrapper.addEventListener("pointerdown", startDrag);
 
-		range(index + 2).forEach(i => {
+		range(index + 2).forEach(() => {
 			const cell = document.createElement("div");
-			cell.className = "w-6 h-6 sm:w-10 sm:h-10 bg-black";
+			cell.className = "w-6 h-6 sm:w-10 sm:h-10 bg-black relative";
 
 			ship.appendChild(cell);
 		});
 
-		shipsContainer.appendChild(ship);
+		shipWrapper.appendChild(ship);
+
+		const rotationButton = document.createElement("button");
+		rotationButton.textContent = "(O)";
+		rotationButton.className = "rotate-btn absolute top-[15px] left-[-36px]";
+
+		rotationButton.addEventListener("click", () => {
+			const newDirection =
+				shipWrapper.dataset.direction === "horizontal"
+					? "vertical"
+					: "horizontal";
+
+			shipWrapper.dataset.direction = newDirection;
+
+			shipWrapper.classList.remove("rotating-horizontal", "rotating-vertical");
+
+			if (newDirection === "vertical") {
+				shipWrapper.classList.add("rotating-vertical");
+			} else {
+				shipWrapper.classList.add("rotating-horizontal");
+			}
+		});
+
+		shipWrapper.appendChild(rotationButton);
+
+		shipsContainer.appendChild(shipWrapper);
 	});
 
 	const gridContainer = document.createElement("div");
-	gridContainer.className = "border flex justify-end";
+	gridContainer.className = "border flex m-auto";
 	gridContainer.id = "shipDeploymentGridContainer";
 
 	const gridElement = grid();

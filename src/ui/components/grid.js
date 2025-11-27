@@ -30,10 +30,6 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 			container.appendChild(cell);
 		});
 	} else {
-		const opponentPlayerIndex = state.game.getPlayerIndex(
-			state.game.opponentPlayer
-		);
-
 		container = document.createElement("div");
 		container.id = `playMatchGrid-${gameboardIndex}`;
 		container.className =
