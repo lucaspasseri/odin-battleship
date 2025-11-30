@@ -11,6 +11,9 @@ export default function deployShips() {
 		state.game.getShips(state.game.currPlayerIndex).length > 0;
 
 	if (hasCurrentPlayerAlreadyDeployed) {
+		if (state.game.currPlayer.type === "computer") {
+			state.game.changePlayer();
+		}
 		goToPage("playMatch");
 		return;
 	}
@@ -177,8 +180,8 @@ export default function deployShips() {
 			newX = e.clientX - offsetLeft + 57;
 			newY = e.clientY - offsetTop - 50;
 		} else {
-			newX = e.clientX - offsetLeft + 1;
-			newY = e.clientY - offsetTop + 1;
+			newX = e.clientX - offsetLeft + 2;
+			newY = e.clientY - offsetTop + 2;
 		}
 
 		targetShip.style.transform = `translate(${newX}px,${newY}px)`;

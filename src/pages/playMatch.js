@@ -3,6 +3,12 @@ import { state } from "../core/index.js";
 import { range } from "../util/range.js";
 import { grid } from "../ui/components/index.js";
 export default function playMatch() {
+	console.log({
+		state,
+		players: state.game.players,
+		currPlayer: state.game.currPlayer,
+	});
+
 	const container = document.createElement("div");
 	container.className = "px-[1em] md:px-[4em] py-[1em] flex gap-[2em] flex-col";
 
