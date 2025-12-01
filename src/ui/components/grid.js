@@ -1,4 +1,5 @@
 import { state } from "../../core/index.js";
+import computerHitCell from "../../core/orchestration/computerHitCell.js";
 import { range } from "../../util/range.js";
 
 export default function grid(type = "shipDeployment", gameboardIndex) {
@@ -52,8 +53,18 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 			cell.dataset.x = x;
 			cell.dataset.y = y;
 
+			console.log({ x, y });
+
 			cell.addEventListener("click", () => {
-				if (gameboardIndex === state.game.currPlayerIndex) return;
+				if (
+					gameboardIndex === state.game.currPlayerIndex ||
+					state.game.isGameOver
+				)
+					return;
+
+				const x = Number(cell.dataset.x);
+				const y = Number(cell.dataset.y);
+				console.log({ x, y });
 
 				const hitAnInitialStateCell = state.game.hitCellByPlayerIndex(
 					x,
@@ -63,25 +74,51 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 
 				if (!hitAnInitialStateCell) return;
 
-				const parentNode = document.querySelector(
-					`#gridContainer-${gameboardIndex}`
+				console.log(1);
+
+				const newCellState = state.game.checkCellByPlayerIndex(
+					x,
+					y,
+					gameboardIndex
 				);
 
-				const oldGrid = document.querySelector(
-					`#playMatchGrid-${gameboardIndex}`
-				);
-				const newGrid = grid("playMatch", gameboardIndex);
+				console.log({ newCellState });
+				cell.classList.remove("initial");
+				cell.classList.add(newCellState);
 
-				newGrid.classList.remove("playableGrid");
-				const currentPlayerGrid = document.querySelector(
+				container.classList.remove("playableGrid");
+				const otherGrid = document.querySelector(
 					`#playMatchGrid-${state.game.currPlayerIndex}`
 				);
 
-				currentPlayerGrid.classList.add("playableGrid");
+				otherGrid.classList.add("playableGrid");
 
-				parentNode.replaceChild(newGrid, oldGrid);
+				const positionHit = computerHitCell();
 
-				state.game.changePlayer();
+				if (positionHit === false) {
+					throw new Error("Error on computerPlays");
+				}
+				const [otherX, otherY] = positionHit.split(",");
+
+				const currPlayerCell = document.querySelector(
+					`#playMatchGrid-${state.game.currPlayerIndex} > #gridCell_${otherX}-${otherY}`
+				);
+
+				console.log({ currPlayerCell });
+
+				const currPlayerNewCellState = state.game.checkCellByPlayerIndex(
+					Number(otherX),
+					Number(otherY),
+					state.game.currPlayerIndex
+				);
+
+				console.log({ currPlayerNewCellState });
+				currPlayerCell.classList.remove("initial");
+				currPlayerCell.classList.add(currPlayerNewCellState);
+				console.log(positionHit);
+
+				otherGrid.classList.remove("playableGrid");
+				container.classList.add("playableGrid");
 			});
 
 			container.appendChild(cell);
