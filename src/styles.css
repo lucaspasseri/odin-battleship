@@ -78,8 +78,38 @@ body {
 	background-color: black;
 }
 
+@keyframes highlightPlayableGrid {
+	to {
+		outline: 2px solid red;
+	}
+}
+
 .playableGrid {
-	outline: 2px dashed red;
+	outline: 0px solid red;
+	animation: highlightPlayableGrid 200ms forwards;
+}
+
+@keyframes resize {
+	50% {
+		transform: scale(1.5);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+.resizeRevealed {
+	animation: resize 0.5s forwards ease-out;
+}
+
+@keyframes fadeOut {
+	to {
+		background-color: transparent;
+	}
+}
+
+.fadeOutRevealed {
+	animation: fadeOut 0.5s forwards ease-out;
 }
 
 @keyframes deployShip {

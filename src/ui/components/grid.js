@@ -42,20 +42,17 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 
 		range(100).forEach(index => {
 			const cell = document.createElement("div");
-			cell.className = "w-6 h-6 gridCell";
+			cell.className = "w-6 h-6 gridCell flex relative";
 
 			const x = index % 10;
 			const y = 9 - Math.floor(index / 10);
 
-			const cellState = state.game.checkCellByPlayerIndex(x, y, gameboardIndex);
-			cell.classList.add(cellState);
 			cell.id = `gridCell_${x}-${y}`;
 			cell.dataset.x = x;
 			cell.dataset.y = y;
 
-			console.log({ x, y });
-
-			cell.addEventListener("click", () => {
+			cell.addEventListener("click", async () => {
+				console.log(1);
 				if (
 					gameboardIndex === state.game.currPlayerIndex ||
 					state.game.isGameOver
@@ -64,7 +61,6 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 
 				const x = Number(cell.dataset.x);
 				const y = Number(cell.dataset.y);
-				console.log({ x, y });
 
 				const hitAnInitialStateCell = state.game.hitCellByPlayerIndex(
 					x,
@@ -74,52 +70,67 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 
 				if (!hitAnInitialStateCell) return;
 
-				console.log(1);
-
-				const newCellState = state.game.checkCellByPlayerIndex(
-					x,
-					y,
-					gameboardIndex
+				const topLayer = document.querySelector(
+					`#playMatchGrid-${gameboardIndex} > #gridCell_${x}-${y} > .topLayer`
 				);
 
-				console.log({ newCellState });
-				cell.classList.remove("initial");
-				cell.classList.add(newCellState);
+				const bottomLayer = document.querySelector(
+					`#playMatchGrid-${gameboardIndex} > #gridCell_${x}-${y} > .bottomLayer`
+				);
+
+				topLayer.classList.add("fadeOutRevealed");
+
+				setTimeout(() => {
+					bottomLayer.classList.add("resizeRevealed");
+				}, 400);
 
 				container.classList.remove("playableGrid");
+
 				const otherGrid = document.querySelector(
 					`#playMatchGrid-${state.game.currPlayerIndex}`
 				);
 
+				console.log({ otherGrid });
+
 				otherGrid.classList.add("playableGrid");
 
-				const positionHit = computerHitCell();
+				const positionHit = await computerHitCell();
 
 				if (positionHit === false) {
 					throw new Error("Error on computerPlays");
 				}
 				const [otherX, otherY] = positionHit.split(",");
 
-				const currPlayerCell = document.querySelector(
-					`#playMatchGrid-${state.game.currPlayerIndex} > #gridCell_${otherX}-${otherY}`
+				const otherGridTopLayer = document.querySelector(
+					`#playMatchGrid-${state.game.currPlayerIndex} > #gridCell_${otherX}-${otherY} > .topLayer`
 				);
 
-				console.log({ currPlayerCell });
+				otherGridTopLayer.classList.add("fadeOutRevealed");
 
-				const currPlayerNewCellState = state.game.checkCellByPlayerIndex(
-					Number(otherX),
-					Number(otherY),
-					state.game.currPlayerIndex
+				const otherGridBottomLayer = document.querySelector(
+					`#playMatchGrid-${state.game.currPlayerIndex} > #gridCell_${otherX}-${otherY} > .bottomLayer`
 				);
 
-				console.log({ currPlayerNewCellState });
-				currPlayerCell.classList.remove("initial");
-				currPlayerCell.classList.add(currPlayerNewCellState);
-				console.log(positionHit);
+				setTimeout(() => {
+					otherGridBottomLayer.classList.add("resizeRevealed");
+				}, 400);
 
 				otherGrid.classList.remove("playableGrid");
 				container.classList.add("playableGrid");
 			});
+
+			const topLayer = document.createElement("div");
+			topLayer.className = "bg-white flex-1 topLayer absolute inset-0";
+			const bottomLayer = document.createElement("div");
+
+			const cellState = state.game.checkShipCellByPlayerIndex(
+				x,
+				y,
+				gameboardIndex
+			);
+			bottomLayer.className = `${cellState} flex-1 bottomLayer`;
+
+			cell.append(topLayer, bottomLayer);
 
 			container.appendChild(cell);
 		});
