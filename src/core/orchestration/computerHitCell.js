@@ -13,6 +13,6 @@ export default async function computerHitCell() {
 	return await new Promise(resolve => {
 		setTimeout(() => {
 			resolve(positionHit);
-		}, 400);
+		}, 600);
 	});
 }

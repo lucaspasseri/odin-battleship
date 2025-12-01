@@ -3,6 +3,7 @@ import computerHitCell from "../../core/orchestration/computerHitCell.js";
 import { range } from "../../util/range.js";
 
 export default function grid(type = "shipDeployment", gameboardIndex) {
+	const currPlayerIndex = state.game.currPlayerIndex;
 	let container;
 
 	if (type === "shipDeployment") {
@@ -21,7 +22,7 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 			const cellState = state.game.checkShipCellByPlayerIndex(
 				x,
 				y,
-				state.game.currPlayerIndex
+				currPlayerIndex
 			);
 			cell.classList.add(cellState);
 			cell.id = `gridCell_${x}-${y}`;
@@ -36,7 +37,7 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 		container.className =
 			"grid grid-cols-10 p-[0.2em] gap-[0.2em] w-fit border-white border-[0.2em]";
 
-		if (gameboardIndex !== state.game.currPlayerIndex) {
+		if (gameboardIndex !== currPlayerIndex) {
 			container.classList.add("playableGrid");
 		}
 
@@ -53,11 +54,7 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 
 			cell.addEventListener("click", async () => {
 				console.log(1);
-				if (
-					gameboardIndex === state.game.currPlayerIndex ||
-					state.game.isGameOver
-				)
-					return;
+				if (gameboardIndex === currPlayerIndex || state.game.isGameOver) return;
 
 				const x = Number(cell.dataset.x);
 				const y = Number(cell.dataset.y);
@@ -84,13 +81,31 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 					bottomLayer.classList.add("resizeRevealed");
 				}, 400);
 
+				const moveCounter = document.querySelector(
+					`#moveCounter-${currPlayerIndex}`
+				);
+
+				moveCounter.textContent =
+					state.game.playedCellsByPlayerIndex(gameboardIndex).size;
+
+				const shipsLeft = document.querySelector(
+					`#shipsLeft-${gameboardIndex}`
+				);
+
+				shipsLeft.textContent =
+					state.game.opponentPlayer.gameboard.numberOfShips;
+
+				if (state.game.isGameOver) {
+					const gameStatus = document.querySelector("#gameStatus");
+					gameStatus.textContent = "Game is over!";
+					return;
+				}
+
 				container.classList.remove("playableGrid");
 
 				const otherGrid = document.querySelector(
-					`#playMatchGrid-${state.game.currPlayerIndex}`
+					`#playMatchGrid-${currPlayerIndex}`
 				);
-
-				console.log({ otherGrid });
 
 				otherGrid.classList.add("playableGrid");
 
@@ -102,13 +117,13 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 				const [otherX, otherY] = positionHit.split(",");
 
 				const otherGridTopLayer = document.querySelector(
-					`#playMatchGrid-${state.game.currPlayerIndex} > #gridCell_${otherX}-${otherY} > .topLayer`
+					`#playMatchGrid-${currPlayerIndex} > #gridCell_${otherX}-${otherY} > .topLayer`
 				);
 
 				otherGridTopLayer.classList.add("fadeOutRevealed");
 
 				const otherGridBottomLayer = document.querySelector(
-					`#playMatchGrid-${state.game.currPlayerIndex} > #gridCell_${otherX}-${otherY} > .bottomLayer`
+					`#playMatchGrid-${currPlayerIndex} > #gridCell_${otherX}-${otherY} > .bottomLayer`
 				);
 
 				setTimeout(() => {
@@ -117,6 +132,26 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 
 				otherGrid.classList.remove("playableGrid");
 				container.classList.add("playableGrid");
+
+				const moveCounterComputer = document.querySelector(
+					`#moveCounter-${gameboardIndex}`
+				);
+
+				moveCounterComputer.textContent =
+					state.game.playedCellsByPlayerIndex(currPlayerIndex).size;
+
+				const shipsLeftComputer = document.querySelector(
+					`#shipsLeft-${currPlayerIndex}`
+				);
+
+				shipsLeftComputer.textContent =
+					state.game.currPlayer.gameboard.numberOfShips;
+
+				if (state.game.isGameOver) {
+					const gameStatus = document.querySelector("#gameStatus");
+					gameStatus.textContent = "Game is over!";
+					return;
+				}
 			});
 
 			const topLayer = document.createElement("div");
