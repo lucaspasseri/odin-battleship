@@ -79,8 +79,14 @@ body {
 }
 
 @keyframes highlightPlayableGrid {
-	to {
+	50% {
+		outline: 1px solid red;
+	}
+	80% {
 		outline: 2px solid red;
+	}
+	100% {
+		outline: 3px solid red;
 	}
 }
 
@@ -110,6 +116,16 @@ body {
 
 .fadeOutRevealed {
 	animation: fadeOut 0.5s forwards ease-out;
+}
+
+@keyframes semiTransparencyRevealed {
+	to {
+		background-color: rgba(255, 255, 255, 0.2);
+	}
+}
+
+.gameOverRevealed {
+	animation: semiTransparencyRevealed 500ms forwards;
 }
 
 @keyframes deployShip {

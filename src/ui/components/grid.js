@@ -1,6 +1,7 @@
 import { state } from "../../core/index.js";
 import computerHitCell from "../../core/orchestration/computerHitCell.js";
 import { range } from "../../util/range.js";
+import verifyGameOver from "../constants/playMatch.js";
 
 export default function grid(type = "shipDeployment", gameboardIndex) {
 	const currPlayerIndex = state.game.currPlayerIndex;
@@ -35,7 +36,7 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 		container = document.createElement("div");
 		container.id = `playMatchGrid-${gameboardIndex}`;
 		container.className =
-			"grid grid-cols-10 p-[0.2em] gap-[0.2em] w-fit border-white border-[0.2em]";
+			"grid grid-cols-10 p-[0.2em] gap-[0.2em] border-white border-[0.2em] min-w-[282px] sm:min-w-[441px]";
 
 		if (gameboardIndex !== currPlayerIndex) {
 			container.classList.add("playableGrid");
@@ -43,7 +44,7 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 
 		range(100).forEach(index => {
 			const cell = document.createElement("div");
-			cell.className = "w-6 h-6 gridCell flex relative";
+			cell.className = "w-6 h-6 gridCell flex relative sm:w-10 sm:h-10";
 
 			const x = index % 10;
 			const y = 9 - Math.floor(index / 10);
@@ -54,7 +55,7 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 
 			cell.addEventListener("click", async () => {
 				console.log(1);
-				if (gameboardIndex === currPlayerIndex || state.game.isGameOver) return;
+				if (gameboardIndex === currPlayerIndex || verifyGameOver()) return;
 
 				const x = Number(cell.dataset.x);
 				const y = Number(cell.dataset.y);
@@ -95,11 +96,8 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 				shipsLeft.textContent =
 					state.game.opponentPlayer.gameboard.numberOfShips;
 
-				if (state.game.isGameOver) {
-					const gameStatus = document.querySelector("#gameStatus");
-					gameStatus.textContent = "Game is over!";
-					return;
-				}
+				const isGameOver = verifyGameOver();
+				if (isGameOver) return;
 
 				container.classList.remove("playableGrid");
 
@@ -147,11 +145,8 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 				shipsLeftComputer.textContent =
 					state.game.currPlayer.gameboard.numberOfShips;
 
-				if (state.game.isGameOver) {
-					const gameStatus = document.querySelector("#gameStatus");
-					gameStatus.textContent = "Game is over!";
-					return;
-				}
+				const isAlsoGameOver = verifyGameOver();
+				if (isAlsoGameOver) return;
 			});
 
 			const topLayer = document.createElement("div");

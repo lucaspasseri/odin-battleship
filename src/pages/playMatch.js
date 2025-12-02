@@ -23,7 +23,8 @@ export default function playMatch() {
 	h3.appendChild(gameStatusSpan);
 
 	const gridsContainer = document.createElement("div");
-	gridsContainer.className = "border flex justify-center gap-[2em] p-[2em]";
+	gridsContainer.className =
+		"border flex justify-center gap-[2em] p-[2em] flex-wrap";
 	const index1 = state.game.firstPlayerIndex;
 	const p1 = state.game.players[index1];
 	const index2 = state.game.secondPlayerIndex;
