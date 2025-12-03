@@ -7,3 +7,5 @@ Dragging a body across a concrete floor by PostProdDog -- https://freesound.org/
 splash 1b by Logicogonist -- https://freesound.org/s/807962/ -- License: Creative Commons 0
 
 Foghorn_near_digifishmusic.wav by digifishmusic -- https://freesound.org/s/276568/ -- License: Attribution 4.0
+Explosion_003.mp3 by cydon -- https://freesound.org/s/268555/ -- License: Attribution NonCommercial 4.0
+Big Explosion.wav by ryansnook -- https://freesound.org/s/110111/ -- License: Attribution NonCommercial 4.0

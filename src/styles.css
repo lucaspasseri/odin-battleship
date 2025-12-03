@@ -34,7 +34,7 @@
 		0.998 87.3%,
 		1.001
 	);
-	--boop-spring-duration: 1.2s;
+	--boop-spring-duration: 1s;
 }
 
 :root[data-theme="light-mode"] {
@@ -67,15 +67,39 @@ body {
 }
 
 .water {
-	background-color: blue;
+	background-color: var(--bg);
 }
 
-.initial {
+/* .initial {
 	background-color: white;
-}
+} */
 
 .ship {
 	background-color: black;
+}
+
+@keyframes tremble {
+	100% {
+		transform: scale(1.08) translate(-2px, -2px);
+	}
+}
+
+.topLayer:hover {
+	animation: tremble var(--boop-spring) var(--boop-spring-duration) infinite
+		alternate;
+	/* box-shadow: 0 5px 15px -3px rgba(0, 0, 0, 0.443),
+		0 4px 6px -4px rgba(0, 0, 0, 0.44);
+	z-index: 999; */
+
+	outline: 0.2em solid black;
+}
+
+.topLayer {
+	cursor: pointer;
+}
+
+.bottomLayer {
+	border: 0.15em dotted black;
 }
 
 @keyframes highlightPlayableGrid {
@@ -125,7 +149,7 @@ body {
 }
 
 .gameOverRevealed {
-	animation: semiTransparencyRevealed 500ms forwards;
+	animation: semiTransparencyRevealed 500ms both;
 }
 
 @keyframes deployShip {

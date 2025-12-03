@@ -1,7 +1,7 @@
 import { state } from "../../core/index.js";
 import computerHitCell from "../../core/orchestration/computerHitCell.js";
 import { range } from "../../util/range.js";
-import verifyGameOver from "../constants/playMatch.js";
+import { attackGridCell, verifyGameOver } from "../constants/playMatch.js";
 
 export default function grid(type = "shipDeployment", gameboardIndex) {
 	const currPlayerIndex = state.game.currPlayerIndex;
@@ -15,7 +15,7 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 
 		range(100).forEach(index => {
 			const cell = document.createElement("div");
-			cell.className = "w-6 h-6 gridCell sm:w-10 sm:h-10 outline-0";
+			cell.className = "w-6 h-6 gridCell sm:w-10 sm:h-10 outline-0 bottomLayer";
 
 			const x = index % 10;
 			const y = 9 - Math.floor(index / 10);
@@ -53,104 +53,13 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 			cell.dataset.x = x;
 			cell.dataset.y = y;
 
-			cell.addEventListener("click", async () => {
-				console.log(1);
-				if (gameboardIndex === currPlayerIndex || verifyGameOver()) return;
-
-				const x = Number(cell.dataset.x);
-				const y = Number(cell.dataset.y);
-
-				const hitAnInitialStateCell = state.game.hitCellByPlayerIndex(
-					x,
-					y,
-					gameboardIndex
-				);
-
-				if (!hitAnInitialStateCell) return;
-
-				const topLayer = document.querySelector(
-					`#playMatchGrid-${gameboardIndex} > #gridCell_${x}-${y} > .topLayer`
-				);
-
-				const bottomLayer = document.querySelector(
-					`#playMatchGrid-${gameboardIndex} > #gridCell_${x}-${y} > .bottomLayer`
-				);
-
-				topLayer.classList.add("fadeOutRevealed");
-
-				setTimeout(() => {
-					bottomLayer.classList.add("resizeRevealed");
-				}, 400);
-
-				const moveCounter = document.querySelector(
-					`#moveCounter-${currPlayerIndex}`
-				);
-
-				moveCounter.textContent =
-					state.game.playedCellsByPlayerIndex(gameboardIndex).size;
-
-				const shipsLeft = document.querySelector(
-					`#shipsLeft-${gameboardIndex}`
-				);
-
-				shipsLeft.textContent =
-					state.game.opponentPlayer.gameboard.numberOfShips;
-
-				const isGameOver = verifyGameOver();
-				if (isGameOver) return;
-
-				container.classList.remove("playableGrid");
-
-				const otherGrid = document.querySelector(
-					`#playMatchGrid-${currPlayerIndex}`
-				);
-
-				otherGrid.classList.add("playableGrid");
-
-				const positionHit = await computerHitCell();
-
-				if (positionHit === false) {
-					throw new Error("Error on computerPlays");
-				}
-				const [otherX, otherY] = positionHit.split(",");
-
-				const otherGridTopLayer = document.querySelector(
-					`#playMatchGrid-${currPlayerIndex} > #gridCell_${otherX}-${otherY} > .topLayer`
-				);
-
-				otherGridTopLayer.classList.add("fadeOutRevealed");
-
-				const otherGridBottomLayer = document.querySelector(
-					`#playMatchGrid-${currPlayerIndex} > #gridCell_${otherX}-${otherY} > .bottomLayer`
-				);
-
-				setTimeout(() => {
-					otherGridBottomLayer.classList.add("resizeRevealed");
-				}, 400);
-
-				otherGrid.classList.remove("playableGrid");
-				container.classList.add("playableGrid");
-
-				const moveCounterComputer = document.querySelector(
-					`#moveCounter-${gameboardIndex}`
-				);
-
-				moveCounterComputer.textContent =
-					state.game.playedCellsByPlayerIndex(currPlayerIndex).size;
-
-				const shipsLeftComputer = document.querySelector(
-					`#shipsLeft-${currPlayerIndex}`
-				);
-
-				shipsLeftComputer.textContent =
-					state.game.currPlayer.gameboard.numberOfShips;
-
-				const isAlsoGameOver = verifyGameOver();
-				if (isAlsoGameOver) return;
+			cell.addEventListener("click", () => {
+				attackGridCell(x, y, gameboardIndex);
 			});
 
 			const topLayer = document.createElement("div");
-			topLayer.className = "bg-white flex-1 topLayer absolute inset-0";
+			topLayer.className =
+				"bg-white flex-1 topLayer absolute inset-0 rounded z-[2]";
 			const bottomLayer = document.createElement("div");
 
 			const cellState = state.game.checkShipCellByPlayerIndex(
@@ -158,7 +67,7 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 				y,
 				gameboardIndex
 			);
-			bottomLayer.className = `${cellState} flex-1 bottomLayer`;
+			bottomLayer.className = `${cellState} inset-0 bottomLayer rounded absolute z-[1]`;
 
 			cell.append(topLayer, bottomLayer);
 

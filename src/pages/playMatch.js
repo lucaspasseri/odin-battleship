@@ -8,6 +8,25 @@ export default function playMatch() {
 		currPlayer: state.game.currPlayer,
 	});
 
+	const waterSplash = new Howl({
+		src: ["./src/assets/dropOnWater.wav"],
+		volume: 0.25,
+	});
+
+	const shipDamage = new Howl({
+		src: ["./src/assets/explosion.mp3"],
+		volume: 0.25,
+	});
+
+	const shipDestruction = new Howl({
+		src: ["./src/assets/bigExplosion.wav"],
+		volume: 0.25,
+	});
+
+	state.pageSounds.push(waterSplash);
+	state.pageSounds.push(shipDamage);
+	state.pageSounds.push(shipDestruction);
+
 	const container = document.createElement("div");
 	container.className = "px-[1em] md:px-[4em] py-[1em] flex gap-[2em] flex-col";
 
