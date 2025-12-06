@@ -7,3 +7,4 @@ export { default as errorPage } from "./errorPage.js";
 export { default as gameMode } from "./gameMode.js";
 export { default as deployShips } from "./deployShips.js";
 export { default as playMatch } from "./playMatch.js";
+export { default as multiplayerPage } from "./multiplayerPage.js";

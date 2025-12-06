@@ -7,6 +7,7 @@ import {
 	gameMode,
 	deployShips,
 	playMatch,
+	multiplayerPage,
 } from "../pages/index.js";
 
 const pageMap = {
@@ -18,6 +19,7 @@ const pageMap = {
 	gameMode,
 	deployShips,
 	playMatch,
+	multiplayerPage,
 };
 
 export default function goToPage(pageName) {

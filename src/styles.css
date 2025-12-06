@@ -35,6 +35,11 @@
 		1.001
 	);
 	--boop-spring-duration: 1s;
+
+	--sprite-w: 1536px;
+	--sprite-h: 1024px;
+	--frame-w: 180px;
+	--frame-h: 240px;
 }
 
 :root[data-theme="light-mode"] {
@@ -76,6 +81,104 @@ body {
 
 .ship {
 	background-color: black;
+}
+
+.typeCheckboxLabel {
+	width: 180px;
+	height: 60px;
+	display: flex;
+	align-items: center;
+}
+@keyframes slide {
+	to {
+		transform: translate(200px);
+	}
+}
+
+.typeCheckboxLabel::before {
+	content: "";
+	height: 88%;
+	width: 40%;
+	border-radius: 100%;
+	background-color: red;
+	transform: translateX(0); /* initial baseline */
+	transition: transform 0.25s;
+}
+
+input[type="checkbox"]:checked + .typeCheckboxLabel::before {
+	/* animation: slide 1s forwards; */
+	transform: translateX(100%);
+}
+input[type="checkbox"] + .typeCheckboxLabel::before {
+	transform: translateX(0);
+}
+
+input[type="checkbox"] + .typeCheckboxLabel {
+	appearance: none;
+	border: 2px solid red;
+	border-radius: 4px;
+}
+
+input[type="checkbox"]:checked + .typeCheckboxLabel {
+	border: 2px solid greenyellow;
+}
+
+input[type="checkbox"] {
+	display: none;
+}
+
+.carousel {
+	width: var(--frame-w);
+	height: var(--frame-h);
+	overflow: hidden;
+	border-radius: 10px;
+	position: relative;
+}
+
+.strip {
+	width: calc(var(--frame-w) * 10);
+	height: var(--frame-h);
+	display: flex;
+}
+
+.frame {
+	width: var(--frame-w);
+	height: var(--frame-h);
+	background-image: url("./assets/imgs/newOfficersSprite.png");
+	background-size: calc(var(--sprite-w) * 1 / 2) calc(var(--sprite-h) * 1 / 2);
+	background-repeat: no-repeat;
+}
+
+.frame:nth-child(1) {
+	background-position: -546px -251px;
+}
+.frame:nth-child(2) {
+	background-position: -17px -19px;
+}
+.frame:nth-child(3) {
+	background-position: -190px -19px;
+}
+.frame:nth-child(4) {
+	background-position: -366px -19px;
+}
+.frame:nth-child(5) {
+	background-position: -545px -19px;
+}
+
+.frame:nth-child(6) {
+	background-position: -15px -251px;
+}
+.frame:nth-child(7) {
+	background-position: -188px -251px;
+}
+.frame:nth-child(8) {
+	background-position: -362px -251px;
+}
+.frame:nth-child(9) {
+	background-position: -546px -251px;
+}
+.frame:nth-child(10) {
+	background-position: -17px -19px;
 }
 
 @keyframes tremble {

@@ -20,10 +20,10 @@ export default function gameMode() {
 			nextPage: "deployShips",
 		},
 		{
-			value: "multiPlayer",
+			value: "multiplayer",
 			svg: 123,
 			text: "P1 vs P2",
-			nextPage: "deployShips",
+			nextPage: "multiplayerPage",
 		},
 	];
 
