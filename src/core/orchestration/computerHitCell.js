@@ -7,7 +7,7 @@ export default async function computerHitCell() {
 		return false;
 	}
 
-	state.game.changePlayer();
+	// state.game.changePlayer();
 
 	return await new Promise(resolve => {
 		setTimeout(() => {

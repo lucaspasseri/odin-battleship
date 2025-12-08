@@ -84,25 +84,27 @@ body {
 }
 
 .typeCheckboxLabel {
-	width: 180px;
+	width: 120px;
 	height: 60px;
 	display: flex;
 	align-items: center;
+	border: 0.2em solid black;
 }
 @keyframes slide {
 	to {
-		transform: translate(200px);
+		transform: translate(200px) ease-out;
 	}
 }
 
 .typeCheckboxLabel::before {
 	content: "";
-	height: 88%;
-	width: 40%;
+	height: 100%;
+	width: 50%;
 	border-radius: 100%;
-	background-color: red;
+	background-color: white;
 	transform: translateX(0); /* initial baseline */
 	transition: transform 0.25s;
+	border: 0.2em solid black;
 }
 
 input[type="checkbox"]:checked + .typeCheckboxLabel::before {
@@ -115,12 +117,12 @@ input[type="checkbox"] + .typeCheckboxLabel::before {
 
 input[type="checkbox"] + .typeCheckboxLabel {
 	appearance: none;
-	border: 2px solid red;
-	border-radius: 4px;
+	/* outline: 0.2em solid red; */
+	border-radius: 100px;
 }
 
 input[type="checkbox"]:checked + .typeCheckboxLabel {
-	border: 2px solid greenyellow;
+	/* outline: 0.2em solid greenyellow; */
 }
 
 input[type="checkbox"] {

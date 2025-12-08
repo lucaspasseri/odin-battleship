@@ -27,8 +27,8 @@ export function verifyGameOver() {
 
 export async function attackGridCell(x, y, gameboardIndex) {
 	const currPlayerIndex = state.game.currPlayerIndex;
-	// const currPlayer = state.game.currPlayer;
 	const container = document.querySelector(`#playMatchGrid-${gameboardIndex}`);
+	const otherGrid = document.querySelector(`#playMatchGrid-${currPlayerIndex}`);
 
 	if (gameboardIndex === currPlayerIndex || verifyGameOver()) return;
 
@@ -74,7 +74,7 @@ export async function attackGridCell(x, y, gameboardIndex) {
 		topLayer.classList.add("z-[0]");
 	}, 800);
 
-	const moveCounter = document.querySelector(`#moveCounter-${currPlayerIndex}`);
+	const moveCounter = document.querySelector(`#moveCounter-${gameboardIndex}`);
 
 	moveCounter.textContent =
 		state.game.playedCellsByPlayerIndex(gameboardIndex).size;
@@ -87,13 +87,20 @@ export async function attackGridCell(x, y, gameboardIndex) {
 	if (isGameOver) return;
 
 	container.classList.remove("playableGrid");
-
-	const otherGrid = document.querySelector(`#playMatchGrid-${currPlayerIndex}`);
-
 	otherGrid.classList.add("playableGrid");
 
-	state.game.changePlayer();
+	if (state.game.opponentPlayer.type === "computer") {
+		state.game.changePlayer();
 
+		await computerAttackCell();
+
+		state.game.changePlayer();
+	} else {
+		state.game.changePlayer();
+	}
+}
+
+export async function computerAttackCell() {
 	if (state.game.currPlayer.type !== "computer") return;
 
 	const positionHit = await computerHitCell();
@@ -103,14 +110,24 @@ export async function attackGridCell(x, y, gameboardIndex) {
 	}
 	const [otherX, otherY] = positionHit.split(",");
 
+	const currPlayerIndex = state.game.currPlayerIndex;
+	const opponentPlayerIndex = state.game.getPlayerIndex(
+		state.game.opponentPlayer
+	);
+
+	const grid = document.querySelector(`#playMatchGrid-${currPlayerIndex}`);
+	const otherGrid = document.querySelector(
+		`#playMatchGrid-${opponentPlayerIndex}`
+	);
+
 	const otherGridTopLayer = document.querySelector(
-		`#playMatchGrid-${currPlayerIndex} > #gridCell_${otherX}-${otherY} > .topLayer`
+		`#playMatchGrid-${opponentPlayerIndex} > #gridCell_${otherX}-${otherY} > .topLayer`
 	);
 
 	otherGridTopLayer.classList.add("fadeOutRevealed");
 
 	const otherGridBottomLayer = document.querySelector(
-		`#playMatchGrid-${currPlayerIndex} > #gridCell_${otherX}-${otherY} > .bottomLayer`
+		`#playMatchGrid-${opponentPlayerIndex} > #gridCell_${otherX}-${otherY} > .bottomLayer`
 	);
 
 	setTimeout(() => {
@@ -125,22 +142,22 @@ export async function attackGridCell(x, y, gameboardIndex) {
 		otherGridTopLayer.classList.add("z-[0]");
 	}, 800);
 
-	otherGrid.classList.remove("playableGrid");
-	container.classList.add("playableGrid");
-
 	const moveCounterComputer = document.querySelector(
-		`#moveCounter-${gameboardIndex}`
+		`#moveCounter-${opponentPlayerIndex}`
 	);
 
 	moveCounterComputer.textContent =
-		state.game.playedCellsByPlayerIndex(currPlayerIndex).size;
+		state.game.playedCellsByPlayerIndex(opponentPlayerIndex).size;
 
 	const shipsLeftComputer = document.querySelector(
-		`#shipsLeft-${currPlayerIndex}`
+		`#shipsLeft-${opponentPlayerIndex}`
 	);
 
-	shipsLeftComputer.textContent = state.game.currPlayer.gameboard.numberOfShips;
+	shipsLeftComputer.textContent =
+		state.game.opponentPlayer.gameboard.numberOfShips;
 
-	const isAlsoGameOver = verifyGameOver();
-	if (isAlsoGameOver) return;
+	if (verifyGameOver()) return;
+
+	otherGrid.classList.remove("playableGrid");
+	grid.classList.add("playableGrid");
 }

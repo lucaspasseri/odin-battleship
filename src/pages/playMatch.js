@@ -1,12 +1,26 @@
 import goToPage from "../ui/goToPage.js";
 import { state } from "../core/index.js";
 import { grid } from "../ui/components/index.js";
+import { computerAttackCell } from "../ui/constants/playMatch.js";
 export default function playMatch() {
 	console.log({
 		state,
 		players: state.game.players,
 		currPlayer: state.game.currPlayer,
 	});
+
+	if (
+		state.game.getPlayerIndex(state.game.currPlayer) >
+		state.game.getPlayerIndex(state.game.opponentPlayer)
+	) {
+		state.game.changePlayer();
+	}
+
+	if (state.game.currPlayer.type === "computer") {
+		computerAttackCell().then(() => {
+			state.game.changePlayer();
+		});
+	}
 
 	const waterSplash = new Howl({
 		src: ["./src/assets/dropOnWater.wav"],

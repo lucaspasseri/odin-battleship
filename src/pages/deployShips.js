@@ -7,13 +7,38 @@ import { sampleOne } from "../util/sampleOne.js";
 import { normalize } from "../util/normalize.js";
 
 export default function deployShips() {
-	const hasCurrentPlayerAlreadyDeployed =
-		state.game.getShips(state.game.currPlayerIndex).length > 0;
+	console.log({ p: state.game.players });
+	// const hasCurrentPlayerAlreadyDeployed =
+	// 	state.game.getShips(state.game.currPlayerIndex).length > 0;
 
-	if (hasCurrentPlayerAlreadyDeployed) {
-		if (state.game.currPlayer.type === "computer") {
-			state.game.changePlayer();
-		}
+	// if (hasCurrentPlayerAlreadyDeployed) {
+	// 	if (state.game.currPlayer.type === "computer") {
+	// 		state.game.changePlayer();
+	// 	}
+	// goToPage("playMatch");
+	// return;
+	// }
+
+	// if (
+	// 	state.game.getShips(state.game.getPlayerIndex(state.game.opponentPlayer))
+	// 		.length > 0
+	// ) {
+	// 	state.game.changePlayer();
+	// 	goToPage("playMatch");
+	// 	return;
+	// }
+
+	if (state.game.currPlayer.type === "computer") {
+		state.game.changePlayer();
+		goToPage("deployShips");
+		return;
+	}
+
+	if (
+		state.game.currPlayer.type === "real" &&
+		state.game.getShips(state.game.currPlayerIndex).length > 0
+	) {
+		state.game.changePlayer();
 		goToPage("playMatch");
 		return;
 	}

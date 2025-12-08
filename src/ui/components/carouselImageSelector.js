@@ -1,7 +1,7 @@
 import { normalize } from "../../util/normalize.js";
 import { range } from "../../util/range.js";
 
-export default function carouselImageSelector() {
+export default function carouselImageSelector(playerIndex) {
 	const container = document.createElement("div");
 
 	const carousel = document.createElement("div");
@@ -11,9 +11,13 @@ export default function carouselImageSelector() {
 	strip.className = "strip";
 	strip.style.transform = "translate(-180px)";
 
-	range(10).forEach(() => {
+	range(10).forEach(index => {
 		const frame = document.createElement("div");
 		frame.className = "frame";
+		frame.ariaLabel = `Avatar ${index}`;
+		if (index === 1) {
+			frame.dataset.activeFrameIndex = 1;
+		}
 
 		strip.appendChild(frame);
 	});
@@ -30,14 +34,32 @@ export default function carouselImageSelector() {
 	leftButton.textContent = "LEFT";
 	leftButton.className = "border absolute top-[-8em] left-[-24%]";
 
-	leftButton.addEventListener("click", () => {
-		const strip = document.querySelector(".strip");
+	function changeActiveFrameIndex(frameIndex) {
+		const frames = [
+			...document.querySelectorAll(`#playerProfileForm-${playerIndex} .frame`),
+		];
+		console.log({ frames });
 
+		frames.forEach((frame, index) => {
+			if (frameIndex === index) {
+				frame.dataset.activeFrameIndex = frameIndex;
+			} else {
+				delete frame.dataset.activeFrameIndex;
+			}
+		});
+	}
+
+	leftButton.addEventListener("click", () => {
+		const strip = document.querySelector(
+			`#playerProfileForm-${playerIndex} .strip`
+		);
+		console.log({ stripLeft: strip });
 		frameIndex -= 1;
 		if (frameIndex === -1) {
 			frameIndex = 9;
 		}
 
+		changeActiveFrameIndex(frameIndex);
 		const position = normalize(frameIndex, 0, 9, 0, -1620);
 
 		strip.style.transform = `translate(${position}px)`;
@@ -50,6 +72,7 @@ export default function carouselImageSelector() {
 					strip.style.transform = `translate(-1440px)`;
 				});
 				frameIndex = 8;
+				changeActiveFrameIndex(8);
 			}, 260);
 		}
 	});
@@ -59,13 +82,16 @@ export default function carouselImageSelector() {
 	rightButton.className = "border absolute top-[-8em] right-[-30%]";
 
 	rightButton.addEventListener("click", () => {
-		const strip = document.querySelector(".strip");
+		const strip = document.querySelector(
+			`#playerProfileForm-${playerIndex} .strip`
+		);
+		console.log({ stripRight: strip });
 
 		frameIndex += 1;
 		if (frameIndex === 10) {
 			frameIndex = 0;
 		}
-
+		changeActiveFrameIndex(frameIndex);
 		const position = normalize(frameIndex, 0, 9, 0, -1620);
 
 		strip.style.transform = `translate(${position}px)`;
@@ -78,6 +104,7 @@ export default function carouselImageSelector() {
 					strip.style.transform = `translate(-180px)`;
 				});
 				frameIndex = 1;
+				changeActiveFrameIndex(1);
 			}, 260);
 		}
 	});
