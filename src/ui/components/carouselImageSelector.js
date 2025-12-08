@@ -33,12 +33,12 @@ export default function carouselImageSelector(playerIndex) {
 	const leftButton = document.createElement("button");
 	leftButton.textContent = "LEFT";
 	leftButton.className = "border absolute top-[-8em] left-[-24%]";
+	leftButton.type = "button";
 
 	function changeActiveFrameIndex(frameIndex) {
 		const frames = [
 			...document.querySelectorAll(`#playerProfileForm-${playerIndex} .frame`),
 		];
-		console.log({ frames });
 
 		frames.forEach((frame, index) => {
 			if (frameIndex === index) {
@@ -49,11 +49,14 @@ export default function carouselImageSelector(playerIndex) {
 		});
 	}
 
+	let isTimeoutActive = false;
+
 	leftButton.addEventListener("click", () => {
+		if (isTimeoutActive) return;
 		const strip = document.querySelector(
 			`#playerProfileForm-${playerIndex} .strip`
 		);
-		console.log({ stripLeft: strip });
+
 		frameIndex -= 1;
 		if (frameIndex === -1) {
 			frameIndex = 9;
@@ -66,6 +69,7 @@ export default function carouselImageSelector(playerIndex) {
 		strip.style.transition = "240ms";
 
 		if (frameIndex === 0) {
+			isTimeoutActive = true;
 			setTimeout(() => {
 				requestAnimationFrame(() => {
 					strip.style.transition = "0s";
@@ -73,6 +77,7 @@ export default function carouselImageSelector(playerIndex) {
 				});
 				frameIndex = 8;
 				changeActiveFrameIndex(8);
+				isTimeoutActive = false;
 			}, 260);
 		}
 	});
@@ -80,12 +85,13 @@ export default function carouselImageSelector(playerIndex) {
 	const rightButton = document.createElement("button");
 	rightButton.textContent = "RIGHT";
 	rightButton.className = "border absolute top-[-8em] right-[-30%]";
+	rightButton.type = "button";
 
 	rightButton.addEventListener("click", () => {
+		if (isTimeoutActive) return;
 		const strip = document.querySelector(
 			`#playerProfileForm-${playerIndex} .strip`
 		);
-		console.log({ stripRight: strip });
 
 		frameIndex += 1;
 		if (frameIndex === 10) {
@@ -98,6 +104,7 @@ export default function carouselImageSelector(playerIndex) {
 		strip.style.transition = "240ms";
 
 		if (frameIndex === 9) {
+			isTimeoutActive = true;
 			setTimeout(() => {
 				requestAnimationFrame(() => {
 					strip.style.transition = "0s";
@@ -105,6 +112,7 @@ export default function carouselImageSelector(playerIndex) {
 				});
 				frameIndex = 1;
 				changeActiveFrameIndex(1);
+				isTimeoutActive = false;
 			}, 260);
 		}
 	});
