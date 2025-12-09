@@ -1,7 +1,6 @@
 import { state } from "../../core/index.js";
-import computerHitCell from "../../core/orchestration/computerHitCell.js";
 import { range } from "../../util/range.js";
-import { attackGridCell, verifyGameOver } from "../constants/playMatch.js";
+import { attackGridCell } from "../constants/playMatch.js";
 
 export default function grid(type = "shipDeployment", gameboardIndex) {
 	const currPlayerIndex = state.game.currPlayerIndex;
@@ -11,7 +10,7 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 		container = document.createElement("div");
 		container.id = "shipDeploymentGrid";
 		container.className =
-			"grid grid-cols-10 p-[0.2em] gap-[0.2em] min-w-[282px] border-white border-[0.2em]";
+			"grid grid-cols-10 p-[0.2em] gap-[0.2em] min-w-[282px] border-[var(--color)] border-[0.4em]";
 
 		range(100).forEach(index => {
 			const cell = document.createElement("div");

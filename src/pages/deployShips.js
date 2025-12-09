@@ -7,27 +7,6 @@ import { sampleOne } from "../util/sampleOne.js";
 import { normalize } from "../util/normalize.js";
 
 export default function deployShips() {
-	console.log({ p: state.game.players });
-	// const hasCurrentPlayerAlreadyDeployed =
-	// 	state.game.getShips(state.game.currPlayerIndex).length > 0;
-
-	// if (hasCurrentPlayerAlreadyDeployed) {
-	// 	if (state.game.currPlayer.type === "computer") {
-	// 		state.game.changePlayer();
-	// 	}
-	// goToPage("playMatch");
-	// return;
-	// }
-
-	// if (
-	// 	state.game.getShips(state.game.getPlayerIndex(state.game.opponentPlayer))
-	// 		.length > 0
-	// ) {
-	// 	state.game.changePlayer();
-	// 	goToPage("playMatch");
-	// 	return;
-	// }
-
 	if (state.game.currPlayer.type === "computer") {
 		state.game.changePlayer();
 		goToPage("deployShips");
@@ -47,6 +26,8 @@ export default function deployShips() {
 	container.className = "px-[1em] md:px-[4em] py-[1em] flex gap-[2em] flex-col";
 
 	const h2 = "Deploy ships";
+
+	const nextButton = document.createElement("button");
 
 	const shipsAndGridContainer = document.createElement("div");
 	shipsAndGridContainer.className = "flex flex-wrap";
@@ -144,6 +125,9 @@ export default function deployShips() {
 		});
 
 		targetShip.remove();
+
+		nextButton.disabled = false;
+		nextButton.classList.replace("bg-gray-700", "bg-green-700");
 
 		if (Preferences.soundPreference === "sound-on") {
 			const spriteId = sampleOne(Object.keys(SPRITE_MAP_HONK));
@@ -267,8 +251,9 @@ export default function deployShips() {
 		shipWrapper.appendChild(ship);
 
 		const rotationButton = document.createElement("button");
-		rotationButton.textContent = "(O)";
-		rotationButton.className = "rotate-btn absolute top-[15px] left-[-36px]";
+		rotationButton.textContent = "⥀";
+		rotationButton.className =
+			"rotate-btn absolute top-[15px] left-[-36px] text-5xl/[0.3em]";
 
 		rotationButton.addEventListener("click", () => {
 			const newDirection =
@@ -293,7 +278,7 @@ export default function deployShips() {
 	});
 
 	const gridContainer = document.createElement("div");
-	gridContainer.className = "border flex m-auto";
+	gridContainer.className = "flex m-auto";
 	gridContainer.id = "shipDeploymentGridContainer";
 
 	const gridElement = grid();
@@ -301,8 +286,14 @@ export default function deployShips() {
 	gridContainer.appendChild(gridElement);
 	shipsAndGridContainer.append(shipsContainer, gridContainer);
 
-	const nextButton = document.createElement("button");
+	nextButton.className =
+		"w-fit rounded border-[var(--color)] border-2 text-2xl px-[0.4em] py-[0.2em] bg-gray-700 m-auto";
 	nextButton.textContent = "Next";
+
+	const isDisabled =
+		state.game.getShips(state.game.currPlayerIndex).length === 0;
+	nextButton.disabled = isDisabled;
+
 	nextButton.addEventListener("click", () => {
 		state.game.changePlayer();
 		goToPage("deployShips");

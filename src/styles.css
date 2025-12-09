@@ -102,7 +102,7 @@ body {
 	width: 50%;
 	border-radius: 100%;
 	background-color: white;
-	transform: translateX(0); /* initial baseline */
+	transform: translateX(0);
 	transition: transform 0.25s;
 	border: 0.2em solid black;
 }
@@ -190,10 +190,6 @@ input[type="checkbox"] {
 .topLayer:hover {
 	animation: tremble var(--boop-spring) var(--boop-spring-duration) infinite
 		alternate;
-	/* box-shadow: 0 5px 15px -3px rgba(0, 0, 0, 0.443),
-		0 4px 6px -4px rgba(0, 0, 0, 0.44);
-	z-index: 999; */
-
 	outline: 0.2em solid black;
 }
 
@@ -202,7 +198,7 @@ input[type="checkbox"] {
 }
 
 .bottomLayer {
-	border: 0.15em dotted black;
+	border: 0.15em dotted var(--color);
 }
 
 @keyframes highlightPlayableGrid {
@@ -321,6 +317,15 @@ input[type="checkbox"] {
 
 #playerProfileSprite {
 	transition: all 400ms;
+}
+
+.poke {
+	transition: transform var(--boop-spring) var(--boop-spring-duration);
+	transform-origin: center;
+}
+
+.poke:hover {
+	transform: rotate(-20deg);
 }
 
 /* @keyframes grow {
@@ -459,12 +464,3 @@ input[type="checkbox"] {
 /* .moonPoke.beingPoked {
 	transform: rotate(-20deg);
 } */
-
-.poke {
-	transition: transform var(--boop-spring) var(--boop-spring-duration);
-	transform-origin: center;
-}
-
-.poke:hover {
-	transform: rotate(-20deg);
-}
