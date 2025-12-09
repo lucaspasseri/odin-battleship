@@ -1,6 +1,9 @@
 import goToPage from "../ui/goToPage.js";
+import state from "../core/state.js";
 
 export default function gameMode() {
+	console.log({ g: state.game, p: state.game.players });
+
 	const container = document.createElement("div");
 	container.className = "px-[1em] md:px-[4em] py-[1em] flex gap-[2em] flex-col";
 

@@ -97,5 +97,6 @@ export default function multiplayerPage() {
 	buttonContainer.appendChild(button);
 
 	container.append(h2, trueForm, buttonContainer);
+
 	return container;
 }

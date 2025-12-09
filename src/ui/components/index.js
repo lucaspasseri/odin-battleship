@@ -37,3 +37,4 @@ export { default as leftTriangleSvg } from "./leftTriangleSvg.js";
 export { default as grid } from "./grid.js";
 export { default as carouselImageSelector } from "./carouselImageSelector.js";
 export { default as playerProfileForm } from "./playerProfileForm.js";
+export { default as playerProfile } from "./playerProfile.js";

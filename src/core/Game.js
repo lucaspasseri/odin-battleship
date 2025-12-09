@@ -239,6 +239,7 @@ export default class Game {
 		this.#isGameOver = false;
 		this.#computerPlayStack.reset();
 		this.#matchlessShipCell.clear();
+		this.#players = [];
 	}
 
 	computerPlays() {

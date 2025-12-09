@@ -1,6 +1,6 @@
 import goToPage from "../ui/goToPage.js";
 import { state } from "../core/index.js";
-import { grid } from "../ui/components/index.js";
+import { grid, playerProfile } from "../ui/components/index.js";
 import { computerAttackCell } from "../ui/constants/playMatch.js";
 export default function playMatch() {
 	console.log({
@@ -59,18 +59,10 @@ export default function playMatch() {
 	gridsContainer.className =
 		"border flex justify-center gap-[2em] p-[2em] flex-wrap";
 	const index1 = state.game.firstPlayerIndex;
-	const p1 = state.game.players[index1];
 	const index2 = state.game.secondPlayerIndex;
-	const p2 = state.game.players[index2];
 
 	const grid1Container = document.createElement("div");
 	grid1Container.id = `gridContainer-${index1}`;
-
-	const header1 = document.createElement("h2");
-	header1.textContent = p1.name;
-
-	const subHeader1 = document.createElement("h3");
-	subHeader1.textContent = p1.type;
 
 	const shipsLeft1 = document.createElement("h3");
 	shipsLeft1.textContent = "Ships left (#): ";
@@ -86,21 +78,18 @@ export default function playMatch() {
 	moveCounterSpan1.textContent = "0";
 	moveCounter1.appendChild(moveCounterSpan1);
 
-	const playerInfoContainer1 = document.createElement("div");
-	playerInfoContainer1.append(header1, subHeader1, shipsLeft1, moveCounter1);
+	const infoContainer1 = document.createElement("div");
+
+	const playerProfile1 = playerProfile(index1);
+
+	infoContainer1.append(playerProfile1, shipsLeft1, moveCounter1);
 
 	const grid1 = grid("playMatch", index1);
 
-	grid1Container.append(playerInfoContainer1, grid1);
+	grid1Container.append(infoContainer1, grid1);
 
 	const grid2Container = document.createElement("div");
 	grid2Container.id = `gridContainer-${index2}`;
-
-	const header2 = document.createElement("h2");
-	header2.textContent = p2.name;
-
-	const subHeader2 = document.createElement("h3");
-	subHeader2.textContent = p2.type;
 
 	const shipsLeft2 = document.createElement("h3");
 	shipsLeft2.textContent = "Ships left (#): ";
@@ -116,12 +105,15 @@ export default function playMatch() {
 	moveCounterSpan2.textContent = "0";
 	moveCounter2.appendChild(moveCounterSpan2);
 
-	const playerInfoContainer2 = document.createElement("div");
-	playerInfoContainer2.append(header2, subHeader2, shipsLeft2, moveCounter2);
+	const infoContainer2 = document.createElement("div");
+
+	const playerProfile2 = playerProfile(index2);
+
+	infoContainer2.append(playerProfile2, shipsLeft2, moveCounter2);
 
 	const grid2 = grid("playMatch", index2);
 
-	grid2Container.append(playerInfoContainer2, grid2);
+	grid2Container.append(infoContainer2, grid2);
 
 	gridsContainer.append(grid1Container, grid2Container);
 
@@ -135,5 +127,6 @@ export default function playMatch() {
 	main.append(h3, gridsContainer);
 
 	container.append(h2, main, restartButton);
+
 	return container;
 }

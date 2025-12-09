@@ -6,8 +6,8 @@ export default function startMultiPlayerGame(playerFormObj) {
 	const { p1Name, p1Type, p1FrameIndex, p2Name, p2Type, p2FrameIndex } =
 		playerFormObj;
 	console.log({ p1Name, p1Type, p1FrameIndex, p2Name, p2Type, p2FrameIndex });
-	state.game.addPlayer(p1Name, p1Type, "");
-	state.game.addPlayer(p2Name, p2Type, "");
+	state.game.addPlayer(p1Name, p1Type, p1FrameIndex);
+	state.game.addPlayer(p2Name, p2Type, p2FrameIndex);
 
 	if (p1Type === "computer") {
 		range(2, 6, 1).forEach(size => {
