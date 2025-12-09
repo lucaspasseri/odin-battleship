@@ -31,8 +31,8 @@ export default function carouselImageSelector(playerIndex) {
 
 	let frameIndex = 1;
 	const leftButton = document.createElement("button");
-	leftButton.textContent = "LEFT";
-	leftButton.className = "border absolute top-[-8em] left-[-24%]";
+	leftButton.textContent = "◀";
+	leftButton.className = "absolute top-[-3em] left-[-24%] text-5xl";
 	leftButton.type = "button";
 
 	function changeActiveFrameIndex(frameIndex) {
@@ -83,8 +83,8 @@ export default function carouselImageSelector(playerIndex) {
 	});
 
 	const rightButton = document.createElement("button");
-	rightButton.textContent = "RIGHT";
-	rightButton.className = "border absolute top-[-8em] right-[-30%]";
+	rightButton.textContent = "▶";
+	rightButton.className = "absolute top-[-3em] right-[-24%] text-5xl";
 	rightButton.type = "button";
 
 	rightButton.addEventListener("click", () => {

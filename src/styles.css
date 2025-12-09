@@ -88,7 +88,7 @@ body {
 	height: 60px;
 	display: flex;
 	align-items: center;
-	border: 0.2em solid black;
+	border: 0.2em solid var(--color);
 }
 @keyframes slide {
 	to {
@@ -108,7 +108,6 @@ body {
 }
 
 input[type="checkbox"]:checked + .typeCheckboxLabel::before {
-	/* animation: slide 1s forwards; */
 	transform: translateX(100%);
 }
 input[type="checkbox"] + .typeCheckboxLabel::before {
@@ -117,7 +116,6 @@ input[type="checkbox"] + .typeCheckboxLabel::before {
 
 input[type="checkbox"] + .typeCheckboxLabel {
 	appearance: none;
-	/* outline: 0.2em solid red; */
 	border-radius: 100px;
 }
 
