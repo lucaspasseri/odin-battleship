@@ -19,7 +19,8 @@ export default function playerProfileForm(playerIndex) {
 
 	const typeContainer = document.createElement("div");
 	const label = document.createElement("label");
-
+	label.role = "button";
+	label.tabIndex = 0;
 	label.htmlFor = `typeCheckbox-${playerIndex}`;
 	label.className = "typeCheckboxLabel cursor-pointer";
 
@@ -55,6 +56,7 @@ export default function playerProfileForm(playerIndex) {
 
 		const checkbox1 = document.querySelector("#typeCheckbox-1");
 		const checkbox2 = document.querySelector("#typeCheckbox-2");
+
 		const isDisabled = checkbox1?.checked && checkbox2?.checked;
 
 		const button = document.querySelector("#playersFormSubmitter");

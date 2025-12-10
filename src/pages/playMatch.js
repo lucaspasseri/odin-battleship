@@ -3,12 +3,6 @@ import { state } from "../core/index.js";
 import { grid, playerProfile } from "../ui/components/index.js";
 import { computerAttackCell } from "../ui/constants/playMatch.js";
 export default function playMatch() {
-	console.log({
-		state,
-		players: state.game.players,
-		currPlayer: state.game.currPlayer,
-	});
-
 	if (
 		state.game.getPlayerIndex(state.game.currPlayer) >
 		state.game.getPlayerIndex(state.game.opponentPlayer)
@@ -19,6 +13,8 @@ export default function playMatch() {
 	if (state.game.currPlayer.type === "computer") {
 		computerAttackCell().then(() => {
 			state.game.changePlayer();
+			const gameStatus = document.querySelector("#gameStatus");
+			gameStatus.textContent = `It's ${state.game.currPlayer.name}'s turn`;
 		});
 	}
 
@@ -44,20 +40,18 @@ export default function playMatch() {
 	const container = document.createElement("div");
 	container.className = "px-[1em] md:px-[4em] py-[1em] flex gap-[2em] flex-col";
 
-	const h2 = "Play match";
+	const h2 = document.createElement("h2");
+	h2.className = "text-3xl";
+	h2.textContent = "It's time to fight!";
 
 	const main = document.createElement("main");
 
 	const h3 = document.createElement("h3");
-	h3.textContent = "Game status: ";
-	const gameStatusSpan = document.createElement("span");
-	gameStatusSpan.id = "gameStatus";
-	gameStatusSpan.textContent = "Playing game...";
-	h3.appendChild(gameStatusSpan);
+	h3.id = "gameStatus";
+	h3.textContent = `It's ${state.game.currPlayer.name}'s turn`;
 
 	const gridsContainer = document.createElement("div");
-	gridsContainer.className =
-		"border flex justify-center gap-[2em] p-[2em] flex-wrap";
+	gridsContainer.className = "flex justify-center gap-[2em] p-[2em] flex-wrap";
 	const index1 = state.game.firstPlayerIndex;
 	const index2 = state.game.secondPlayerIndex;
 

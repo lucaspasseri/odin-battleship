@@ -88,15 +88,20 @@ export async function attackGridCell(x, y, gameboardIndex) {
 
 	container.classList.remove("playableGrid");
 	otherGrid.classList.add("playableGrid");
+	const gameStatus = document.querySelector("#gameStatus");
 
 	if (state.game.opponentPlayer.type === "computer") {
 		state.game.changePlayer();
 
+		gameStatus.textContent = `It's ${state.game.currPlayer.name}'s turn`;
+
 		await computerAttackCell();
 
 		state.game.changePlayer();
+		gameStatus.textContent = `It's ${state.game.currPlayer.name}'s turn`;
 	} else {
 		state.game.changePlayer();
+		gameStatus.textContent = `It's ${state.game.currPlayer.name}'s turn`;
 	}
 }
 

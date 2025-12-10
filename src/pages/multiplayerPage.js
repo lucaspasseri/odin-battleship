@@ -9,7 +9,9 @@ export default function multiplayerPage() {
 	const container = document.createElement("div");
 	container.className = "px-[1em] md:px-[4em] py-[1em] flex gap-[2em] flex-col";
 
-	const h2 = "Add players";
+	const h2 = document.createElement("h2");
+	h2.className = "text-3xl";
+	h2.textContent = "Define combatants";
 
 	const trueForm = document.createElement("form");
 	trueForm.className = "flex justify-center flex-1";
@@ -18,7 +20,8 @@ export default function multiplayerPage() {
 	const p1Container = document.createElement("div");
 	p1Container.className = "flex flex-col";
 	const p1H3 = document.createElement("h3");
-	p1H3.textContent = "P1";
+	p1H3.className = "text-xl mb-[0.4em]";
+	p1H3.textContent = "Player 1";
 
 	const p1 = playerProfileForm("1");
 
@@ -27,7 +30,8 @@ export default function multiplayerPage() {
 	const p2Container = document.createElement("div");
 	p2Container.className = "flex-1";
 	const p2H3 = document.createElement("h3");
-	p2H3.textContent = "P2";
+	p2H3.className = "text-xl mb-[0.4em]";
+	p2H3.textContent = "Player 2";
 
 	const p2 = playerProfileForm("2");
 

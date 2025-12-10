@@ -5,16 +5,19 @@ export default function gameMode() {
 	console.log({ g: state.game, p: state.game.players });
 
 	const container = document.createElement("div");
-	container.className = "px-[1em] md:px-[4em] py-[1em] flex gap-[2em] flex-col";
+	container.className =
+		"px-[1em] md:px-[4em] py-[1em] flex gap-[2em] flex-col mt-[1em]";
 
-	const h2 = "Welcome, can we start?";
+	const h2 = document.createElement("h2");
+	h2.textContent = "Welcome, Captain, are you ready?";
+	h2.className = "text-3xl";
 
 	const buttonContainer = document.createElement("div");
 	buttonContainer.className = "flex justify-center";
 
 	const button = document.createElement("button");
 	button.className =
-		"flex-1 rounded border-[var(--color)] border-2 bg-gray-700";
+		"rounded border-[var(--color)] border-2 bg-gray-700 px-[0.6em] py-[0.3em] bg-green-700 text-2xl";
 	button.textContent = "Start game";
 	button.addEventListener("click", () => {
 		goToPage("multiplayerPage");

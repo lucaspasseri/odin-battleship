@@ -25,7 +25,9 @@ export default function deployShips() {
 	const container = document.createElement("div");
 	container.className = "px-[1em] md:px-[4em] py-[1em] flex gap-[2em] flex-col";
 
-	const h2 = "Deploy ships";
+	const h2 = document.createElement("h2");
+	h2.className = "text-3xl";
+	h2.textContent = "Deploy ships";
 
 	const nextButton = document.createElement("button");
 
