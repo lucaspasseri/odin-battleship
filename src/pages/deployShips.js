@@ -23,7 +23,8 @@ export default function deployShips() {
 	}
 
 	const container = document.createElement("div");
-	container.className = "px-[1em] md:px-[4em] py-[1em] flex gap-[2em] flex-col";
+	container.className =
+		"px-[1em] md:px-[4em] py-[1em] flex gap-[2em] flex-col mt-[1em]";
 
 	const h2 = document.createElement("h2");
 	h2.className = "text-3xl";
@@ -32,7 +33,7 @@ export default function deployShips() {
 	const nextButton = document.createElement("button");
 
 	const shipsAndGridContainer = document.createElement("div");
-	shipsAndGridContainer.className = "flex flex-wrap";
+	shipsAndGridContainer.className = "flex flex-wrap mt-[1em]";
 
 	const shipsContainer = document.createElement("div");
 	shipsContainer.className =
@@ -203,7 +204,7 @@ export default function deployShips() {
 	range(NUMBER_OF_SHIPS).forEach(index => {
 		const shipWrapper = document.createElement("div");
 		shipWrapper.className =
-			"touch-none absolute will-change-transform draggableShip";
+			"touch-none absolute will-change-transform draggableShip cursor-pointer";
 		shipWrapper.id = `draggableShip-${index}`;
 
 		shipWrapper.dataset.id = `draggableShip`;
@@ -289,7 +290,7 @@ export default function deployShips() {
 	shipsAndGridContainer.append(shipsContainer, gridContainer);
 
 	nextButton.className =
-		"w-fit rounded border-[var(--color)] border-2 text-2xl px-[0.4em] py-[0.2em] bg-gray-700 m-auto";
+		"w-fit rounded border-[var(--color)] border-2 text-2xl px-[0.6em] py-[0.3em] bg-gray-700 m-auto mt-[1em]";
 	nextButton.textContent = "Next";
 
 	const isDisabled =

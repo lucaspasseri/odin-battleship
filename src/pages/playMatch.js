@@ -38,7 +38,8 @@ export default function playMatch() {
 	state.pageSounds.push(shipDestruction);
 
 	const container = document.createElement("div");
-	container.className = "px-[1em] md:px-[4em] py-[1em] flex gap-[2em] flex-col";
+	container.className =
+		"px-[1em] md:px-[4em] py-[1em] flex gap-[2em] flex-col mt-[1em]";
 
 	const h2 = document.createElement("h2");
 	h2.className = "text-3xl";
@@ -47,6 +48,7 @@ export default function playMatch() {
 	const main = document.createElement("main");
 
 	const h3 = document.createElement("h3");
+	h3.className = "text-xl";
 	h3.id = "gameStatus";
 	h3.textContent = `It's ${state.game.currPlayer.name}'s turn`;
 

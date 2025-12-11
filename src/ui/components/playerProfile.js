@@ -2,8 +2,18 @@ import { state } from "../../core/index.js";
 
 export default function playerProfile(playerIndex) {
 	const currPlayer = state.game.players[playerIndex];
-	const playerProfileContainer = document.createElement("div");
-	const playerProfile = document.createElement("div");
+	const container = document.createElement("div");
+	const frame = document.createElement("div");
+	frame.className =
+		"border-[var(--color)] border-[0.5em] w-[330px] h-[500px] flex flex-col items-center justify-center rounded-xl gap-[1em]";
+
+	if (currPlayer.type === "computer") {
+		frame.classList.add("bg-gray-700");
+	} else if (playerIndex === state.game.firstPlayerIndex) {
+		frame.classList.add("bg-red-700");
+	} else {
+		frame.classList.add("bg-purple-700");
+	}
 
 	const playerImage = document.createElement("div");
 
@@ -22,12 +32,30 @@ export default function playerProfile(playerIndex) {
 
 	playerImage.className = `frame bg-[position:${bgPosition}]`;
 
-	const playerType = document.createElement("div");
-	playerType.textContent = currPlayer.type;
-	const playerName = document.createElement("div");
-	playerName.textContent = currPlayer.name;
+	const playerTypePreview = document.createElement("div");
+	playerTypePreview.className =
+		"border-[var(--color)] border-[0.3em] text-center text-xl text-[var(--color)] mb-[0.6em]";
+	const playerTypePreviewH3 = document.createElement("h3");
 
-	playerProfile.append(playerImage, playerType, playerName);
-	playerProfileContainer.appendChild(playerProfile);
-	return playerProfileContainer;
+	playerTypePreviewH3.textContent =
+		currPlayer.type === "computer" ? "CPU" : "HUMAN";
+	playerTypePreview.appendChild(playerTypePreviewH3);
+
+	const nameSelector = document.createElement("div");
+	nameSelector.className = "text-[1.4em] text-gray-700";
+	const nameInput = document.createElement("input");
+	nameInput.readOnly = true;
+	nameInput.className = "text-center";
+	nameInput.type = "text";
+	nameInput.name = `p${playerIndex}Name`;
+	nameInput.id = `p${playerIndex}NameInput`;
+	nameInput.value = currPlayer.name;
+
+	nameSelector.appendChild(nameInput);
+
+	frame.append(playerImage, playerTypePreview, nameSelector);
+
+	container.append(frame);
+
+	return container;
 }
