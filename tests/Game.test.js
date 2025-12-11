@@ -447,3 +447,19 @@ it("should be able to handle random plays for player of type computer: After hit
 
 	expect(game.opponentPlayer.gameboard.numberOfShips).toBe(1);
 });
+
+it("should be able to calculate if a ship deployment has a collision", () => {
+	const game = new Game();
+
+	game.addPlayer("Marcelo", "real");
+
+	expect(game.placeShipHasCollision(0, 0, 5, "horizontal", 0)).toBe(false);
+	expect(game.placeShipHasCollision(0, 5, 5, "vertical", 0)).toBe(false);
+
+	expect(game.placeShipHasCollision(9, 0, 3, "horizontal", 0)).toBe(true);
+	expect(game.placeShipHasCollision(0, 6, 5, "vertical", 0)).toBe(true);
+
+	game.placeShipByPlayerIndex(0, 5, 5, "vertical", 0);
+
+	expect(game.placeShipHasCollision(0, 3, 3, "vertical", 0)).toBe(true);
+});
