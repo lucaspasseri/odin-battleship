@@ -1,4 +1,5 @@
 import { Game, state } from "./core/index.js";
+import startSinglePlayerGame from "./core/orchestration/startSinglePlayerGame.js";
 import { navbar } from "./ui/components/index.js";
 import goToPage from "./ui/goToPage.js";
 import app from "./ui/state/app.js";
@@ -47,4 +48,7 @@ const footer = document.createElement("div");
 
 container.append(header, main, footer);
 
-goToPage("gameMode");
+// goToPage("gameMode");
+
+startSinglePlayerGame();
+goToPage("playMatch");

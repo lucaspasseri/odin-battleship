@@ -3,6 +3,8 @@ import { state } from "../../core/index.js";
 export default function playerProfile(playerIndex) {
 	const currPlayer = state.game.players[playerIndex];
 	const container = document.createElement("div");
+	container.className = "w-fit border-2 border-green-600";
+	// container.className = "flex justify-end";
 	const frame = document.createElement("div");
 	frame.className =
 		"border-[var(--color)] border-[0.5em] w-[330px] h-[500px] flex flex-col items-center justify-center rounded-xl gap-[1em]";
@@ -34,7 +36,7 @@ export default function playerProfile(playerIndex) {
 
 	const playerTypePreview = document.createElement("div");
 	playerTypePreview.className =
-		"border-[var(--color)] border-[0.3em] text-center text-xl text-[var(--color)] mb-[0.6em]";
+		"border-[var(--color)] border-[0.3em] text-center text-xl text-[var(--color)] mb-[0.6em] px-[0.8em]";
 	const playerTypePreviewH3 = document.createElement("h3");
 
 	playerTypePreviewH3.textContent =
@@ -42,10 +44,10 @@ export default function playerProfile(playerIndex) {
 	playerTypePreview.appendChild(playerTypePreviewH3);
 
 	const nameSelector = document.createElement("div");
-	nameSelector.className = "text-[1.4em] text-gray-700";
+	nameSelector.className = "text-[1.4em] text-gray-700 w-full";
 	const nameInput = document.createElement("input");
 	nameInput.readOnly = true;
-	nameInput.className = "text-center";
+	nameInput.className = "text-center w-[50%] block m-auto";
 	nameInput.type = "text";
 	nameInput.name = `p${playerIndex}Name`;
 	nameInput.id = `p${playerIndex}NameInput`;

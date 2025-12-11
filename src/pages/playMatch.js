@@ -1,6 +1,11 @@
 import goToPage from "../ui/goToPage.js";
 import { state } from "../core/index.js";
-import { grid, playerProfile } from "../ui/components/index.js";
+import {
+	grid,
+	leftTriangleSvg,
+	playerProfile,
+	versusTextSvg,
+} from "../ui/components/index.js";
 import { computerAttackCell } from "../ui/constants/playMatch.js";
 export default function playMatch() {
 	if (
@@ -53,12 +58,19 @@ export default function playMatch() {
 	h3.textContent = `It's ${state.game.currPlayer.name}'s turn`;
 
 	const gridsContainer = document.createElement("div");
-	gridsContainer.className = "flex justify-center gap-[2em] p-[2em] flex-wrap";
+	gridsContainer.className =
+		"flex justify-evenly gap-[4em] p-[0.1em] flex-wrap relative ";
 	const index1 = state.game.firstPlayerIndex;
 	const index2 = state.game.secondPlayerIndex;
 
 	const grid1Container = document.createElement("div");
 	grid1Container.id = `gridContainer-${index1}`;
+	grid1Container.className = "flex flex-col items-start";
+
+	const infoContainer1 = document.createElement("div");
+	// infoContainer1.className = "border-[1em] border-red-700";
+
+	const playerProfile1 = playerProfile(index1);
 
 	const shipsLeft1 = document.createElement("h3");
 	shipsLeft1.textContent = "Ships left (#): ";
@@ -74,18 +86,15 @@ export default function playMatch() {
 	moveCounterSpan1.textContent = "0";
 	moveCounter1.appendChild(moveCounterSpan1);
 
-	const infoContainer1 = document.createElement("div");
-
-	const playerProfile1 = playerProfile(index1);
-
-	infoContainer1.append(playerProfile1, shipsLeft1, moveCounter1);
+	infoContainer1.append(shipsLeft1, moveCounter1);
 
 	const grid1 = grid("playMatch", index1);
 
-	grid1Container.append(infoContainer1, grid1);
+	grid1Container.append(playerProfile1, infoContainer1, grid1);
 
 	const grid2Container = document.createElement("div");
 	grid2Container.id = `gridContainer-${index2}`;
+	grid2Container.className = "flex flex-col-reverse items-end ";
 
 	const shipsLeft2 = document.createElement("h3");
 	shipsLeft2.textContent = "Ships left (#): ";
@@ -103,26 +112,41 @@ export default function playMatch() {
 
 	const infoContainer2 = document.createElement("div");
 
-	const playerProfile2 = playerProfile(index2);
-
-	infoContainer2.append(playerProfile2, shipsLeft2, moveCounter2);
+	infoContainer2.append(shipsLeft2, moveCounter2);
 
 	const grid2 = grid("playMatch", index2);
 
-	grid2Container.append(infoContainer2, grid2);
+	const playerProfile2 = playerProfile(index2);
 
-	gridsContainer.append(grid1Container, grid2Container);
+	grid2Container.append(playerProfile2, infoContainer2, grid2);
+
+	const versusContainer = document.createElement("div");
+	versusContainer.className =
+		"absolute inset-0 flex justify-center items-center z-[-1]";
+
+	const text = versusTextSvg();
+
+	versusContainer.appendChild(text);
+
+	gridsContainer.append(grid1Container, versusContainer, grid2Container);
+
+	const buttonContainer = document.createElement("div");
+	buttonContainer.className = "flex justify-center my-[2em]";
 
 	const restartButton = document.createElement("button");
+	restartButton.className =
+		"w-fit rounded border-[var(--color)] border-2 text-2xl px-[0.6em] py-[0.3em] bg-green-700";
 	restartButton.textContent = "Restart";
 	restartButton.addEventListener("click", () => {
 		state.game.restart();
 		goToPage("gameMode");
 	});
 
+	buttonContainer.appendChild(restartButton);
+
 	main.append(h3, gridsContainer);
 
-	container.append(h2, main, restartButton);
+	container.append(h2, main, buttonContainer);
 
 	return container;
 }

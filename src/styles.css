@@ -141,6 +141,16 @@ input[type="checkbox"] {
 	display: flex;
 }
 
+/* @keyframes lowerSize {
+	to {
+		transform: scale(0.6);
+	}
+}
+
+.diminish {
+	animation: lowerSize 500ms forwards ease-out;
+} */
+
 .frame {
 	width: var(--frame-w);
 	height: var(--frame-h);
@@ -203,18 +213,18 @@ input[type="checkbox"] {
 
 @keyframes highlightPlayableGrid {
 	50% {
-		outline: 1px solid red;
+		outline: 0.2em groove lch(55% 97 1);
 	}
 	80% {
-		outline: 2px solid red;
+		outline: 0.3em groove lch(55% 97 1);
 	}
 	100% {
-		outline: 3px solid red;
+		outline: 0.4em groove lch(55% 97 1);
 	}
 }
 
 .playableGrid {
-	outline: 0px solid red;
+	outline: 0em groove lch(55% 97 1);
 	animation: highlightPlayableGrid 200ms forwards;
 }
 
