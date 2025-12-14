@@ -191,10 +191,10 @@ export default function deployShips() {
 		let anchorX = 0;
 		let anchorY = 0;
 		if (direction === "horizontal") {
-			anchorX = 0;
+			anchorX = shipWidth / 2;
 			anchorY = shipHeight + 2;
 		} else {
-			anchorX = -shipHeight;
+			anchorX = -shipHeight / 2;
 			anchorY = shipWidth + shipHeight + 2;
 		}
 

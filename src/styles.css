@@ -34,7 +34,7 @@
 		0.998 87.3%,
 		1.001
 	);
-	--boop-spring-duration: 1s;
+	--boop-spring-duration: 1.5s;
 
 	--sprite-w: 1536px;
 	--sprite-h: 1024px;
@@ -213,21 +213,16 @@ input[type="checkbox"] {
 	border: 0.15em solid var(--color);
 }
 
-@keyframes highlightPlayableGrid {
-	50% {
-		outline: 0.2em groove lch(55% 97 1);
-	}
-	80% {
-		outline: 0.3em groove lch(55% 97 1);
-	}
-	100% {
+@keyframes pinkPulse {
+	to {
 		outline: 0.4em groove lch(55% 97 1);
 	}
 }
 
 .playableGrid {
 	outline: 0em groove lch(55% 97 1);
-	animation: highlightPlayableGrid 200ms forwards;
+	animation: highlightPlayableGrid var(--boop-spring)
+		var(--boop-spring-duration) infinite;
 }
 
 @keyframes resize {
@@ -312,19 +307,13 @@ input[type="checkbox"] {
 
 @keyframes greenPulse {
 	to {
-		border-top: lch(78% 132 143) 0.2em solid;
-		border-left: lch(78% 132 143) 0.4em solid;
-		border-bottom: lch(78% 132 143) 0.2em solid;
-		border-right: lch(78% 132 143) 0.4em solid;
+		outline: lch(78% 132 143) 0.4em groove;
 	}
 }
 
 @keyframes redPulse {
 	to {
-		border-top: red 0.2em solid;
-		border-left: red 0.4em solid;
-		border-bottom: red 0.2em solid;
-		border-right: red 0.4em solid;
+		outline: red 0.4em groove;
 	}
 }
 

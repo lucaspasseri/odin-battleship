@@ -68,7 +68,6 @@ export default function playMatch() {
 	grid1Container.className = "flex flex-col items-start";
 
 	const infoContainer1 = document.createElement("div");
-	// infoContainer1.className = "border-[1em] border-red-700";
 
 	const playerProfile1 = playerProfile(index1);
 
