@@ -197,10 +197,12 @@ input[type="checkbox"] {
 	}
 }
 
-.topLayer:hover {
-	animation: tremble var(--boop-spring) var(--boop-spring-duration) infinite
-		alternate;
-	outline: 0.2em solid black;
+@media (hover: hover) and (pointer: fine) {
+	.topLayer:hover {
+		animation: tremble var(--boop-spring) var(--boop-spring-duration) infinite
+			alternate;
+		outline: 0.2em solid black;
+	}
 }
 
 .topLayer {
@@ -285,6 +287,15 @@ input[type="checkbox"] {
 	from {
 		transform: rotate(0.25turn) translateY(100%);
 	}
+}
+
+.draggableShip {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+	-webkit-touch-callout: none;
 }
 
 .draggableShip .rotateShip {

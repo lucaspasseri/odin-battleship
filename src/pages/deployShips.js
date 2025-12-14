@@ -41,6 +41,8 @@ export default function deployShips() {
 
 	let offsetLeft = 0;
 	let offsetTop = 0;
+	let shipWidth = 0;
+	let shipHeight = 0;
 	let targetShip = null;
 	let lastHoveredCell = null;
 	let lastPreviewedCells = [];
@@ -186,15 +188,18 @@ export default function deployShips() {
 			});
 		}
 
-		let newX;
-		let newY;
-		if (direction === "vertical") {
-			newX = e.clientX - offsetLeft + 57;
-			newY = e.clientY - offsetTop - 50;
+		let anchorX = 0;
+		let anchorY = 0;
+		if (direction === "horizontal") {
+			anchorX = 0;
+			anchorY = shipHeight + 2;
 		} else {
-			newX = e.clientX - offsetLeft + 2;
-			newY = e.clientY - offsetTop + 2;
+			anchorX = -shipHeight;
+			anchorY = shipWidth + shipHeight + 2;
 		}
+
+		const newX = e.clientX - offsetLeft - anchorX;
+		const newY = e.clientY - offsetTop - anchorY;
 
 		targetShip.style.transform = `translate(${newX}px,${newY}px)`;
 	}
@@ -236,6 +241,10 @@ export default function deployShips() {
 			targetShip = shipWrapper;
 			offsetLeft = parentRect.left + shipWrapper.offsetLeft;
 			offsetTop = parentRect.top + shipWrapper.offsetTop;
+			shipHeight = shipWrapper.offsetHeight;
+			shipWidth = shipWrapper.offsetWidth;
+
+			console.log({ shipWrapper, shipHeight, shipWidth });
 
 			shipWrapper.setPointerCapture(e.pointerId);
 			shipWrapper.addEventListener("pointermove", onDrag);
