@@ -4,10 +4,9 @@ export default function playerProfile(playerIndex) {
 	const currPlayer = state.game.players[playerIndex];
 	const container = document.createElement("div");
 	container.className = "w-fit border-2 border-green-600";
-	// container.className = "flex justify-end";
 	const frame = document.createElement("div");
 	frame.className =
-		"border-[var(--color)] border-[0.5em] w-[330px] h-[500px] flex flex-col items-center justify-center rounded-xl gap-[1em]";
+		"border-[var(--color)] border-[0.5em] w-[280px] h-[400px] sm:w-[330px] sm:h-[500px] flex flex-col items-center justify-center rounded-xl sm:gap-[1em] gap-[0.6em]";
 
 	if (currPlayer.type === "computer") {
 		frame.classList.add("bg-gray-700");
@@ -36,7 +35,7 @@ export default function playerProfile(playerIndex) {
 
 	const playerTypePreview = document.createElement("div");
 	playerTypePreview.className =
-		"border-[var(--color)] border-[0.3em] text-center text-xl text-[var(--color)] mb-[0.6em] px-[0.8em]";
+		"border-[var(--color)] border-[0.3em] text-center text-xl text-[var(--color)] px-[0.8em]";
 	const playerTypePreviewH3 = document.createElement("h3");
 
 	playerTypePreviewH3.textContent =

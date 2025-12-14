@@ -10,7 +10,7 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 		container = document.createElement("div");
 		container.id = "shipDeploymentGrid";
 		container.className =
-			"grid grid-cols-10 p-[0.2em] gap-[0.2em] min-w-[282px] border-[var(--color)] border-[0.4em]";
+			"grid grid-cols-10 p-[0.4em] gap-[0.4em] border-[var(--color)] border-[0.2em] min-w-[100%] bg-[var(--bg)]";
 
 		range(100).forEach(index => {
 			const cell = document.createElement("div");
@@ -35,7 +35,7 @@ export default function grid(type = "shipDeployment", gameboardIndex) {
 		container = document.createElement("div");
 		container.id = `playMatchGrid-${gameboardIndex}`;
 		container.className =
-			"grid grid-cols-10 p-[0.2em] gap-[0.2em] border-white border-[0.2em] min-w-[282px] sm:min-w-[441px] bg-[var(--bg)]";
+			"grid grid-cols-10 p-[0.4em] gap-[0.4em] border-white border-[0.2em] min-w-[100%] bg-[var(--bg)]";
 
 		if (gameboardIndex !== currPlayerIndex) {
 			container.classList.add("playableGrid");

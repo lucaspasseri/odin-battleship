@@ -48,7 +48,7 @@ const footer = document.createElement("div");
 
 container.append(header, main, footer);
 
-// goToPage("gameMode");
+goToPage("gameMode");
 
-startSinglePlayerGame();
-goToPage("playMatch");
+// startSinglePlayerGame();
+// goToPage("playMatch");

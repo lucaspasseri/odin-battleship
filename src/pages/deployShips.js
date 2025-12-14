@@ -281,12 +281,12 @@ export default function deployShips() {
 	});
 
 	const gridContainer = document.createElement("div");
-	gridContainer.className = "flex m-auto";
+	gridContainer.className = "flex flex-col m-auto";
 	gridContainer.id = "shipDeploymentGridContainer";
 
-	const gridElement = grid();
+	const gridEl = grid();
 
-	gridContainer.appendChild(gridElement);
+	gridContainer.appendChild(gridEl);
 	shipsAndGridContainer.append(shipsContainer, gridContainer);
 
 	nextButton.className =

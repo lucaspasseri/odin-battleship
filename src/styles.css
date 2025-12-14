@@ -208,7 +208,7 @@ input[type="checkbox"] {
 }
 
 .bottomLayer {
-	border: 0.15em dotted var(--color);
+	border: 0.15em solid var(--color);
 }
 
 @keyframes highlightPlayableGrid {
