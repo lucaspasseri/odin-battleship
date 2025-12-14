@@ -19,11 +19,11 @@ export default function preferenceSettings() {
 	const soundBtn = soundButton(sound);
 	soundLi.appendChild(soundBtn);
 
-	const motionLi = document.createElement("li");
-	const motionBtn = motionButton(motion);
-	motionLi.appendChild(motionBtn);
+	// const motionLi = document.createElement("li");
+	// const motionBtn = motionButton(motion);
+	// motionLi.appendChild(motionBtn);
 
-	settings.append(themeLi, soundLi, motionLi);
+	settings.append(themeLi, soundLi);
 
 	container.appendChild(settings);
 
