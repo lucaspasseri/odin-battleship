@@ -220,9 +220,7 @@ input[type="checkbox"] {
 }
 
 .playableGrid {
-	outline: 0em groove lch(55% 97 1);
-	animation: highlightPlayableGrid var(--boop-spring)
-		var(--boop-spring-duration) infinite;
+	animation: pinkPulse var(--boop-spring) var(--boop-spring-duration) infinite;
 }
 
 @keyframes resize {

@@ -244,8 +244,6 @@ export default function deployShips() {
 			shipHeight = shipWrapper.offsetHeight;
 			shipWidth = shipWrapper.offsetWidth;
 
-			console.log({ shipWrapper, shipHeight, shipWidth });
-
 			shipWrapper.setPointerCapture(e.pointerId);
 			shipWrapper.addEventListener("pointermove", onDrag);
 			shipWrapper.addEventListener("pointerup", endDrag);
