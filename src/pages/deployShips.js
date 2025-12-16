@@ -1,7 +1,7 @@
 import goToPage from "../ui/goToPage.js";
 import { state } from "../core/index.js";
 import { range } from "../util/range.js";
-import { grid } from "../ui/components/index.js";
+import { grid, shimmerButton } from "../ui/components/index.js";
 import { Preferences } from "../ui/state/Preferences.js";
 import { sampleOne } from "../util/sampleOne.js";
 import { normalize } from "../util/normalize.js";
@@ -29,8 +29,6 @@ export default function deployShips() {
 	const h2 = document.createElement("h2");
 	h2.className = "text-3xl";
 	h2.textContent = "Deploy ships";
-
-	const nextButton = document.createElement("button");
 
 	const shipsAndGridContainer = document.createElement("div");
 	shipsAndGridContainer.className = "flex flex-wrap mt-[1em]";
@@ -131,8 +129,27 @@ export default function deployShips() {
 
 		targetShip.remove();
 
-		nextButton.disabled = false;
-		nextButton.classList.replace("bg-gray-700", "bg-green-700");
+		// nextButton.disabled = false;
+		// nextButton.classList.replace("bg-gray-700", "bg-green-700");
+
+		const opponentPlayer = state.game.opponentPlayer;
+		const opponentPlayerIndex = state.game.getPlayerIndex(opponentPlayer);
+		const hasDeployedShips =
+			state.game.getShips(opponentPlayerIndex).length > 0;
+
+		const isLastPlayer = opponentPlayer.type === "computer" || hasDeployedShips;
+
+		const textContent = isLastPlayer ? "Play match" : "Next player";
+
+		const isDisabled =
+			state.game.getShips(state.game.currPlayerIndex).length === 0;
+
+		const nextButtonContainer = document.querySelector("#nextButtonContainer");
+
+		const oldButton = document.querySelector("#nextButton");
+
+		const newButton = shimmerButton(textContent, isDisabled, "nextButton");
+		nextButtonContainer.replaceChild(newButton, oldButton);
 
 		if (Preferences.soundPreference === "sound-on") {
 			const spriteId = sampleOne(Object.keys(SPRITE_MAP_HONK));
@@ -296,19 +313,24 @@ export default function deployShips() {
 	gridContainer.appendChild(gridEl);
 	shipsAndGridContainer.append(shipsContainer, gridContainer);
 
-	nextButton.className =
-		"w-fit rounded border-[var(--color)] border-2 text-2xl px-[0.6em] py-[0.3em] bg-gray-700 m-auto mt-[1em]";
-	nextButton.textContent = "Next";
+	const nextButtonContainer = document.createElement("div");
+	nextButtonContainer.id = "nextButtonContainer";
+
+	const opponentPlayer = state.game.opponentPlayer;
+	const opponentPlayerIndex = state.game.getPlayerIndex(opponentPlayer);
+	const hasDeployedShips = state.game.getShips(opponentPlayerIndex).length > 0;
+
+	const isLastPlayer = opponentPlayer.type === "computer" || hasDeployedShips;
+
+	const textContent = isLastPlayer ? "Play match" : "Next player";
 
 	const isDisabled =
 		state.game.getShips(state.game.currPlayerIndex).length === 0;
-	nextButton.disabled = isDisabled;
 
-	nextButton.addEventListener("click", () => {
-		state.game.changePlayer();
-		goToPage("deployShips");
-	});
+	const nextButton = shimmerButton(textContent, isDisabled, "nextButton");
 
-	container.append(h2, shipsAndGridContainer, nextButton);
+	nextButtonContainer.appendChild(nextButton);
+
+	container.append(h2, shipsAndGridContainer, nextButtonContainer);
 	return container;
 }

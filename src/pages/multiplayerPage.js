@@ -1,8 +1,5 @@
 import startMultiPlayerGame from "../core/orchestration/startMultiPlayerGame.js";
-import {
-	carouselImageSelector,
-	playerProfileForm,
-} from "../ui/components/index.js";
+import { playerProfileForm, shimmerButton } from "../ui/components/index.js";
 import goToPage from "../ui/goToPage.js";
 
 export default function multiplayerPage() {
@@ -47,20 +44,11 @@ export default function multiplayerPage() {
 
 	const buttonContainer = document.createElement("div");
 	buttonContainer.className = "flex justify-center my-[2em]";
-
-	const button = document.createElement("button");
-	button.id = "playersFormSubmitter";
-	button.className =
-		"w-fit rounded border-[var(--color)] border-2 text-2xl px-[0.6em] py-[0.3em] bg-green-700";
-	button.textContent = "Deploy ships!";
-	button.type = "submit";
-	button.setAttribute("form", "playersForm");
+	buttonContainer.id = "playersFormSubmitterContainer";
 
 	const checkbox1 = document.querySelector("#typeCheckbox-1");
 	const checkbox2 = document.querySelector("#typeCheckbox-2");
 	const isDisabled = checkbox1?.checked && checkbox2?.checked;
-
-	button.disabled = isDisabled;
 
 	trueForm.addEventListener("submit", e => {
 		e.preventDefault();
@@ -99,7 +87,13 @@ export default function multiplayerPage() {
 		}
 	});
 
-	buttonContainer.appendChild(button);
+	const deployShipBtn = shimmerButton(
+		"Deploy ships",
+		isDisabled,
+		"playersFormSubmitter"
+	);
+
+	buttonContainer.appendChild(deployShipBtn);
 
 	container.append(h2, trueForm, buttonContainer);
 

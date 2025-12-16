@@ -336,6 +336,42 @@ input[type="checkbox"] {
 	transform: rotate(-20deg);
 }
 
+@keyframes sliding {
+	0% {
+		transform: translateX(-100%);
+	}
+	10% {
+		transform: translateX(100%);
+	}
+	100% {
+		transform: translateX(100%);
+	}
+}
+
+.slidingOver {
+	animation: sliding 6s ease-in-out both infinite;
+	background: linear-gradient(
+		to right,
+		transparent,
+		hsl(180, 98%, 80%),
+		transparent
+	);
+	pointer-events: none;
+}
+.slidingOverBtn {
+	background: radial-gradient(
+			circle at 50% 0%,
+			oklch(0.5 0.15 165 / 0) 0% 60%,
+			oklch(0.5 0.15 165 / 0.125) 70%,
+			oklch(0.5 0.15 165 / 0.325) 80%,
+			oklch(0.5 0.15 165 / 0) 100%
+		),
+		linear-gradient(to top, oklch(0.6 0.19 164 / 1), oklch(0.9 0.2 182 / 1));
+	box-shadow: inset 0px -1px 2px hsl(175deg 100% 20% / 0.5),
+		inset 0px -3px 6px hsl(175deg 100% 20% / 0.4),
+		inset 0px 5px 5px hsl(175deg 100% 90% / 0.75);
+}
+
 /* @keyframes grow {
 	to {
 		transform: scale(2);

@@ -35,7 +35,7 @@ export default function playerProfile(playerIndex) {
 
 	const playerTypePreview = document.createElement("div");
 	playerTypePreview.className =
-		"border-[var(--color)] border-[0.3em] text-center text-xl text-[var(--color)] px-[0.8em]";
+		"border-[var(--color)] border-[0.2em] text-center text-xl text-[var(--color)] px-[0.8em] rounded";
 	const playerTypePreviewH3 = document.createElement("h3");
 
 	playerTypePreviewH3.textContent =
@@ -46,7 +46,7 @@ export default function playerProfile(playerIndex) {
 	nameSelector.className = "text-[1.4em] text-gray-700 w-full";
 	const nameInput = document.createElement("input");
 	nameInput.readOnly = true;
-	nameInput.className = "text-center w-[50%] block m-auto";
+	nameInput.className = "text-center w-[50%] block m-auto rounded";
 	nameInput.type = "text";
 	nameInput.name = `p${playerIndex}Name`;
 	nameInput.id = `p${playerIndex}NameInput`;

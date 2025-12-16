@@ -39,3 +39,4 @@ export { default as carouselImageSelector } from "./carouselImageSelector.js";
 export { default as playerProfileForm } from "./playerProfileForm.js";
 export { default as playerProfile } from "./playerProfile.js";
 export { default as versusTextSvg } from "./versusTextSvg.js";
+export { default as shimmerButton } from "./shimmerButton.js";

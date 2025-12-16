@@ -1,6 +1,11 @@
 import goToPage from "../ui/goToPage.js";
 import { state } from "../core/index.js";
-import { grid, playerProfile, versusTextSvg } from "../ui/components/index.js";
+import {
+	grid,
+	playerProfile,
+	shimmerButton,
+	versusTextSvg,
+} from "../ui/components/index.js";
 import { computerAttackCell } from "../ui/constants/playMatch.js";
 
 function updateGameStatus(el = document.querySelector("#gameStatus")) {
@@ -100,14 +105,7 @@ export default function playMatch() {
 
 	gridsContainer.append(playerGrid1, versusContainer, playerGrid2);
 
-	const restartButton = document.createElement("button");
-	restartButton.className =
-		"w-fit rounded border-[var(--color)] border-2 text-2xl px-[0.6em] py-[0.3em] bg-green-700";
-	restartButton.textContent = "Restart";
-	restartButton.addEventListener("click", () => {
-		state.game.restart();
-		goToPage("gameMode");
-	});
+	const restartButton = shimmerButton("Restart", false, "restartButton");
 
 	const buttonContainer = document.createElement("div");
 	buttonContainer.className = "flex justify-center my-[2em]";

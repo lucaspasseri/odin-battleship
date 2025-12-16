@@ -1,4 +1,4 @@
-import { carouselImageSelector } from "./index.js";
+import { carouselImageSelector, shimmerButton } from "./index.js";
 
 export default function playerProfileForm(playerIndex) {
 	const container = document.createElement("div");
@@ -32,7 +32,7 @@ export default function playerProfileForm(playerIndex) {
 
 	const playerTypePreview = document.createElement("div");
 	playerTypePreview.className =
-		"border-[var(--color)] border-[0.3em] text-center text-xl text-[var(--color)] mb-[0.6em]";
+		"border-[var(--color)] border-[0.2em] text-center text-xl text-[var(--color)] mb-[0.6em] rounded";
 	const playerTypePreviewH3 = document.createElement("h3");
 
 	playerTypePreviewH3.textContent = checkbox.checked ? "CPU" : "HUMAN";
@@ -52,15 +52,19 @@ export default function playerProfileForm(playerIndex) {
 
 		const isDisabled = checkbox1?.checked && checkbox2?.checked;
 
+		const buttonContainer = document.querySelector(
+			"#playersFormSubmitterContainer"
+		);
+
 		const button = document.querySelector("#playersFormSubmitter");
 
-		button.disabled = isDisabled;
+		const newButton = shimmerButton(
+			"Deploy ships",
+			isDisabled,
+			"playersFormSubmitter"
+		);
 
-		if (isDisabled) {
-			button.classList.replace("bg-green-700", "bg-gray-700");
-		} else {
-			button.classList.replace("bg-gray-700", "bg-green-700");
-		}
+		buttonContainer.replaceChild(newButton, button);
 	});
 
 	typeSelector.append(playerTypePreview, typeContainer);
@@ -68,7 +72,7 @@ export default function playerProfileForm(playerIndex) {
 	const nameSelector = document.createElement("div");
 	nameSelector.className = "text-[1.4em] text-gray-700 w-full";
 	const nameInput = document.createElement("input");
-	nameInput.className = "text-center block w-[50%] m-auto";
+	nameInput.className = "text-center block w-[50%] m-auto rounded";
 	nameInput.type = "text";
 	nameInput.name = `p${playerIndex}Name`;
 	nameInput.id = `p${playerIndex}NameInput`;
