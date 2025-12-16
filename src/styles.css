@@ -1,3 +1,11 @@
+@font-face {
+	font-family: "AudioWide";
+	src: url("./assets/fonts/Audiowide-Regular.ttf") format("truetype");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
 :root {
 	--boop-spring: linear(
 		0,
@@ -55,6 +63,7 @@
 body {
 	background-color: var(--bg);
 	color: var(--color);
+	font-family: "AudioWide", system-ui, sans-serif;
 }
 
 #navbar {
@@ -248,7 +257,7 @@ input[type="checkbox"] {
 
 @keyframes semiTransparencyRevealed {
 	to {
-		background-color: rgba(255, 255, 255, 0.2);
+		background-color: rgba(255, 255, 255, 0.5);
 	}
 }
 
@@ -304,14 +313,20 @@ input[type="checkbox"] {
 }
 
 @keyframes greenPulse {
+	from {
+		outline: lch(76.99% 87 138.49) 0.1em dashed;
+	}
 	to {
-		outline: lch(78% 132 143) 0.4em groove;
+		outline: lch(76.99% 87 138.49) 0.3em dashed;
 	}
 }
 
 @keyframes redPulse {
+	from {
+		outline: rgb(254, 54, 54) 0.1em dashed;
+	}
 	to {
-		outline: red 0.4em groove;
+		outline: rgb(254, 54, 54) 0.3em dashed;
 	}
 }
 
