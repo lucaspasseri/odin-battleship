@@ -5,7 +5,7 @@ export default function playerProfileForm(playerIndex) {
 	container.id = `playerProfileForm-${playerIndex}`;
 	const frame = document.createElement("div");
 	frame.className =
-		"border-[var(--color)] border-[0.5em] w-[280px] h-[440px] sm:w-[330px] sm:h-[500px] flex flex-col items-center justify-center rounded-xl sm:gap-[1em] gap-[0.6em]";
+		"border-[var(--color)] border-[0.5em] w-[280px] h-[440px] sm:w-[330px] sm:h-[500px] flex flex-col items-center justify-center rounded-xl sm:gap-[1em] gap-[0.6em] transition duration-[400]";
 
 	if (playerIndex === "1") {
 		frame.classList.add("bg-red-700");
